@@ -1,1 +1,91 @@
 # Doc-React-Typescript-make-Notion-clone
+
+## タイトル
+
+React + Typescriptで人気アプリ「Notion」のクローンを作る講座。ログイン/ユーザー登録機能、入れ子でのノートの作成、リアルタイム通信など、本格的なWebアプリの機能開発が学べる
+
+## 製作者
+
+くるしば
+
+## この講座で学べること
+
+・React + TypeScript + Supabaseを使った本格的な開発
+・基本的なCRUD、検索、リアルタイム通信などの機能
+・Jotaiを使ったグローバル状態管理
+・React + Tailwind CSSのセットアップなど
+
+## この講座の対象者
+
+・Reactの基礎学習をおえた方
+・エンジニアとしての就職を目指している方
+・Reactをより深く理解したい方
+
+## 受講頂く上でのお願い
+
+・基本的にPCを推奨
+・作ったアプリはカスタマイズしよう
+・受講終了後に、レビューをお願いします
+
+## アプリの機能要件
+
+ノートのタイトルを作成することができる
+ノートを作成することができる
+ノートは親子関係のノートを作成することができる
+ノートのスタイルを変更することができる
+ノートは削除することができる
+ノートはリアルタイム編集ができる
+テキストはドラッグアンドドロップで移動することができる
+
+左側メニューにノート一覧が表示される
+ノートは検索することができる
+
+ノートアプリは、アカウントの登録、アカウントのログイン、ログアウトができる
+
+質問Bot機能を追加することができ、Google のNotebookLM は、AI搭載のノートリサーチツールで、アップロードした文章や、ウェブ上の情報を解析して、概要を自動生成してくれます。
+
+学習するデータを登録することができます。
+
+## 開発環境を作成する
+
+### Node.jsのインストール
+
+macOSを利用する場合、ターミナルを起動して確認してましょう。
+
+% node -v
+v22.18.0
+
+バージョンが表示されなかったら、https://nodejs.org/ja よりインストールしてください
+
+## テキストエディターをインストールします
+
+https://code.visualstudio.com/
+
+## おすすめの拡張機能 tool
+
+### ES7+ React/Redux/React-Native snippets
+https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets
+
+### Auto Close Tag
+https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag
+
+### Emmet
+
+### テキストの比較
+
+https://www.diffchecker.com/
+
+### 翻訳
+
+deepl
+
+## プロジェクトのセットアップ
+
+ReactとTypescriptの環境をBEAT経由でセットアップする
+
+### プロジェクトディレクトリを作成する
+
+```sh
+% cd ~ && mkdir -p work/Udemy && cd $_
+```
+
