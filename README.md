@@ -118,40 +118,46 @@ ReactとTypescriptの環境をBEAT経由でセットアップする
 
 開発サーバーが起動していたら contrl + C　で停止させます。
 
-### package.jsonの変更
+### package.jsonにパッケージを追加する
 
-dependenciesとdevDependencies　を以下に変更させます。
+1.cmdk
 
-追加したパッケージ
-
-### https://github.com/dip/cmdk
+[https://github.com/dip/cmdk](https://github.com/dip/cmdk)
 
 ```sh
 npm install cmdk
 ```
 
-### https://lucide.dev/
+2. lucide-react
+
+[https://lucide.dev/](https://lucide.dev/)
 
 ```sh
-npm install lucide
+npm install lucide-react
 ```
 
-### https://www.radix-ui.com/primitives/docs/components/dropdown-menu
+3. @radix-ui/react-dropdown-menu
+
+[https://www.radix-ui.com/primitives/docs/components/dropdown-menu](https://www.radix-ui.com/primitives/docs/components/dropdown-menu)
 
 ```sh
 npm install @radix-ui/react-dropdown-menu
 ```
 
-### https://www.npmjs.com/package/tailwind-merge
+4. tailwind-merge
+
+[https://www.npmjs.com/package/tailwind-merge](https://www.npmjs.com/package/tailwind-merge)
 
 ```sh
 npm i tailwind-merge
 ```
 
-### https://www.npmjs.com/package/tailwind-animate
+5. tailwindcss-animate
+
+[https://www.npmjs.com/package/tailwindcss-animate](https://www.npmjs.com/package/tailwindcss-animate)
 
 ```sh
-% npm i tailwind-animate
+% npm install tailwindcss-animate
 ```
 
 
@@ -159,7 +165,7 @@ npm i tailwind-merge
 
 
 
-npm install lucide-react
+
 
 
 
