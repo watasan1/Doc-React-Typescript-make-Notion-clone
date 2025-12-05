@@ -238,9 +238,23 @@ src/index.cssは、reset.cssなどのグローバルスタイルを記載しま�
 @import "tailwindcss";
 ```
 
+### テストしてみましょう
 
+src/App.tsx ファイルを編集します。
 
+```tsx
+<h1>Vite + React</h1>
+```
 
+を
+
+```tsx
+<h1 className="text-3xl font-bold text-blue-600">Vite + React</h1>
+```
+
+に変更して保存します。
+
+開発サーバーを起動してブラウザーで確認しましょう。
 
 
 
