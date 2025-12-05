@@ -211,7 +211,14 @@ Reactのロジックを作成していきます。
 
 Viteの設定に@tailwindcss/viteプラグインを追加してください。
 
-vite.config.ts
+vite.config.ts ファイルを編集します。
+
+
+
+
+
+
+
 
 
 tailwind.config.js
