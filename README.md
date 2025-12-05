@@ -109,6 +109,10 @@ ReactとTypescriptの環境をBEAT経由でセットアップする
 ◆  Use rolldown-vite (Experimental)?:
 │  ● Yes (The future default Vite, which is powered by Rolldown)
 
+
+これは使わない方がいいかも
+
+
 ◆  Install with npm and start now?
 │  ● Yes / ○ No
 
