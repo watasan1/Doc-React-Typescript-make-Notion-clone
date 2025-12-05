@@ -144,7 +144,7 @@ npm install lucide-react
 npm install @radix-ui/react-dropdown-menu
 ```
 
-5. tailwind-merge
+4. tailwind-merge
 
 [https://www.npmjs.com/package/tailwind-merge](https://www.npmjs.com/package/tailwind-merge)
 
@@ -157,7 +157,7 @@ npm i tailwind-merge
 [https://www.npmjs.com/package/tailwindcss-animate](https://www.npmjs.com/package/tailwindcss-animate)
 
 ```sh
-% npm install tailwindcss-animate
+npm install tailwindcss-animate
 ```
 
 6. postcss
@@ -184,15 +184,38 @@ npm install -D tailwindcss
 npm install -D autoprefixer
 ```
 
+### npm install
 
+パッケージを node_modules にインストールするには npm install とコマンド実行します。
 
+```sh
+% npm install
+```
 
 ### 開発サーバーで確認
 
-http://localhost:5173/　を開くと
+```
+% npm run dev
+```
 
-## TailwindCSS をインストールします。
+[http://localhost:5173/](http://localhost:5173/)　を開くと Reactの初期画面が表示されます。
 
+停止するには、control + c で開発サーバを停止します。
+
+プロジェクトにコンポーネントの見た目を追加したあと。
+
+Reactのロジックを作成していきます。
+
+
+tailwind.config.js
+
+tsconfig.app.json
+
+tsconfig.json
+
+vite.config.ts
+
+をプロジェクト直下に作成します。
 
 
 
