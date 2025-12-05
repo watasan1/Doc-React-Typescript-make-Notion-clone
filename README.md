@@ -211,8 +211,18 @@ Reactのロジックを作成していきます。
 
 Viteの設定に@tailwindcss/viteプラグインを追加してください。
 
-vite.config.ts ファイルを編集します。
+プロジェクトディレクトリ直下にある、vite.config.ts ファイルを編集します。
 
+```vite.config.ts 
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})
+```
 
 
 
