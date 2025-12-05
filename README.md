@@ -122,6 +122,45 @@ ReactとTypescriptの環境をBEAT経由でセットアップする
 
 dependenciesとdevDependencies　を以下に変更させます。
 
+追加したパッケージ
+
+### https://github.com/dip/cmdk
+
+```sh
+npm install cmdk
+```
+
+### https://lucide.dev/
+
+```sh
+npm install lucide
+```
+
+### https://www.radix-ui.com/primitives/docs/components/dropdown-menu
+
+```sh
+npm install @radix-ui/react-dropdown-menu
+```
+
+### https://www.npmjs.com/package/tailwind-merge
+
+```sh
+npm i tailwind-merge
+```
+
+### https://www.npmjs.com/package/tailwind-animate
+
+```sh
+% npm i tailwind-animate
+```
+
+
+
+
+
+
+npm install lucide-react
+
 
 
 ### 開発サーバーで確認
