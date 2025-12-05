@@ -89,3 +89,48 @@ ReactとTypescriptの環境をBEAT経由でセットアップする
 % cd ~ && mkdir -p work/Udemy && cd $_
 ```
 
+### プロジェクトを作成する
+
+```sh
+% npm create vite@latest
+```
+
+```sh
+│
+◆  Project name:
+│  notion-clone-app█
+
+◆  Select a framework:
+│  ● React
+
+◆  Select a variant:
+│  ● TypeScript
+
+◆  Use rolldown-vite (Experimental)?:
+│  ● Yes (The future default Vite, which is powered by Rolldown)
+
+◆  Install with npm and start now?
+│  ● Yes / ○ No
+
+```
+
+プロジェクトの雛形ができました。
+
+開発サーバーが起動していたら contrl + C　で停止させます。
+
+### package.jsonの変更
+
+dependenciesとdevDependencies　を以下に変更させます。
+
+
+
+### 開発サーバーで確認
+
+http://localhost:5173/　を開くと
+
+## TailwindCSS をインストールします。
+
+
+
+
+
