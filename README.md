@@ -207,13 +207,20 @@ npm install -D autoprefixer
 Reactのロジックを作成していきます。
 
 
+### tailwindcss のViteプラグインを設定する
+
+Viteの設定に@tailwindcss/viteプラグインを追加してください。
+
+vite.config.ts
+
+
 tailwind.config.js
 
 tsconfig.app.json
 
 tsconfig.json
 
-vite.config.ts
+
 
 をプロジェクト直下に作成します。
 
