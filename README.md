@@ -144,7 +144,7 @@ npm install lucide-react
 npm install @radix-ui/react-dropdown-menu
 ```
 
-4. tailwind-merge
+5. tailwind-merge
 
 [https://www.npmjs.com/package/tailwind-merge](https://www.npmjs.com/package/tailwind-merge)
 
@@ -160,11 +160,29 @@ npm i tailwind-merge
 % npm install tailwindcss-animate
 ```
 
+6. postcss
 
+[https://www.npmjs.com/package/postcss](https://www.npmjs.com/package/postcss)
 
+```sh
+npm install -D postcss
+```
 
+7. tailwindcss
 
+[https://www.npmjs.com/package/tailwindcss](https://www.npmjs.com/package/tailwindcss)
 
+```sh
+npm install -D tailwindcss
+```
+
+8. autoprefixer
+
+[https://www.npmjs.com/package/autoprefixer](https://www.npmjs.com/package/autoprefixer)
+
+```sh
+npm install -D autoprefixer
+```
 
 
 
