@@ -224,6 +224,19 @@ export default defineConfig({
 })
 ```
 
+### Import Tailwind CSS
+
+CSSファイルに@importを追加し、Tailwind CSSをインポートしてください。
+
+reactでは、src/App.css 、src/index.cssファイルに、cssを記載しています。
+src/index.cssは、reset.cssなどのグローバルスタイルを記載します。
+一方、src/App.cssファイルは、Appコンポーネントに関連するスタイルを掲載します。
+
+なので、src/index.cssの中身を消して、以下の内容を掲載します。
+
+```ts
+@import "tailwindcss";
+```
 
 
 
