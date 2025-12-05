@@ -173,7 +173,7 @@ npm install -D postcss
 [https://www.npmjs.com/package/tailwindcss](https://www.npmjs.com/package/tailwindcss)
 
 ```sh
-npm install -D tailwindcss
+npm install tailwindcss@next @tailwindcss/vite@next
 ```
 
 8. autoprefixer
