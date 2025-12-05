@@ -170,7 +170,7 @@ npm install -D postcss
 
 7. tailwindcss
 
-[https://www.npmjs.com/package/tailwindcss](https://www.npmjs.com/package/tailwindcss)
+[https://tailwindcss.com/docs/installation/using-vite](https://tailwindcss.com/docs/installation/using-vite)
 
 ```sh
 npm install tailwindcss@next @tailwindcss/vite@next
