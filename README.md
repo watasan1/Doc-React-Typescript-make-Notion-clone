@@ -2,7 +2,7 @@
 
 ## タイトル
 
-React + Typescriptで人気アプリ「Notion」のクローンを作る講座。ログイン/ユーザー登録機能、入れ子でのノートの作成、リアルタイム通信など、本格的なWebアプリの機能開発が学べる
+React + Typescriptで人気アプリ「Notion」のクローンを作る講座。ログイン/ユーザー登録機能、入れ子でのノートの作成、リアルタイム通信など、本格的なWebアプリの機能開発が学べます。
 
 ## 製作者
 
@@ -10,7 +10,7 @@ React + Typescriptで人気アプリ「Notion」のクローンを作る講座�
 
 ## この講座で学べること
 
-・React + TypeScript + Supabaseを使った本格的な開発
+- React + TypeScript + Supabaseを使った本格的な開発
 ・基本的なCRUD、検索、リアルタイム通信などの機能
 ・Jotaiを使ったグローバル状態管理
 ・React + Tailwind CSSのセットアップなど
@@ -81,7 +81,7 @@ deepl
 
 ## プロジェクトのセットアップ
 
-ReactとTypescriptの環境をBEAT経由でセットアップする
+ReactとTypescriptの環境をVite経由でセットアップする
 
 ### プロジェクトディレクトリを作成する
 
