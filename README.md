@@ -235,9 +235,11 @@ npm install tailwindcss-animate
 
 ### 10. tsconfig.app.jsonを変更する
 
-tsconfig.app.jsonファイルは、TypeScript のコンパイル設定ファイル（tsconfig.json）を細かく分割したうちの “アプリケーション用設定” を記述するファイルです。
+`tsconfig.app.json`は、TypeScriptのコンパイル設定ファイル（tsconfig.json）を細かく分割したうちのアプリケーション用の設定を記述するファイルです。
 
-```
+ここに次の設定を追加します。
+
+```JSONC
 {
   "compilerOptions": {
     /* 省略 */
@@ -259,8 +261,21 @@ tsconfig.app.jsonファイルは、TypeScript のコンパイル設定ファイ�
 
 ```
 
-この設定を追加することで、
+この設定を追加することで、コードの可読性が大きく向上します。
 
+これまで相対パスで書いていた
+
+```ts
+import Header from "../../components/Header";
+```
+
+というような記述が、次のようにシンプルになります。
+
+```ts
+import Header from "@/components/Header";
+```
+
+これにより、パスが整理されてみやすくなり、管理しやすくなります。
 
 tscnfig.json
 vite.config.ts
