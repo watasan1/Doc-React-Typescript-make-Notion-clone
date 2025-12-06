@@ -160,74 +160,62 @@ export default defineConfig({
 })
 ```
 
+- Tailwind CSS をインポートする
 
+CSS ファイルに @import を追加し、Tailwind CSS をインポートします。
 
+reactのプロジェクトには、src/App.css と、src/index.css にcssを設定するファイルがあります。 
+src/App.css はコンポーネントのCSSを記述し、src/index.cssはreset.cssなどプロジェクト全体に適用したいCSSを書きます。
 
+なので、src/index.css の内容を消して、以下の内容を掲載します。
 
+```src/index.css
+@import "tailwindcss";
+```
 
+- TailwindCSSを試す。
 
+src/App.tsx ファイルの`<h1>Vite + React</h1>` タグをTailwindCSSに変更します。
 
+```src/App.tsx
+<h1 className="text-3xl font-bold underline">Vite + React</h1>
+```
+
+に変更して、開発サーバーを起動して試してみましょう。
+
+- 開発サーバーの起動
+
+```sh
+npm run dev
 ```
 
 すると開発サーバーが起動されます。
 
 [http://localhost:5173/](http://localhost:5173/)　をブラウザーで表示するとReactの初回画面が表示されます。
 
+タイトルにTailwindCSSが導入されたことを確認します。
+
 プロジェクトの雛形ができました。
 
 開発サーバーが起動していたら contrl + C　で停止させます。
 
-### 7. npmのパッケージのインストール
+5. tailwind-merge
 
-必要なパッケージをまとめてインストールします。
-
-```bash
-cd notion-clone-app
-```
-
-
-
-
-
-```sh
-npm install tailwindcss@next @tailwindcss/vite@next
-```
-
-
-4. tailwind-merge
-
-[https://www.npmjs.com/package/tailwind-merge](https://www.npmjs.com/package/tailwind-merge)
+Tailwind CSS のクラス名の競合（上書き）を自動で解決してくれるユーティリティ関数を提供するパッケージです。
 
 ```sh
 npm i tailwind-merge
 ```
 
-5. tailwindcss-animate
+6. tailwindcss-animate
 
-[https://www.npmjs.com/package/tailwindcss-animate](https://www.npmjs.com/package/tailwindcss-animate)
+Tailwind CSS にアニメーション
 
 ```sh
 npm install tailwindcss-animate
 ```
 
-6. postcss
-
-[https://www.npmjs.com/package/postcss](https://www.npmjs.com/package/postcss)
-
-```sh
-npm install -D postcss
-```
-
-
-8. autoprefixer
-
-[https://www.npmjs.com/package/autoprefixer](https://www.npmjs.com/package/autoprefixer)
-
-```sh
-npm install -D autoprefixer
-```
-
-### npm install
+### 8. npm install
 
 パッケージを node_modules にインストールするには npm install とコマンド実行します。
 
@@ -235,7 +223,7 @@ npm install -D autoprefixer
 % npm install
 ```
 
-### 開発サーバーで確認
+### 9. 開発サーバーで確認
 
 ```
 % npm run dev
@@ -245,72 +233,36 @@ npm install -D autoprefixer
 
 停止するには、control + c で開発サーバを停止します。
 
-プロジェクトにコンポーネントの見た目を追加したあと。
+### 10. tsconfig.app.jsonを変更する
 
-Reactのロジックを作成していきます。
+tsconfig.app.jsonファイルは、TypeScript のコンパイル設定ファイル（tsconfig.json）を細かく分割したうちの “アプリケーション用設定” を記述するファイルです。
 
+```
+{
+  "compilerOptions": {
+    /* 省略 */
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    /* 以下を追加  */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+    /* ここまで追加 */
+  },
+  "include": ["src"]
+}
 
-### tailwindcss のViteプラグインを設定する
-
-Viteの設定に@tailwindcss/viteプラグインを追加してください。
-
-プロジェクトディレクトリ直下にある、vite.config.ts ファイルを編集します。
-
-```vite.config.ts 
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-})
 ```
 
-### Import Tailwind CSS
-
-CSSファイルに@importを追加し、Tailwind CSSをインポートしてください。
-
-reactでは、src/App.css 、src/index.cssファイルに、cssを記載しています。
-src/index.cssは、reset.cssなどのグローバルスタイルを記載します。
-一方、src/App.cssファイルは、Appコンポーネントに関連するスタイルを掲載します。
-
-なので、src/index.cssの中身を消して、以下の内容を掲載します。
-
-```ts
-@import "tailwindcss";
-```
-
-### テストしてみましょう
-
-src/App.tsx ファイルを編集します。
-
-```tsx
-<h1>Vite + React</h1>
-```
-
-を
-
-```tsx
-<h1 className="text-3xl font-bold text-blue-600">Vite + React</h1>
-```
-
-に変更して保存します。
-
-開発サーバーを起動してブラウザーで確認しましょう。
+この設定を追加することで、
 
 
-
-tailwind.config.js
-
-tsconfig.app.json
-
-tsconfig.json
-
-
-
-をプロジェクト直下に作成します。
-
-
+tscnfig.json
+vite.config.ts
 
 
