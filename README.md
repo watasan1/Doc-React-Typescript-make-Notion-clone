@@ -82,19 +82,12 @@ cd ~ && mkdir -p work/Udemy && cd $_
 ### 6. プロジェクトを作成する
 
 ```sh
-npm create vite@latest
+npm create vite@latest notion-clone-app
 ```
 
 ```sh
+
 │
-◆  Project name:
-│  notion-clone-app██
-└
-
-◆  Package name:
-│  notion-clone-app█
-└
-
 ◆  Select a framework:
 │  ● React
 └
@@ -108,26 +101,15 @@ npm create vite@latest
 └
 
 ◆  Install with npm and start now?
-│  ● Yes / ○ No
+│  ○ Yes / ● No
 └
-
 ```
 
-すると開発サーバーが起動されます。
-
-[http://localhost:5173/](http://localhost:5173/)　をブラウザーで表示するとReactの初回画面が表示されます。
-
-プロジェクトの雛形ができました。
-
-開発サーバーが起動していたら contrl + C　で停止させます。
-
-### 7. npmのパッケージのインストール
-
-必要なパッケージをまとめてインストールします。
-
-```bash
+```sh
 cd notion-clone-app
 ```
+
+### 7. プロジェクトにパッケージをインストール
 
 1.cmdk
 
@@ -155,11 +137,56 @@ npm install @radix-ui/react-dropdown-menu
 
 4. Tailwind CSS
 
-Tailwind CSS　インストール
+- Tailwind CSS　インストール
+
+npm経由でtailwindcssと@tailwindcss/viteをインストールします。
 
 ```sh
 npm install tailwindcss @tailwindcss/vite
 ```
+
+- Viteプラグインの設定
+
+プロジェクト直下にある、vite.config.ts　ファイルに、@tailwindcss/viteプラグインを追加してください。
+
+```ts
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+})
+```
+
+
+
+
+
+
+
+
+```
+
+すると開発サーバーが起動されます。
+
+[http://localhost:5173/](http://localhost:5173/)　をブラウザーで表示するとReactの初回画面が表示されます。
+
+プロジェクトの雛形ができました。
+
+開発サーバーが起動していたら contrl + C　で停止させます。
+
+### 7. npmのパッケージのインストール
+
+必要なパッケージをまとめてインストールします。
+
+```bash
+cd notion-clone-app
+```
+
+
+
 
 
 ```sh
