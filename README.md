@@ -10,113 +10,116 @@ React + Typescriptで人気アプリ「Notion」のクローンを作る講座�
 
 ## この講座で学べること
 
-- React + TypeScript + Supabaseを使った本格的な開発
-・基本的なCRUD、検索、リアルタイム通信などの機能
-・Jotaiを使ったグローバル状態管理
-・React + Tailwind CSSのセットアップなど
+- React + TypeScript + Supabase を使った本格的な開発
+- 基本的なCRUD、検索、リアルタイム通信などの機能
+- Jotaiを使ったグローバル状態管理
+- React + Tailwind CSS（v4）のセットアップ方法
 
 ## この講座の対象者
 
-・Reactの基礎学習をおえた方
-・エンジニアとしての就職を目指している方
-・Reactをより深く理解したい方
+- Reactの基礎学習をおえた方
+- エンジニアとしての就職を目指している方
+- Reactをより深く理解したい方
 
-## 受講頂く上でのお願い
+## 受講頂く上での注意事項
 
-・基本的にPCを推奨
-・作ったアプリはカスタマイズしよう
-・受講終了後に、レビューをお願いします
+- 基本的にPCを推奨します。
+- 作ったアプリはカスタマイズしましょう。
+- 受講終了後に、レビューをお願いします。
 
 ## アプリの機能要件
 
-ノートのタイトルを作成することができる
-ノートを作成することができる
-ノートは親子関係のノートを作成することができる
-ノートのスタイルを変更することができる
-ノートは削除することができる
-ノートはリアルタイム編集ができる
-テキストはドラッグアンドドロップで移動することができる
+- ノートのタイトル/本文を作成、編集、削除（CRUD）できる
+- ノートのスタイル（フォントなど）を変更することができる
+- ノートはリアルタイムで共同編集ができる編集ができる
+- テキストはドラッグアンドドロップで移動することができる
+- 左側メニューにノート一覧が表示される
+- ノートは検索することができる
+- アカウントの登録、ログイン、ログアウト機能
+- 質問Bot機能（AIによる文書解析、概要生成など、Google NotebookLMのようなRAG機能を想定）
+- 学習用データを登録できる機能
 
-左側メニューにノート一覧が表示される
-ノートは検索することができる
+## 1. 開発環境のセットアップ
 
-ノートアプリは、アカウントの登録、アカウントのログイン、ログアウトができる
+### 1. Node.jsのインストール
 
-質問Bot機能を追加することができ、Google のNotebookLM は、AI搭載のノートリサーチツールで、アップロードした文章や、ウェブ上の情報を解析して、概要を自動生成してくれます。
+macOSを利用する場合、ターミナルを起動してバージョンを確認しましょう。
 
-学習するデータを登録することができます。
-
-## 開発環境を作成する
-
-### Node.jsのインストール
-
-macOSを利用する場合、ターミナルを起動して確認してましょう。
-
-% node -v
-v22.18.0
-
-バージョンが表示されなかったら、https://nodejs.org/ja よりインストールしてください
-
-## テキストエディターをインストールします
-
-https://code.visualstudio.com/
-
-## おすすめの拡張機能 tool
-
-### ES7+ React/Redux/React-Native snippets
-https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets
-
-### Auto Close Tag
-https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag
-
-### Emmet
-
-### テキストの比較
-
-https://www.diffchecker.com/
-
-### 翻訳
-
-deepl
-
-## プロジェクトのセットアップ
-
-ReactとTypescriptの環境をVite経由でセットアップする
-
-### プロジェクトディレクトリを作成する
-
-```sh
-% cd ~ && mkdir -p work/Udemy && cd $_
+```bash
+node -v
 ```
 
-### プロジェクトを作成する
+v22.18.0
+
+バージョンが表示されない場合は、[https://nodejs.org/ja/download](https://nodejs.org/ja/download)よりインストールしてください。
+
+### 2. テキストエディターをインストールします
+
+[https://code.visualstudio.com/](https://code.visualstudio.com/)
+
+### 3. おすすめの拡張機能
+
+- ES7 + React/Redux/React-Native snippets
+
+[https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets](https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets)
+
+- Auto Close Tag
+
+[https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag)
+
+- Emmet（VS Codeに標準搭載）
+
+### 4. プロジェクトの初期設定
+
+ReactとTypescriptの環境をVite経由でセットアップします。
+
+### 5. プロジェクトディレクトリを作成する
 
 ```sh
-% npm create vite@latest
+cd ~ && mkdir -p work/Udemy && cd $_
+```
+
+### 6. プロジェクトを作成する
+
+```sh
+npm create vite@latest
 ```
 
 ```sh
 │
 ◆  Project name:
+│  notion-clone-app██
+└
+
+◆  Package name:
 │  notion-clone-app█
+└
 
 ◆  Select a framework:
 │  ● React
+└
 
 ◆  Select a variant:
 │  ● TypeScript
+└
 
 ◆  Use rolldown-vite (Experimental)?:
-│  ● Yes (The future default Vite, which is powered by Rolldown)
-
-
-これは使わない方がいいかも
-
+│  ● No
+└
 
 ◆  Install with npm and start now?
 │  ● Yes / ○ No
+└
 
 ```
+
+すると開発サーバーが起動されます。
+
+[http://localhost:5173/](http://localhost:5173/)　をブラウザーで表示するとReactの初回画面が表示されます。
+
+
+
+
 
 プロジェクトの雛形ができました。
 
