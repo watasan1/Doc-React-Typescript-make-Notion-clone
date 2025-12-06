@@ -117,19 +117,21 @@ npm create vite@latest
 
 [http://localhost:5173/](http://localhost:5173/)　をブラウザーで表示するとReactの初回画面が表示されます。
 
-
-
-
-
 プロジェクトの雛形ができました。
 
 開発サーバーが起動していたら contrl + C　で停止させます。
 
-### package.jsonにパッケージを追加する
+### 7. npmのパッケージのインストール
+
+必要なパッケージをまとめてインストールします。
+
+```bash
+cd notion-clone-app
+```
 
 1.cmdk
 
-[https://github.com/dip/cmdk](https://github.com/dip/cmdk)
+キーボード操作に特化したコマンドパレットインターフェースを作成するためのライブラリです。
 
 ```sh
 npm install cmdk
@@ -137,7 +139,7 @@ npm install cmdk
 
 2. lucide-react
 
-[https://lucide.dev/](https://lucide.dev/)
+React用のアイコンコンポーネント集です。
 
 ```sh
 npm install lucide-react
@@ -145,11 +147,19 @@ npm install lucide-react
 
 3. @radix-ui/react-dropdown-menu
 
-[https://www.radix-ui.com/primitives/docs/components/dropdown-menu](https://www.radix-ui.com/primitives/docs/components/dropdown-menu)
+Radix UI の「ドロップダウンメニュー」コンポーネントを React で使うためのパッケージです。
 
 ```sh
 npm install @radix-ui/react-dropdown-menu
 ```
+
+4. tailwindcss
+
+
+```sh
+npm install tailwindcss@next @tailwindcss/vite@next
+```
+
 
 4. tailwind-merge
 
@@ -175,13 +185,6 @@ npm install tailwindcss-animate
 npm install -D postcss
 ```
 
-7. tailwindcss
-
-[https://tailwindcss.com/docs/installation/using-vite](https://tailwindcss.com/docs/installation/using-vite)
-
-```sh
-npm install tailwindcss@next @tailwindcss/vite@next
-```
 
 8. autoprefixer
 
