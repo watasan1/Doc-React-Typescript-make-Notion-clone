@@ -153,7 +153,13 @@ Radix UI の「ドロップダウンメニュー」コンポーネントを Reac
 npm install @radix-ui/react-dropdown-menu
 ```
 
-4. tailwindcss
+4. Tailwind CSS
+
+Tailwind CSS　インストール
+
+```sh
+npm install tailwindcss @tailwindcss/vite
+```
 
 
 ```sh
