@@ -235,7 +235,7 @@ npm install tailwindcss-animate
 
 ### 10. tsconfig.app.jsonを変更する
 
-`tsconfig.app.json`は、TypeScriptのコンパイル設定ファイル（tsconfig.json）を細かく分割したうちのアプリケーション用の設定を記述するファイルです。
+`tsconfig.app.json`は、TypeScriptの設定を用途ごとに分割したファイルのうち、アプリケーションコード（srcフォルダ）に適用される設定を記述するファイルです。親ファイルである、`tsconfig.json`の設定を継承しつつ、アプリ用の設定を細かく管理できます。
 
 ここに次の設定を追加します。
 
@@ -261,7 +261,7 @@ npm install tailwindcss-animate
 
 ```
 
-この設定を追加することで、コードの可読性が大きく向上します。
+この設定を追加することで、プロジェクト内のファイルを`@`を使って参照できるようになります。
 
 これまで相対パスで書いていた
 
@@ -269,15 +269,17 @@ npm install tailwindcss-animate
 import Header from "../../components/Header";
 ```
 
-というような記述が、次のようにシンプルになります。
+という記述が、次のようにシンプルになります。
 
 ```ts
 import Header from "@/components/Header";
 ```
 
-これにより、パスが整理されてみやすくなり、管理しやすくなります。
+これにより、パスの見通しが良くなり、コードの可読性・保守性が大きく向上します。
 
 ### 11. vite.config.ts
+
+次に、Vite側でも同じエイリアス設定を行う必要があります。
 
 ```ts
 import { defineConfig } from 'vite'
@@ -297,5 +299,6 @@ export default defineConfig({
 
 ```
 
+これで、プロジェクト全体で、`@/`を使ったパスエイリアスを利用できるようになります。
 
 
