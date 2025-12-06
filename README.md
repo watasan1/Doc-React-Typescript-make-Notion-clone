@@ -277,7 +277,25 @@ import Header from "@/components/Header";
 
 これにより、パスが整理されてみやすくなり、管理しやすくなります。
 
-tscnfig.json
-vite.config.ts
+### 11. vite.config.ts
+
+```ts
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+import path from "node:path";
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+    resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+})
+
+```
+
 
 
