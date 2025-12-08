@@ -81,6 +81,8 @@ cd ~ && mkdir -p work/Udemy && cd $_
 
 ### 6. プロジェクトを作成する
 
+Viteを使用して新しいReactプロジェクトを始めます。
+
 ```sh
 npm create vite@latest notion-clone-app
 ```
@@ -215,6 +217,10 @@ Tailwind CSS にアニメーション
 npm install tailwindcss-animate
 ```
 
+7. shadcn/ui
+
+shadcn/uiは、React製のUIライブラリである
+
 ### 8. npm install
 
 パッケージを node_modules にインストールするには npm install とコマンド実行します。
@@ -233,7 +239,32 @@ npm install tailwindcss-animate
 
 停止するには、control + c で開発サーバを停止します。
 
-### 10. tsconfig.app.jsonを変更する
+### 10. tsconfig.json を編集します。
+
+tsconfig.jsonとtsconfig.app.jsonファイルのcompilerOptionsセクションにbaseUrlとpathsプロパティを追加してください。
+
+```
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  /* ,を忘れずに、ここから追加 */
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+  /* ここまで追加 */
+}
+
+```
+
+
+
+### 11. tsconfig.app.jsonを変更する
 
 `tsconfig.app.json`は、TypeScriptの設定を用途ごとに分割したファイルのうち、アプリケーションコード（srcフォルダ）に適用される設定を記述するファイルです。親ファイルである、`tsconfig.json`の設定を継承しつつ、アプリ用の設定を細かく管理できます。
 
@@ -277,7 +308,7 @@ import Header from "@/components/Header";
 
 これにより、パスの見通しが良くなり、コードの可読性・保守性が大きく向上します。
 
-### 11. vite.config.ts
+### 12. vite.config.ts
 
 次に、Vite側でも同じエイリアス設定を行う必要があります。
 
@@ -300,5 +331,83 @@ export default defineConfig({
 ```
 
 これで、プロジェクト全体で、`@/`を使ったパスエイリアスを利用できるようになります。
+
+## CLIを実行する
+
+プロジェクトを設定するには、shadcn init コマンドを実行してください:
+
+```sh
+npx shadcn@latest init
+```
+
+
+## 雛形を作成する
+
+```sh
+├── components
+│   ├── Editor.tsx
+│   ├── NoteList
+│   │   ├── index.tsx
+│   │   └── NoteItem.tsx
+│   ├── SearchModal.tsx
+│   ├── SideBar
+│   │   ├── index.tsx
+│   │   ├── Item.tsx
+│   │   └── UserItem.tsx
+│   ├── Toolbar.tsx
+│   └── ui
+│       ├── card.tsx
+│       ├── command.tsx
+│       ├── dialog.tsx
+│       ├── dropdown-menu.tsx
+│       ├── input.tsx
+│       └── popover.tsx
+```
+
+```
+index.css
+```
+
+```
+Layout.tsx
+```
+
+```
+├── lib
+│   └── utils.ts
+```
+
+```
+├── pages
+│   ├── Home.tsx
+│   ├── NoteDetail.tsx
+│   ├── Signin.tsx
+│   └── Signup.tsx
+```
+
+## assets/react.svg フォルダの中身は不要なので削除する 
+
+```sh
+├── src
+│   ├── assets
+│   │   └── react.svg
+```
+
+## ロジックを初期化します。
+
+- src/App.tsx を修正します。
+
+```tsx
+function App() {
+  return
+  <div className="text-2xl text-orange-500 font-bold">Hello, World!</div>;
+}
+
+export default App;
+```
+
+
+
+
 
 
