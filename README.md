@@ -266,9 +266,7 @@ tsconfig.jsonとtsconfig.app.jsonファイルのcompilerOptionsセクション�
 
 ### 11. tsconfig.app.jsonを変更する
 
-`tsconfig.app.json`は、TypeScriptの設定を用途ごとに分割したファイルのうち、アプリケーションコード（srcフォルダ）に適用される設定を記述するファイルです。親ファイルである、`tsconfig.json`の設定を継承しつつ、アプリ用の設定を細かく管理できます。
-
-ここに次の設定を追加します。
+IDE のパスを解決するには、次のコードを tsconfig.app.json ファイルに追加します。
 
 ```JSONC
 {
@@ -339,6 +337,17 @@ export default defineConfig({
 ```sh
 npx shadcn@latest init
 ```
+
+コンポーネント構成ファイル `components.json` を設定するため、いくつかの質問が表示されます。
+
+```sh
+Which color would you like to use as base color? › Neutral
+```
+
+Success! Project initialization completed.
+You may now add components.
+
+という文字を作成して完了です。
 
 
 ## 雛形を作成する
