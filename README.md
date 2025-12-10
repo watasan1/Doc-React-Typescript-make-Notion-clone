@@ -71,7 +71,7 @@ v22.18.0
 
 ### 4. プロジェクトの初期設定
 
-ReactとTypescriptの環境をVite経由でセットアップします。
+ReactとTypeScriptの環境をVite経由でセットアップします。
 
 ### 5. プロジェクトディレクトリを作成する
 
@@ -137,21 +137,99 @@ Radix UI の「ドロップダウンメニュー」コンポーネントを Reac
 npm install @radix-ui/react-dropdown-menu
 ```
 
-4. Tailwind CSS
+4. Tailwind CSSのインストール
 
-- Tailwind CSS　インストール
-
-npm経由でtailwindcssと@tailwindcss/viteをインストールします。
+- npm経由でtailwindcssと@tailwindcss/viteをインストールします。
 
 ```sh
 npm install tailwindcss @tailwindcss/vite
 ```
 
-- Viteプラグインの設定
+- CSS ファイルに @import を追加し、Tailwind CSS をインポートします。
 
-プロジェクト直下にある、vite.config.ts　ファイルに、@tailwindcss/viteプラグインを追加してください。
+reactのプロジェクトには、src/App.css と、src/index.css にcssを設定するファイルがあります。 
+src/App.css はコンポーネントのCSSを記述し、src/index.cssはreset.cssなどプロジェクト全体に適用したいCSSを書きます。
+
+src/index.css 内のすべてを以下で置き換えてください。
+
+```src/index.css
+@import "tailwindcss";
+```
+
+- tsconfig.json ファイルを編集する
+
+現在のバージョンのViteでは、TypeScriptの設定が3つのファイルに分割されており、そのうち2つを編集する必要があります。プロジェクト直下にある、tsconfig.jsonとtsconfig.app.jsonファイルのcompilerOptionsセクションにbaseUrlとpathsプロパティを追加してください。
+
+```tsconfig.json
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  /* ,を忘れずに、ここから追加 */
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+  /* ここまで追加 */
+}
+
+```
+
+- tsconfig.app.json ファイルを編集する
+
+以下のコードをプロジェクト直下にある、tsconfig.app.jsonファイルに追加して、IDE用のパスを解決してください。
+
+```tsconfig.app.json
+{
+  "compilerOptions": {
+    /* 省略 */
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    /* ,を忘れずに、以下を追加  */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+    /* ここまで追加 */
+  },
+  "include": ["src"]
+}
+
+```
+
+この設定を追加することで、プロジェクト内のファイルを`@`を使って参照できるようになります。
+
+これまで相対パスで書いていた
 
 ```ts
+import Header from "../../components/Header";
+```
+
+という記述が、次のようにシンプルになります。
+
+```ts
+import Header from "@/components/Header";
+```
+
+これにより、パスの見通しが良くなり、コードの可読性・保守性が大きく向上します。
+
+- vite.config.tsを更新する
+
+以下のコードをプロジェクト直下にある、 vite.config.ts に追加し、アプリがエラーなくパスを解決できるようにします。
+
+```bash
+npm install -D @types/node
+```
+
+```vite.config.ts
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -162,18 +240,71 @@ export default defineConfig({
 })
 ```
 
-- Tailwind CSS をインポートする
+- CLI を実行する
 
-CSS ファイルに @import を追加し、Tailwind CSS をインポートします。
+プロジェクトを設定するには、shadcn init コマンドを実行してください。
 
-reactのプロジェクトには、src/App.css と、src/index.css にcssを設定するファイルがあります。 
-src/App.css はコンポーネントのCSSを記述し、src/index.cssはreset.cssなどプロジェクト全体に適用したいCSSを書きます。
-
-なので、src/index.css の内容を消して、以下の内容を掲載します。
-
-```src/index.css
-@import "tailwindcss";
+```sh
+npx shadcn@latest init
 ```
+
+以下の内容が表示される場合がありますが。
+次のパッケージをインストールする必要があります。
+表示されたらyキーエンターでインストールしてください。
+
+```sh
+Need to install the following packages:
+shadcn@3.5.2
+Ok to proceed? (y)
+```
+
+コンポーネント構成ファイル `components.json` を設定するため、いくつかの質問が表示されます。
+Neutralを選択してエンターキーでインストールしてください。
+
+```sh
+? Which color would you like to use as the base color? › - Use arrow-keys. Return to submit.
+❯   Neutral
+```
+
+Success! Project initialization completed.
+
+- shadcn/ui を試してみましょう！
+
+Componentsを追加します。
+
+```sh
+npx shadcn@latest add button
+```
+
+上記のコマンドを実行すると、Buttonコンポーネントがプロジェクトに追加されます。その後、次のようにインポートできます。
+
+src/App.tsxファイルを編集します。
+
+```
+import { Button } from "@/components/ui/button";
+
+function App() {
+  return (
+    <div className="flex min-h-svh flex-col items-center justify-center">
+      <h1 className="font-bold text-2xl text-blue-500">
+        Vite + React + tailwindcss + shadcn/uiのサンプル
+      </h1>
+      <Button>Click me</Button>
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+
+
+
+
+
+
+
 
 - TailwindCSSを試す。
 
@@ -241,115 +372,9 @@ shadcn/uiは、React製のUIライブラリである
 
 停止するには、control + c で開発サーバを停止します。
 
-### 10. tsconfig.json を編集します。
-
-tsconfig.jsonとtsconfig.app.jsonファイルのcompilerOptionsセクションにbaseUrlとpathsプロパティを追加してください。
-
-```
-{
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
-  /* ,を忘れずに、ここから追加 */
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
-  /* ここまで追加 */
-}
-
-```
 
 
 
-### 11. tsconfig.app.jsonを変更する
-
-IDE のパスを解決するには、次のコードを tsconfig.app.json ファイルに追加します。
-
-```JSONC
-{
-  "compilerOptions": {
-    /* 省略 */
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-    /* 以下を追加  */
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-    /* ここまで追加 */
-  },
-  "include": ["src"]
-}
-
-```
-
-この設定を追加することで、プロジェクト内のファイルを`@`を使って参照できるようになります。
-
-これまで相対パスで書いていた
-
-```ts
-import Header from "../../components/Header";
-```
-
-という記述が、次のようにシンプルになります。
-
-```ts
-import Header from "@/components/Header";
-```
-
-これにより、パスの見通しが良くなり、コードの可読性・保守性が大きく向上します。
-
-### 12. vite.config.ts
-
-次に、Vite側でも同じエイリアス設定を行う必要があります。
-
-```ts
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-import path from "node:path";
-
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-    resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-})
-
-```
-
-これで、プロジェクト全体で、`@/`を使ったパスエイリアスを利用できるようになります。
-
-## CLIを実行する
-
-プロジェクトを設定するには、shadcn init コマンドを実行してください:
-
-```sh
-npx shadcn@latest init
-```
-
-コンポーネント構成ファイル `components.json` を設定するため、いくつかの質問が表示されます。
-
-```sh
-Which color would you like to use as base color? › Neutral
-```
-
-Success! Project initialization completed.
-You may now add components.
-
-という文字を作成して完了です。
 
 
 ## 雛形を作成する
