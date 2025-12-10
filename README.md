@@ -240,7 +240,9 @@ export default defineConfig({
 })
 ```
 
-- CLI を実行する
+5. shadcn/ui をインストールする
+
+shadcn/uiは、React製のUIライブラリである
 
 プロジェクトを設定するには、shadcn init コマンドを実行してください。
 
@@ -298,41 +300,9 @@ export default App;
 
 ```
 
-
-
-
-
-
-
-
-
-- TailwindCSSを試す。
-
-src/App.tsx ファイルの`<h1>Vite + React</h1>` タグをTailwindCSSに変更します。
-
-```src/App.tsx
-<h1 className="text-3xl font-bold underline">Vite + React</h1>
-```
-
 に変更して、開発サーバーを起動して試してみましょう。
 
-- 開発サーバーの起動
-
-```sh
-npm run dev
-```
-
-すると開発サーバーが起動されます。
-
-[http://localhost:5173/](http://localhost:5173/)　をブラウザーで表示するとReactの初回画面が表示されます。
-
-タイトルにTailwindCSSが導入されたことを確認します。
-
-プロジェクトの雛形ができました。
-
-開発サーバーが起動していたら contrl + C　で停止させます。
-
-5. tailwind-merge
+6. tailwind-merge をインストール
 
 Tailwind CSS のクラス名の競合（上書き）を自動で解決してくれるユーティリティ関数を提供するパッケージです。
 
@@ -348,34 +318,25 @@ Tailwind CSS にアニメーション
 npm install tailwindcss-animate
 ```
 
-### 7. shadcn/ui をインストールする
-
-shadcn/uiは、React製のUIライブラリである
-
-### 8. CLIを実行する
-
-### 9. npm install
-
-パッケージを node_modules にインストールするには npm install とコマンド実行します。
+- プロジェクトに必要なパッケージ（依存関係）をインストールする
 
 ```sh
-% npm install
+npm install
 ```
 
-### 10. 開発サーバーで確認
+- 開発サーバーの起動
 
+```sh
+npm run dev
 ```
-% npm run dev
-```
 
-[http://localhost:5173/](http://localhost:5173/)　を開くと Reactの初期画面が表示されます。
+すると開発サーバーが起動されます。
 
-停止するには、control + c で開発サーバを停止します。
+[http://localhost:5173/](http://localhost:5173/)　をブラウザーで表示するとアプリが表示されます。
 
+プロジェクトの雛形ができました。
 
-
-
-
+開発サーバーが起動していたら contrl + C　で停止させます。
 
 ## 雛形を作成する
 
