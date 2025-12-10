@@ -217,11 +217,13 @@ Tailwind CSS にアニメーション
 npm install tailwindcss-animate
 ```
 
-7. shadcn/ui
+### 7. shadcn/ui をインストールする
 
 shadcn/uiは、React製のUIライブラリである
 
-### 8. npm install
+### 8. CLIを実行する
+
+### 9. npm install
 
 パッケージを node_modules にインストールするには npm install とコマンド実行します。
 
@@ -229,7 +231,7 @@ shadcn/uiは、React製のUIライブラリである
 % npm install
 ```
 
-### 9. 開発サーバーで確認
+### 10. 開発サーバーで確認
 
 ```
 % npm run dev
