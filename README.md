@@ -282,7 +282,7 @@ npx shadcn@latest add button
 
 src/App.tsxファイルを編集します。
 
-```
+```App.tsx
 import { Button } from "@/components/ui/button";
 
 function App() {
@@ -334,6 +334,37 @@ npm install react-router-dom
 % npm i react-textarea-autosize
 ```
 
+9. Prettier + prettier-plugin-tailwindcss を使う
+
+Prettierは、コードを整形してくれます。
+
+prettier-plugin-tailwindcssは、Tailwind CSSのclassの順番をルールにしたがって並べ変えるプラグインです。
+
+```Bash
+npm install -D prettier prettier-plugin-tailwindcss
+```
+
+Prettierの設定ファイルを作成する
+
+プロジェクト直下に.prettierrcファイルを作成する
+
+```bash
+touch .prettierrc
+```
+
+```json
+{
+  "plugins": ["prettier-plugin-tailwindcss"]
+}
+```
+
+### 使い方
+
+```bash
+npx prettier --write .
+```
+
+
 - プロジェクトに必要なパッケージ（依存関係）をインストールする
 
 ```sh
@@ -357,6 +388,8 @@ npm run dev
 ## ルーティングを設定しよう
 
 Notion Clone のプロダクトは、
+
+- Home.tsx トップページ
 
 アカウント認証
 登録
