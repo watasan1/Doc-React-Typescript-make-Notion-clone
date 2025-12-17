@@ -364,6 +364,39 @@ touch .prettierrc
 npx prettier --write .
 ```
 
+10. import 文の順番をルール通りに整列する
+
+prettier-plugin-sort-imports`をインストールします。
+
+```sh
+npm install --save-dev prettier-plugin-sort-imports
+```
+
+.prettierrc　ファイルに、設定を追加します。
+
+```json
+{
+  "plugins": [
+    "prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ],
+  "importOrder": [
+    "^react$",
+    "^react-dom$",
+    "^@?\\w",
+    "^@/components/(.*)$",
+    "^@/hooks/(.*)$",
+    "^@/lib/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": false,
+  "importOrderSortSpecifiers": true
+}
+
+```
+
+
+
 
 - プロジェクトに必要なパッケージ（依存関係）をインストールする
 
