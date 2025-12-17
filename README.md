@@ -372,15 +372,63 @@ Notion Clone のプロダクトは、
 - src/App.tsx を修正します。
 
 ```tsx
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import NoteDetail from "./pages/NoteDetail";
+import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
+
 function App() {
-  return
-  <div className="text-2xl text-orange-500 font-bold">Hello, World!</div>;
+  return (
+    <BrowserRouter>
+      <div className="h-full">
+        <Routes>
+          {/* Layoutコンポーネント */}
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/notes/:id" element={<NoteDetail />} />
+          </Route>
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
 }
 
 export default App;
+
 ```
 
+Routeタグの中身が重要で、それぞれのコンポーネント名と、URLがひもづきを設定しています。
 
+
+
+### layout.ts
+
+このままでは、ルーティング先のファイルがないのでエラーになります。続いて`src/Layout.tsx`ファイルを作成します。
+
+プロジェクト直下で
+
+```sh
+touch src/Layout.tsx
+```
+
+```tsx
+import { Outlet } from "react-router-dom";
+
+const Layout = () => {
+  return (
+    <div>
+      <h1>Layoutを表示します。</h1>
+      <Outlet />
+    </div>
+  );
+};
+
+export default Layout;
+```
 
 
 
