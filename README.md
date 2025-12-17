@@ -369,6 +369,8 @@ Notion Clone のプロダクトは、
 
 ## React Routerのコンポーネントを記述する
 
+src/App.tsx は「アプリ全体の設計図（骨組み）」を書く場所だと考えると分かりやすいです。
+
 - src/App.tsx を修正します。
 
 ```tsx
@@ -407,7 +409,9 @@ Routeタグの中身が重要で、それぞれのコンポーネント名と、
 
 ### layout.tsx
 
-このままでは、ルーティング先のファイルがないのでエラーになります。続いて`src/Layout.tsx`ファイルを作成します。
+layout.tsx は「どのページでも共通で表示される枠組み」を書くファイルです。
+
+src/App.tsxだけでは、ルーティング先のファイルがないのでエラーになります。続いて`src/Layout.tsx`ファイルを作成します。
 
 プロジェクト直下で
 
@@ -439,4 +443,55 @@ Layout.tsx （共通レイアウト）がHomeが入ります。
 一方、URLが、`notes/1`のとき
 
 Layout.tsx （共通レイアウト）がHomeが入ります。ノートの1番目の投稿が入ります。
+
+## Home.tsxコンポーネントの作成
+
+```bash
+mkdir -p src/pages && touch src/pages/Home.tsx
+```
+
+pagesディレクトリは、ルーティング単位の画面コンポーネントを置く場所です。
+Home.tsx はトップページに対応する画面になります。
+
+src/App.tsx で、react-router-domを使う場合は、
+
+```App.tsx
+<Route index element={<Home />} />
+```
+
+のように指定します。
+
+## Home.tsx(トップページ)を作成する
+
+```tsx
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Plus } from 'lucide-react';
+
+export function Home() {
+  return (
+    <Card className="border-0 shadow-none w-full max-w-lg mx-auto">
+      <CardHeader className="px-4 pb-3">
+        <CardTitle className="text-lg font-medium">
+          新しいノートを作成してみましょう
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="px-4">
+        <div className="flex gap-2">
+          <input
+            type="text"
+            aria-label="ノートのタイトル"
+            placeholder="ノートのタイトルを入力"
+            className="h-9 flex-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
+          />
+          <button className="flex items-center justify-center py-2 px-4 rounded-md shadow-sm text-sm font-medium text-white bg-slate-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 disabled:opacity-50 disabled:cursor-not-allowed">
+            <Plus className="h-4 w-4" />
+            <span className="ml-1">ノート作成</span>
+          </button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
 
