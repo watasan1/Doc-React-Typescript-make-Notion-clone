@@ -326,6 +326,13 @@ npm install tailwindcss-animate
 npm install react-router-dom
 ```
 
+8. react-textarea-autosizeをインストールします。
+
+入力内容に応じて高さが自動で伸び縮みするtextareaタグを簡単に実装できるReactライブルラリ
+
+```bash
+% npm i react-textarea-autosize
+```
 
 - プロジェクトに必要なパッケージ（依存関係）をインストールする
 
@@ -360,63 +367,7 @@ Notion Clone のプロダクトは、
 
 4っつの要素つまり、4っつの画面にURLを割り当てます。
 
-
-
-
-
-プロダクトはログイン登録フォームノート
-
-```sh
-├── components
-│   ├── Editor.tsx
-│   ├── NoteList
-│   │   ├── index.tsx
-│   │   └── NoteItem.tsx
-│   ├── SearchModal.tsx
-│   ├── SideBar
-│   │   ├── index.tsx
-│   │   ├── Item.tsx
-│   │   └── UserItem.tsx
-│   ├── Toolbar.tsx
-│   └── ui
-│       ├── card.tsx
-│       ├── command.tsx
-│       ├── dialog.tsx
-│       ├── dropdown-menu.tsx
-│       ├── input.tsx
-│       └── popover.tsx
-```
-
-```
-index.css
-```
-
-```
-Layout.tsx
-```
-
-```
-├── lib
-│   └── utils.ts
-```
-
-```
-├── pages
-│   ├── Home.tsx
-│   ├── NoteDetail.tsx
-│   ├── Signin.tsx
-│   └── Signup.tsx
-```
-
-## assets/react.svg フォルダの中身は不要なので削除する 
-
-```sh
-├── src
-│   ├── assets
-│   │   └── react.svg
-```
-
-## ロジックを初期化します。
+## React Routerのコンポーネントを記述する
 
 - src/App.tsx を修正します。
 
