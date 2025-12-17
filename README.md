@@ -430,6 +430,13 @@ const Layout = () => {
 export default Layout;
 ```
 
+`<Outlet />`ここに、今のURLに対応した子ページを表示してくださいという意味です。
 
+例えば、URL が`/`のとき
 
+Layout.tsx （共通レイアウト）がHomeが入ります。
+
+一方、URLが、`notes/1`のとき
+
+Layout.tsx （共通レイアウト）がHomeが入ります。ノートの1番目の投稿が入ります。
 
