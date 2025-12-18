@@ -364,9 +364,9 @@ touch .prettierrc
 npx prettier --write .
 ```
 
-10. import 文の順番をルール通りに整列する
+10. `prettier-plugin-sort-imports`をインストール
 
-prettier-plugin-sort-imports`をインストールします。
+`prettier-plugin-sort-imports`は、import 文の順番をルール通りに整列するプラグインです
 
 ```sh
 npm install --save-dev prettier-plugin-sort-imports
