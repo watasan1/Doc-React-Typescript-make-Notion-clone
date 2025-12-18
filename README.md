@@ -1,63 +1,80 @@
 # Doc-React-Typescript-make-Notion-clone
 
-## タイトル
+## 1. 講座概要
 
-React + Typescriptで人気アプリ「Notion」のクローンを作る講座。ログイン/ユーザー登録機能、入れ子でのノートの作成、リアルタイム通信など、本格的なWebアプリの機能開発が学べます。
+1. タイトル
 
-## 製作者
+React + Typescriptで人気アプリ「Notion」のクローンを作る講座。
+認証機能、入れ子構造のノートの作成、リアルタイム通信など、本格的なWebアプリ開発を通じて実践力を身につけます。
+
+2. 製作者
 
 くるしば
 
-## この講座で学べること
+3. この講座で学べること
 
-- React + TypeScript + Supabase を使った本格的な開発
-- 基本的なCRUD、検索、リアルタイム通信などの機能
-- Jotaiを使ったグローバル状態管理
-- React + Tailwind CSS（v4）のセットアップ方法
+- React + TypeScript + Supabase を使った本格的なWebアプリ開発
+- ノートアプリを題材にしたCRUD/検索/リアルタイム通信などの実装
+- Jotaiを使ったシンプルなグローバル状態管理
+- React + Tailwind CSS（v4）のセットアップと実践的な使い方
 
-## この講座の対象者
+4. この講座の対象者
 
 - Reactの基礎学習をおえた方
-- エンジニアとしての就職を目指している方
-- Reactをより深く理解したい方
+- エンジニアとしての就職・転職をを目指している方
+- React／TypeScriptを使った実践的なアプリ開発を学びたい方
 
-## 受講頂く上での注意事項
+5. 受講にあたっての注意点
 
-- 基本的にPCを推奨します。
-- 作ったアプリはカスタマイズしましょう。
-- 受講終了後に、レビューをお願いします。
+- 学習にはPCの利用を推奨します。
+- 講座内で作成したアプリは、ぜひデザインや機能をカスタマイズしてみてください。
+- 受講終了後に、レビューをいただけると励みになります。
 
-## アプリの機能要件
+## 2. アプリの機能要件
 
-- ノートのタイトル/本文を作成、編集、削除（CRUD）できる
-- ノートのスタイル（フォントなど）を変更することができる
-- ノートはリアルタイムで共同編集ができる編集ができる
-- テキストはドラッグアンドドロップで移動することができる
-- 左側メニューにノート一覧が表示される
-- ノートは検索することができる
-- アカウントの登録、ログイン、ログアウト機能
-- 質問Bot機能（AIによる文書解析、概要生成など、Google NotebookLMのようなRAG機能を想定）
+1. 基本機能
+
+- ノートのタイトル/本文を作成・編集・削除できる（CRUD）
+- 入れ子構造（階層構造）のノートを作成できる
+- 左側メニューにノート一覧を表示する
+- ノートを検索できる
+- アカウントの認証機能
+
+2. 応用機能
+
+- ノートをリアルタイムで共同編集できる
+- ドラッグ&ドロップでノートを移動できる
+- ノートのスタイル（フォントなど）を変更できる
+
+3. 発展機能（チャレンジ）
+
+- 質問Bot機能
+  - （AIによる文書解析、概要生成など、Google NotebookLMのようなRAG機能を想定）
 - 学習用データを登録できる機能
 
-## 1. 開発環境のセットアップ
+## 3. 開発環境のセットアップ
 
-### 1. Node.jsのインストール
+1. Node.jsのインストール
 
-macOSを利用する場合、ターミナルを起動してバージョンを確認しましょう。
+macOSを利用する場合、ターミナルを起動して以下のコマンドを実行してください。
 
 ```bash
 node -v
 ```
 
-v22.18.0
+Node.js v18 以上（LTS 推奨） が表示されれば問題ありません。
 
-バージョンが表示されない場合は、[https://nodejs.org/ja/download](https://nodejs.org/ja/download)よりインストールしてください。
+バージョンが表示されない場合は、以下の公式サイトからインストールしてください。
 
-### 2. テキストエディターをインストールします
+[https://nodejs.org/ja/download](https://nodejs.org/ja/download)
+
+2. テキストエディターのインストール
+
+以下のリンクから Visual Studio Code をインストールしてください。
 
 [https://code.visualstudio.com/](https://code.visualstudio.com/)
 
-### 3. おすすめの拡張機能
+3. おすすめの拡張機能
 
 - ES7 + React/Redux/React-Native snippets
 
@@ -67,25 +84,28 @@ v22.18.0
 
 [https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag)
 
-- Emmet（VS Codeに標準搭載）
+- Emmet
+  VS Codeに標準搭載
 
-### 4. プロジェクトの初期設定
+4. プロジェクトの初期設定
 
-ReactとTypeScriptの環境をVite経由でセットアップします。
+この講座ではViteを使用して、ReactとTypeScriptの開発環境を構築します。
 
-### 5. プロジェクトディレクトリを作成する
+5. プロジェクトディレクトリを作成する
 
 ```sh
 cd ~ && mkdir -p work/Udemy && cd $_
 ```
 
-### 6. プロジェクトを作成する
+6. プロジェクトを作成する
 
-Viteを使用して新しいReactプロジェクトを始めます。
+以下のコマンドを実行して、新しいReactプロジェクトを作成します。
 
-```sh
+```Bash
 npm create vite@latest notion-clone-app
 ```
+
+対話形式で以下を選択してください。
 
 ```sh
 
@@ -107,11 +127,13 @@ npm create vite@latest notion-clone-app
 └
 ```
 
+プロジェクト作成後、ディレクトリに移動します。
+
 ```sh
 cd notion-clone-app
 ```
 
-### 7. プロジェクトにパッケージをインストール
+7. プロジェクトにパッケージをインストール
 
 1.cmdk
 
@@ -326,7 +348,7 @@ npm install tailwindcss-animate
 npm install react-router-dom
 ```
 
-8. react-textarea-autosizeをインストールします。
+8. react-textarea-autosizeをインストール
 
 入力内容に応じて高さが自動で伸び縮みするtextareaタグを簡単に実装できるReactライブルラリ
 
@@ -334,9 +356,7 @@ npm install react-router-dom
 % npm i react-textarea-autosize
 ```
 
-9. Prettier + prettier-plugin-tailwindcss を使う
-
-Prettierは、コードを整形してくれます。
+9. Prettier + prettier-plugin-tailwindcssをインストール
 
 prettier-plugin-tailwindcssは、Tailwind CSSのclassの順番をルールにしたがって並べ変えるプラグインです。
 
@@ -364,12 +384,18 @@ touch .prettierrc
 npx prettier --write .
 ```
 
-10. `prettier-plugin-sort-imports`をインストール
+10. `@trivago/prettier-plugin-sort-imports`をインストール
 
-`prettier-plugin-sort-imports`は、import 文の順番をルール通りに整列するプラグインです
+`@trivago/prettier-plugin-sort-imports`は、import 文の順番をルール通りに整列するプラグインです
 
 ```sh
-npm install --save-dev prettier-plugin-sort-imports
+npm install --save-dev @trivago/prettier-plugin-sort-imports
+```
+
+Tailwind CSS を使っている場合は、併せてこちらもインストールします。
+
+```bash
+npm install --save-dev prettier-plugin-tailwindcss
 ```
 
 .prettierrc　ファイルに、設定を追加します。
@@ -377,7 +403,7 @@ npm install --save-dev prettier-plugin-sort-imports
 ```json
 {
   "plugins": [
-    "prettier-plugin-sort-imports",
+    "@trivago/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss"
   ],
   "importOrder": [
@@ -390,13 +416,24 @@ npm install --save-dev prettier-plugin-sort-imports
     "^[./]"
   ],
   "importOrderSeparation": false,
-  "importOrderSortSpecifiers": true
+  "importOrderSortSpecifiers": true,
+  "importOrderParserPlugins": ["typescript", "jsx"]
 }
-
 ```
 
+Prettier を実行して動作確認
 
+ファイル単体
 
+```bash
+npx prettier src/App.tsx --write
+```
+
+プロジェクト全体
+
+```bash
+npx prettier . --write
+```
 
 - プロジェクトに必要なパッケージ（依存関係）をインストールする
 
@@ -417,6 +454,9 @@ npm run dev
 プロジェクトの雛形ができました。
 
 開発サーバーが起動していたら contrl + C　で停止させます。
+
+
+
 
 ## ルーティングを設定しよう
 
