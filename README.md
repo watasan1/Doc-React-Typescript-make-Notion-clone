@@ -133,54 +133,64 @@ npm create vite@latest notion-clone-app
 cd notion-clone-app
 ```
 
-7. プロジェクトにパッケージをインストール
+7. プロジェクトにパッケージをインストールする
 
-1.cmdk
+1. cmdkをインストール
 
-キーボード操作に特化したコマンドパレットインターフェースを作成するためのライブラリです。
+cmdkは、キーボード操作に特化した
+コマンドパレットを簡単に実装できるライブラリです。
 
-```sh
+```Bash
 npm install cmdk
 ```
 
 2. lucide-react
 
-React用のアイコンコンポーネント集です。
+lucide-reactは、React用のアイコンコンポーネント集です。
+軽量で、shadcn/ui と相性が良いのが特徴です。
 
-```sh
+```Bash
 npm install lucide-react
 ```
 
-3. @radix-ui/react-dropdown-menu
+3. @radix-ui/react-dropdown-menuをインストール
 
-Radix UI の「ドロップダウンメニュー」コンポーネントを React で使うためのパッケージです。
+Radix UI のドロップダウンメニューコンポーネントをReactで利用するためのパッケージです。
 
-```sh
+```Bash
 npm install @radix-ui/react-dropdown-menu
 ```
 
 4. Tailwind CSSのインストール
 
-- npm経由でtailwindcssと@tailwindcss/viteをインストールします。
+- パッケージのインストール
 
-```sh
+Vite用の公式プラグインを含めてインストールします。
+
+```Bash
 npm install tailwindcss @tailwindcss/vite
 ```
 
-- CSS ファイルに @import を追加し、Tailwind CSS をインポートします。
+- CSS ファイルの設定
 
-reactのプロジェクトには、src/App.css と、src/index.css にcssを設定するファイルがあります。 
-src/App.css はコンポーネントのCSSを記述し、src/index.cssはreset.cssなどプロジェクト全体に適用したいCSSを書きます。
+React（Vite）プロジェクトでは、主に次の2つのCSSファイルがあります。
 
-src/index.css 内のすべてを以下で置き換えてください。
+- src/index.css：リセットCSSやTailwindCSSなど、全体に適用するスタイル
+- src/App.css：コンポーネント固有のスタイル
+
+`src/index.css`の中身をすべて削除して、以下の内容に置き換えてください。
 
 ```src/index.css
 @import "tailwindcss";
 ```
 
+5. パスエイリアス（@/）の設定
+
 - tsconfig.json ファイルを編集する
 
-現在のバージョンのViteでは、TypeScriptの設定が3つのファイルに分割されており、そのうち2つを編集する必要があります。プロジェクト直下にある、tsconfig.jsonとtsconfig.app.jsonファイルのcompilerOptionsセクションにbaseUrlとpathsプロパティを追加してください。
+現在のバージョンのViteでは、TypeScriptの設定が3つのファイルに分割されており、そのうち2つを編集する必要があります。
+
+プロジェクト直下にある、tsconfig.jsonとtsconfig.app.jsonファイルのcompilerOptionsセクションにbaseUrlとpathsプロパティを追加してください。
 
 ```tsconfig.json
 {
@@ -227,29 +237,30 @@ src/index.css 内のすべてを以下で置き換えてください。
 
 ```
 
+パスエイリアスの効果
+
 この設定を追加することで、プロジェクト内のファイルを`@`を使って参照できるようになります。
 
 これまで相対パスで書いていた
 
 ```ts
+// Before
 import Header from "../../components/Header";
-```
-
-という記述が、次のようにシンプルになります。
-
-```ts
+// After
 import Header from "@/components/Header";
 ```
 
-これにより、パスの見通しが良くなり、コードの可読性・保守性が大きく向上します。
+相対パスの深さを気にせずコードが書けるため、可読性・保守性が大きく向上します。
 
-- vite.config.tsを更新する
+6. vite.config.tsを更新する
 
-以下のコードをプロジェクト直下にある、 vite.config.ts に追加し、アプリがエラーなくパスを解決できるようにします。
+- Node.jsの型定義を追加します。
 
 ```bash
 npm install -D @types/node
 ```
+
+- vite.config.ts を以下のように更新します。
 
 ```vite.config.ts
 import { defineConfig } from 'vite'
@@ -262,9 +273,10 @@ export default defineConfig({
 })
 ```
 
-5. shadcn/ui をインストールする
+7. shadcn/ui をインストールする
 
-shadcn/uiは、React製のUIライブラリである
+shadcn/ui は、Radix UI + Tailwind CSS をベースにした
+実務向けの UI コンポーネント集です。
 
 プロジェクトを設定するには、shadcn init コマンドを実行してください。
 
@@ -282,7 +294,7 @@ shadcn@3.5.2
 Ok to proceed? (y)
 ```
 
-コンポーネント構成ファイル `components.json` を設定するため、いくつかの質問が表示されます。
+コンポーネント構成ファイル `components.json` を設定するため、カラーテーマを選択する質問が表示されます。
 Neutralを選択してエンターキーでインストールしてください。
 
 ```sh
@@ -290,41 +302,11 @@ Neutralを選択してエンターキーでインストールしてください�
 ❯   Neutral
 ```
 
+選択後、以下が表示されれば成功です。
+
 Success! Project initialization completed.
 
-- shadcn/ui を試してみましょう！
-
-Componentsを追加します。
-
-```sh
-npx shadcn@latest add button
-```
-
-上記のコマンドを実行すると、Buttonコンポーネントがプロジェクトに追加されます。その後、次のようにインポートできます。
-
-src/App.tsxファイルを編集します。
-
-```App.tsx
-import { Button } from "@/components/ui/button";
-
-function App() {
-  return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <h1 className="font-bold text-2xl text-blue-500">
-        Vite + React + tailwindcss + shadcn/uiのサンプル
-      </h1>
-      <Button>Click me</Button>
-    </div>
-  );
-}
-
-export default App;
-
-```
-
-に変更して、開発サーバーを起動して試してみましょう。
-
-6. tailwind-merge をインストール
+8. tailwind-merge をインストール
 
 Tailwind CSS のクラス名の競合（上書き）を自動で解決してくれるユーティリティ関数を提供するパッケージです。
 
@@ -332,7 +314,7 @@ Tailwind CSS のクラス名の競合（上書き）を自動で解決してく�
 npm i tailwind-merge
 ```
 
-6. tailwindcss-animate
+9. tailwindcss-animate
 
 Tailwind CSS にアニメーション
 
@@ -340,7 +322,7 @@ Tailwind CSS にアニメーション
 npm install tailwindcss-animate
 ```
 
-7. react-router-dom をインストールします
+10. react-router-dom をインストールします
 
 ページ遷移（ルーティング）の仕組みを提供してくれるライブラリです。
 
@@ -348,12 +330,12 @@ npm install tailwindcss-animate
 npm install react-router-dom
 ```
 
-8. react-textarea-autosizeをインストール
+11. react-textarea-autosizeをインストール
 
 入力内容に応じて高さが自動で伸び縮みするtextareaタグを簡単に実装できるReactライブルラリ
 
 ```bash
-% npm i react-textarea-autosize
+npm i react-textarea-autosize
 ```
 
 9. Prettier + prettier-plugin-tailwindcssをインストール
@@ -434,6 +416,43 @@ npx prettier src/App.tsx --write
 ```bash
 npx prettier . --write
 ```
+
+
+
+
+- shadcn/ui を試してみましょう！
+
+Button　コンポーネントを追加
+
+```sh
+npx shadcn@latest add button
+```
+
+上記のコマンドを実行すると、Buttonコンポーネントがプロジェクトに追加されます。その後、次のようにインポートできます。
+
+src/App.tsxファイルを編集します。
+
+```src/App.tsx
+import { Button } from "@/components/ui/button";
+
+function App() {
+  return (
+    <div className="flex min-h-svh flex-col items-center justify-center">
+      <h1 className="font-bold text-2xl text-blue-500">
+        Vite + React + tailwindcss + shadcn/uiのサンプル
+      </h1>
+      <Button>Click me</Button>
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+
+
+
 
 - プロジェクトに必要なパッケージ（依存関係）をインストールする
 
