@@ -468,7 +468,8 @@ src/App.tsx は、アプリ全体の画面構成とURLの対応関係を定義�
 
 - src/App.tsx を修正します。
 
-```tsximport { BrowserRouter, Route, Routes } from "react-router-dom";
+```tsx
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
@@ -497,6 +498,7 @@ function App() {
 }
 
 export default App;
+
 
 ```
 
@@ -574,14 +576,15 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <div>
-      <h1>Layoutを表示します。</h1>
+    <main className="min-h-screen">
+      <h1>Layoutが表示されています。</h1>
       <Outlet />
-    </div>
+    </main>
   );
 };
 
 export default Layout;
+
 ```
 
 `<Outlet />`ここに、今のURLに対応した子ページを表示してくださいという意味です。
