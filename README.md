@@ -93,7 +93,7 @@ Node.js v18 以上（LTS 推奨） が表示されれば問題ありません。
 
 5. プロジェクトディレクトリを作成する
 
-```sh
+```bash
 cd ~ && mkdir -p work/Udemy && cd $_
 ```
 
@@ -101,7 +101,7 @@ cd ~ && mkdir -p work/Udemy && cd $_
 
 以下のコマンドを実行して、新しいReactプロジェクトを作成します。
 
-```Bash
+```bash
 npm create vite@latest notion-clone-app
 ```
 
@@ -129,54 +129,60 @@ npm create vite@latest notion-clone-app
 
 プロジェクト作成後、ディレクトリに移動します。
 
-```sh
+```bash
 cd notion-clone-app
 ```
 
 7. プロジェクトにパッケージをインストールする
 
-1. cmdkをインストール
+この章では、アプリ開発に必要な npm パッケージ をインストールしていきます。
+npm ではすべて「パッケージ」として提供されますが、本書では役割に応じて以下のように呼び分けます。
+
+- ライブラリ：単体で機能を提供するパッケージ
+- プラグイン：特定のツールを拡張するためのパッケージ
+
+1. cmdkをインストール（ライブラリ）
 
 cmdkは、キーボード操作に特化した
-コマンドパレットを簡単に実装できるライブラリです。
+コマンドパレットUIを簡単に実装できるReactライブラリです。
 
-```Bash
+```bash
 npm install cmdk
 ```
 
-2. lucide-react
+2. lucide-react をインストール（ライブラリ）
 
 lucide-reactは、React用のアイコンコンポーネント集です。
 軽量で、shadcn/ui と相性が良いのが特徴です。
 
-```Bash
+```bash
 npm install lucide-react
 ```
 
-3. @radix-ui/react-dropdown-menuをインストール
+3. @radix-ui/react-dropdown-menuをインストール(ライブラリ)
 
 Radix UI のドロップダウンメニューコンポーネントをReactで利用するためのパッケージです。
 
-```Bash
+```bash
 npm install @radix-ui/react-dropdown-menu
 ```
 
 4. Tailwind CSSのインストール
 
-- パッケージのインストール
+- 4-1. パッケージのインストール
 
-Vite用の公式プラグインを含めてインストールします。
+Vite用の公式プラグイン（@tailwindcss/vite）を含めてインストールします。
 
-```Bash
+```bash
 npm install tailwindcss @tailwindcss/vite
 ```
 
-- CSS ファイルの設定
+- 4-2. CSS ファイルの設定
 
 React（Vite）プロジェクトでは、主に次の2つのCSSファイルがあります。
 
-- src/index.css：リセットCSSやTailwindCSSなど、全体に適用するスタイル
-- src/App.css：コンポーネント固有のスタイル
+- `src/index.css`：リセットCSSやTailwindCSSなど、全体に適用するスタイル
+- `src/App.css`：コンポーネント固有のスタイル
 
 `src/index.css`の中身をすべて削除して、以下の内容に置き換えてください。
 
@@ -186,11 +192,13 @@ React（Vite）プロジェクトでは、主に次の2つのCSSファイルが�
 
 5. パスエイリアス（@/）の設定
 
-- tsconfig.json ファイルを編集する
+5-1. tsconfig.json ファイルを編集する
 
-現在のバージョンのViteでは、TypeScriptの設定が3つのファイルに分割されており、そのうち2つを編集する必要があります。
+ViteではTypeScriptの設定が複数ファイルに分かれています。
 
-プロジェクト直下にある、tsconfig.jsonとtsconfig.app.jsonファイルのcompilerOptionsセクションにbaseUrlとpathsプロパティを追加してください。
+ここでは、プロジェクト直下にある、`tsconfig.json`ファイルと`tsconfig.app.json`ファイルの両方を編集します。
+
+compilerOptionsセクションにbaseUrlとpathsプロパティを追加してください。
 
 ```tsconfig.json
 {
@@ -211,7 +219,7 @@ React（Vite）プロジェクトでは、主に次の2つのCSSファイルが�
 
 ```
 
-- tsconfig.app.json ファイルを編集する
+5-2. tsconfig.app.json ファイルを編集する
 
 以下のコードをプロジェクト直下にある、tsconfig.app.jsonファイルに追加して、IDE用のパスを解決してください。
 
@@ -254,13 +262,13 @@ import Header from "@/components/Header";
 
 6. vite.config.tsを更新する
 
-- Node.jsの型定義を追加します。
+6-1. Node.jsの型定義をインストール
 
 ```bash
 npm install -D @types/node
 ```
 
-- vite.config.ts を以下のように更新します。
+6-2. vite.config.ts を更新
 
 ```vite.config.ts
 import tailwindcss from "@tailwindcss/vite";
@@ -285,9 +293,7 @@ export default defineConfig({
 shadcn/ui は、Radix UI + Tailwind CSS をベースにした
 実務向けの UI コンポーネント集です。
 
-プロジェクトを設定するには、shadcn init コマンドを実行してください。
-
-```sh
+```bash
 npx shadcn@latest init
 ```
 
@@ -311,41 +317,46 @@ Neutralを選択してエンターキーでインストールしてください�
 
 選択後、以下が表示されれば成功です。
 
+```text
 Success! Project initialization completed.
+```
 
-8. tailwind-merge をインストール
+8. tailwind-merge をインストール（ライブラリ）
 
-Tailwind CSS のクラス名の競合（上書き）を自動で解決してくれるユーティリティ関数を提供するパッケージです。
+Tailwind CSS のクラス名の競合を自動で解決してくれるユーティリティ関数を提供するパッケージです。
 
 ```sh
 npm i tailwind-merge
 ```
 
-9. tailwindcss-animate
+9. tailwindcss-animateをインストール（プラグイン）
 
-Tailwind CSS にアニメーション
+Tailwind CSS にアニメーション用のユーティリティを追加するTailwind CSS 用プラグインです。
 
-```sh
+
+```bash
 npm install tailwindcss-animate
 ```
 
-10. react-router-dom をインストールします
+10. react-router-dom をインストールします（ライブラリ）
 
-ページ遷移（ルーティング）の仕組みを提供してくれるライブラリです。
+ページ遷移（ルーティング）を実現するReactライブラリです。
 
 ```bash
 npm install react-router-dom
 ```
 
-11. react-textarea-autosizeをインストール
+11. react-textarea-autosizeをインストール（ライブラリ）
 
-入力内容に応じて高さが自動で伸び縮みするtextareaタグを簡単に実装できるReactライブルラリ
+入力内容に応じて高さが自動で変化するtextareaを簡単に実装できるReactライブラリです。
 
 ```bash
 npm i react-textarea-autosize
 ```
 
-9. Prettier + prettier-plugin-tailwindcssをインストール
+12. Prettierを導入（フォーマッタ）
+
+12-1. Prettier本体とプラグインをインストール
 
 prettier-plugin-tailwindcssは、Tailwind CSSのclassの順番をルールにしたがって並べ変えるプラグインです。
 
@@ -353,7 +364,7 @@ prettier-plugin-tailwindcssは、Tailwind CSSのclassの順番をルールにし
 npm install -D prettier prettier-plugin-tailwindcss
 ```
 
-Prettierの設定ファイルを作成する
+12-2. Prettier　設定ファイルを作成
 
 プロジェクト直下に.prettierrcファイルを作成する
 
@@ -367,15 +378,17 @@ touch .prettierrc
 }
 ```
 
-### 使い方
+12-3. 使い方
 
 ```bash
 npx prettier --write .
 ```
 
-10. `@trivago/prettier-plugin-sort-imports`をインストール
+13. `@trivago/prettier-plugin-sort-imports`をインストール
 
-`@trivago/prettier-plugin-sort-imports`は、import 文の順番をルール通りに整列するプラグインです
+`@trivago/prettier-plugin-sort-imports`は、import 文の順番をルール通りに整列するプラグインです。
+
+13-1. プラグインのインストール
 
 ```sh
 npm install --save-dev @trivago/prettier-plugin-sort-imports
@@ -387,7 +400,7 @@ Tailwind CSS を使っている場合は、併せてこちらもインストー�
 npm install --save-dev prettier-plugin-tailwindcss
 ```
 
-.prettierrc　ファイルに、設定を追加します。
+13-2. prettierrc ファイルに、設定を追加します。
 
 ```json
 {
@@ -410,7 +423,7 @@ npm install --save-dev prettier-plugin-tailwindcss
 }
 ```
 
-Prettier を実行して動作確認
+13-3. Prettier を実行して動作確認
 
 ファイル単体
 
@@ -424,11 +437,11 @@ npx prettier src/App.tsx --write
 npx prettier . --write
 ```
 
-- shadcn/ui を試してみましょう！
+14. shadcn/ui を試す
 
 Button　コンポーネントを追加
 
-```sh
+```bash
 npx shadcn@latest add button
 ```
 
@@ -454,30 +467,18 @@ export default App;
 
 ```
 
+15. 開発サーバーの起動
 
-
-
-
-- プロジェクトに必要なパッケージ（依存関係）をインストールする
-
-```sh
-npm install
-```
-
-- 開発サーバーの起動
-
-```sh
+```bash
 npm run dev
 ```
 
-すると開発サーバーが起動されます。
+[http://localhost:5173/](http://localhost:5173/)にアクセスするとアプリが表示されます。
 
-[http://localhost:5173/](http://localhost:5173/)　をブラウザーで表示するとアプリが表示されます。
+開発サーバーを停止する場合は、Ctrl + C　を押してください。
+
 
 プロジェクトの雛形ができました。
-
-開発サーバーが起動していたら contrl + C　で停止させます。
-
 
 
 
