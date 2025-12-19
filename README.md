@@ -463,7 +463,8 @@ Notion Clone のプロダクトは、
 
 ## React Routerのコンポーネントを記述する
 
-src/App.tsx は「アプリ全体の設計図（骨組み）」を書く場所だと考えると分かりやすいです。
+src/App.tsx は、アプリ全体の画面構成とURLの対応関係を定義するファイルです。
+どのURLにアクセスしたとき、どのコンポーネントを表示するかをここで設定します。
 
 - src/App.tsx を修正します。
 
@@ -480,7 +481,7 @@ function App() {
     <BrowserRouter>
       <div className="h-full">
         <Routes>
-          {/* Layoutコンポーネント */}
+          {/* 共通レイアウト */}
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/notes/:id" element={<NoteDetail />} />
@@ -503,6 +504,11 @@ Routeタグの中身が重要で、それぞれのコンポーネント名と、
 ### layout.tsx
 
 layout.tsx は「どのページでも共通で表示される枠組み」を書くファイルです。
+
+layoutコンポーネントは、ペースの見た目となります。Layoutコンポーネントファイルは、<Outlet />タグにApp.tsx でのpath="/"を引数として渡してあげるとHomeコンポーネントが入ります。
+
+<Route path="/notes/:id" element={<NoteDetail />} />解説してください。
+
 
 src/App.tsxだけでは、ルーティング先のファイルがないのでエラーになります。続いて`src/Layout.tsx`ファイルを作成します。
 
@@ -557,6 +563,18 @@ src/App.tsx で、react-router-domを使う場合は、
 ## Home.tsx(トップページ)を作成する
 
 ```tsx
+export function Home() {
+  return (
+    <div>
+      Home
+    </div>
+  );
+}
+
+export default Home;
+```
+
+```tsx
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Plus } from 'lucide-react';
 
@@ -604,3 +622,40 @@ const NoteDetail = () => {
 
 export default NoteDetail;
 ```
+
+### ./pages/Signin コンポーネントを作成します。
+
+```bash
+touch src/pages/Signin.tsx
+```
+
+```pages/Signin.tsx
+const Signin = () => {
+  return (
+    <div>
+      Signin
+    </div>
+  );
+};
+
+export default Signin;
+```
+
+### ./pages/Signup.tsx コンポーネントを作成します。
+
+```bash
+touch src/pages/Signup.tsx
+```
+
+```pages/Signup.tsx
+const Signup = () => {
+  return (
+    <div>
+      Signup
+    </div>
+  );
+};
+
+export default Signup;
+```
+
