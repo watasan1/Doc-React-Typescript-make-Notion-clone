@@ -468,8 +468,7 @@ src/App.tsx は、アプリ全体の画面構成とURLの対応関係を定義�
 
 - src/App.tsx を修正します。
 
-```tsx
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+```tsximport { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
@@ -485,8 +484,8 @@ function App() {
           <Route path="/" element={<Layout />}>
             {/* トップページ（/） */}
             <Route index element={<Home />} />
-            {/* ノート詳細ページ(/notes/:id) */}
-            <Route path="/notes/:id" element={<NoteDetail />} />
+            {/* ノート詳細ページ(notes/:id) */}
+            <Route path="notes/:id" element={<NoteDetail />} />
           </Route>
           {/* 認証関連ページ */}
           <Route path="/signin" element={<Signin />} />
@@ -498,10 +497,59 @@ function App() {
 }
 
 export default App;
+
 ```
 
-Routeタグの中身が重要で、それぞれのコンポーネント名と、URLがひもづきを設定しています。
+Routeの役割について
 
+`Route`コンポーネントでは、URLと表示するコンポーネントの対応関係を定義します。
+
+`path`: 表示されるURL
+
+`element`: そのURLで表示するReactコンポーネント
+
+- レイアウトを使ったルーティング
+
+```tsx
+<Route path="/" element={<Layout />}>
+```
+
+このように `Route`をネストすると、共通レイアウト（ヘッダー・フッターなど）を持つページ構成を作ることができます。
+
+ネストされたページは、`Layout`コンポーネント内の`<Outlet />`の位置に表示されます。
+
+ネストされたという言葉は、
+React Router でいう 「ネスト（nested）」 は、ルート（Route）を親子関係で定義することを指します。
+共通のレイアウトを親にして、その中に表示されるページを子としてぶら下げることです。
+つまり
+Layout コンポーネントに書いた見た目（Header や Footer など）が、
+子コンポーネント（Home / NoteDetail）でも共通して表示される
+
+表示の仕組み
+
+Header → 常に表示される
+
+Footer → 常に表示される
+
+<Outlet /> →
+
+/ のとき → Home が表示される
+
+/notes/1 のとき → NoteDetail が表示される
+
+「Layout が外枠として存在し、その中の <Outlet /> にHome や NoteDetail が表示されます。
+
+動的ルーティングについて
+
+```tsx
+<Route path="notes/:id" element={<NoteDetail />} />
+```
+
+:id は 動的パラメータ
+
+/notes/1 や /notes/abc のような URL に対応できます
+
+NoteDetail コンポーネント内では useParams() を使って id を取得します
 
 
 ### layout.tsx
