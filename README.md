@@ -452,7 +452,7 @@ Notion Clone のプロダクトは、
 
 - Home.tsx トップページ
 
-アカウント認証
+認証
 登録
 フォーム
 ノート詳細
@@ -620,14 +620,15 @@ src/App.tsx で、react-router-domを使う場合は、
 const Home = () => {
   return (
     <div>
-      <h1>Home</h1>
-      <p>ここがトップページです</p>
+      <h1>ここがトップページです</h1>
     </div>
   );
 }
 
 export default Home;
 ```
+
+http://localhost:5173/
 
 
 ## pages/notes/NoteDetail.tsx コンポーネントを作成する
@@ -648,6 +649,8 @@ export default NoteDetail;
 
 ```
 
+http://localhost:5173/notes/1
+
 ### ./pages/Signin コンポーネントを作成します。
 
 ```bash
@@ -666,6 +669,8 @@ const Signin = () => {
 export default Signin;
 ```
 
+http://localhost:5173/signin
+
 ### ./pages/Signup.tsx コンポーネントを作成します。
 
 ```bash
@@ -683,4 +688,7 @@ const Signup = () => {
 
 export default Signup;
 ```
+
+http://localhost:5173/signup
+
 
