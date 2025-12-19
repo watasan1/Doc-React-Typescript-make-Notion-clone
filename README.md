@@ -620,12 +620,12 @@ src/App.tsx で、react-router-domを使う場合は、
 export function Home() {
   return (
     <div>
-      Home
+      <h1>Home</h1>
+      <p>ここがトップページです</p>
     </div>
   );
 }
 
-export default Home;
 ```
 
 ```tsx
