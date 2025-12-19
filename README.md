@@ -587,4 +587,20 @@ export function Home() {
 }
 ```
 
+## pages/notes/NoteDetail.tsx コンポーネントを作成する
 
+```bash
+mkdir -p src/pages/notes && touch src/pages/notes/NoteDetail.tsx
+```
+
+```pages/notes/NoteDetail.tsx
+const NoteDetail = () => {
+  return (
+    <div>
+      NoteDetail
+    </div>
+  );
+};
+
+export default NoteDetail;
+```
