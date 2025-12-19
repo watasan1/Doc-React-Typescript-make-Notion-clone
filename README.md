@@ -470,11 +470,11 @@ src/App.tsx は、アプリ全体の画面構成とURLの対応関係を定義�
 
 ```tsx
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Layout from "./components/Layout";
+import Layout from "./Layout";
 import Home from "./pages/Home";
-import NoteDetail from "./pages/NoteDetail";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import NoteDetail from "./pages/notes/NoteDetail";
 
 function App() {
   return (
@@ -483,9 +483,12 @@ function App() {
         <Routes>
           {/* 共通レイアウト */}
           <Route path="/" element={<Layout />}>
+            {/* トップページ（/） */}
             <Route index element={<Home />} />
+            {/* ノート詳細ページ(/notes/:id) */}
             <Route path="/notes/:id" element={<NoteDetail />} />
           </Route>
+          {/* 認証関連ページ */}
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
