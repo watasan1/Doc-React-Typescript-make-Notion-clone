@@ -263,14 +263,21 @@ npm install -D @types/node
 - vite.config.ts を以下のように更新します。
 
 ```vite.config.ts
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
+import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-})
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+});
+
 ```
 
 7. shadcn/ui をインストールする
@@ -416,9 +423,6 @@ npx prettier src/App.tsx --write
 ```bash
 npx prettier . --write
 ```
-
-
-
 
 - shadcn/ui を試してみましょう！
 
