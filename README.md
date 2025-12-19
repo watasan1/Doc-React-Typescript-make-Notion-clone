@@ -141,43 +141,19 @@ npm ではすべて「パッケージ」として提供されますが、本書�
 - ライブラリ：単体で機能を提供するパッケージ
 - プラグイン：特定のツールを拡張するためのパッケージ
 
-1. cmdkをインストール（ライブラリ）
+7-1. Tailwind CSS をインストールする
 
-cmdkは、キーボード操作に特化した
-コマンドパレットUIを簡単に実装できるReactライブラリです。
+shadcn/ui を利用するためには、先にTailwind CSSのセットアップが必要です。
 
-```bash
-npm install cmdk
-```
+- パッケージのインストール
 
-2. lucide-react をインストール（ライブラリ）
-
-lucide-reactは、React用のアイコンコンポーネント集です。
-軽量で、shadcn/ui と相性が良いのが特徴です。
-
-```bash
-npm install lucide-react
-```
-
-3. @radix-ui/react-dropdown-menuをインストール(ライブラリ)
-
-Radix UI のドロップダウンメニューコンポーネントをReactで利用するためのパッケージです。
-
-```bash
-npm install @radix-ui/react-dropdown-menu
-```
-
-4. Tailwind CSSのインストール
-
-- 4-1. パッケージのインストール
-
-Vite用の公式プラグイン（@tailwindcss/vite）を含めてインストールします。
+Vite用の公式プラグイン（`@tailwindcss/vite`）を含めてインストールします。
 
 ```bash
 npm install tailwindcss @tailwindcss/vite
 ```
 
-- 4-2. CSS ファイルの設定
+- CSS ファイルの設定
 
 React（Vite）プロジェクトでは、主に次の2つのCSSファイルがあります。
 
@@ -190,9 +166,11 @@ React（Vite）プロジェクトでは、主に次の2つのCSSファイルが�
 @import "tailwindcss";
 ```
 
-5. パスエイリアス（@/）の設定
+7-2. パスエイリアス（@/）の設定
 
-5-1. tsconfig.json ファイルを編集する
+パスエイリアスを設定すると、`@`を使って`src`配下のファイルを参照できるようになります。
+
+- tsconfig.json ファイルを編集する
 
 ViteではTypeScriptの設定が複数ファイルに分かれています。
 
@@ -219,9 +197,11 @@ compilerOptionsセクションにbaseUrlとpathsプロパティを追加して�
 
 ```
 
-5-2. tsconfig.app.json ファイルを編集する
+- tsconfig.app.json ファイルを編集する
 
-以下のコードをプロジェクト直下にある、tsconfig.app.jsonファイルに追加して、IDE用のパスを解決してください。
+IDE（エディタ）で正しくパスを解決できるように設定を追加します。
+
+以下のコードをプロジェクト直下にある、tsconfig.app.jsonファイルに追加します。
 
 ```tsconfig.app.json
 {
@@ -245,7 +225,7 @@ compilerOptionsセクションにbaseUrlとpathsプロパティを追加して�
 
 ```
 
-パスエイリアスの効果
+- パスエイリアスの効果
 
 この設定を追加することで、プロジェクト内のファイルを`@`を使って参照できるようになります。
 
@@ -260,15 +240,15 @@ import Header from "@/components/Header";
 
 相対パスの深さを気にせずコードが書けるため、可読性・保守性が大きく向上します。
 
-6. vite.config.tsを更新する
+7-3. vite.config.tsを更新する
 
-6-1. Node.jsの型定義をインストール
+- Node.jsの型定義をインストール
 
 ```bash
 npm install -D @types/node
 ```
 
-6-2. vite.config.ts を更新
+- vite.config.ts を編集する
 
 ```vite.config.ts
 import tailwindcss from "@tailwindcss/vite";
@@ -288,20 +268,22 @@ export default defineConfig({
 
 ```
 
-7. shadcn/ui をインストールする
+7-4. shadcn/ui をインストールする
 
-shadcn/ui は、Radix UI + Tailwind CSS をベースにした
+shadcn/ui は、Radix UI と Tailwind CSS をベースにした
 実務向けの UI コンポーネント集です。
+
+※ shadcn/ui は npm install ではなく、CLI を使って
+プロジェクト構成に合わせたファイルを直接生成します。
 
 ```bash
 npx shadcn@latest init
 ```
 
-以下の内容が表示される場合がありますが。
-次のパッケージをインストールする必要があります。
-表示されたらyキーエンターでインストールしてください。
+途中で以下の表示が出た場合は、`y`を入力して進めてください。
 
-```sh
+
+```bash
 Need to install the following packages:
 shadcn@3.5.2
 Ok to proceed? (y)
@@ -320,6 +302,39 @@ Neutralを選択してエンターキーでインストールしてください�
 ```text
 Success! Project initialization completed.
 ```
+
+7-5. UI関連ライブラリを
+
+
+1. cmdkをインストール（ライブラリ）
+
+cmdkは、キーボード操作に特化した
+コマンドパレットUIを簡単に実装できるReactライブラリです。
+
+```bash
+npm install cmdk
+```
+
+2. lucide-react をインストール（ライブラリ）
+
+lucide-reactは、React用のアイコンコンポーネント集です。
+軽量で、shadcn/ui と相性が良いのが特徴です。
+
+```bash
+npm install lucide-react
+```
+
+3. @radix-ui/react-dropdown-menuをインストール(ライブラリ)
+
+Radix UI のドロップダウンメニューコンポーネントをReactで利用するためのパッケージです。
+
+```bash
+npm install @radix-ui/react-dropdown-menu
+```
+
+
+
+
 
 8. tailwind-merge をインストール（ライブラリ）
 
