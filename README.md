@@ -636,15 +636,15 @@ mkdir -p src/pages/notes && touch src/pages/notes/NoteDetail.tsx
 ```
 
 ```pages/notes/NoteDetail.tsx
+import { useParams } from "react-router-dom";
+
 const NoteDetail = () => {
-  return (
-    <div>
-      NoteDetail
-    </div>
-  );
+  const { id } = useParams<{ id: string }>();
+  return <div>ノートID: {id}</div>;
 };
 
 export default NoteDetail;
+
 ```
 
 ### ./pages/Signin コンポーネントを作成します。
