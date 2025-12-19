@@ -617,7 +617,7 @@ src/App.tsx で、react-router-domを使う場合は、
 ## Home.tsx(トップページ)を作成する
 
 ```Home.tsx
-export function Home() {
+const Home = () => {
   return (
     <div>
       <h1>Home</h1>
@@ -626,6 +626,7 @@ export function Home() {
   );
 }
 
+export default Home;
 ```
 
 
