@@ -725,29 +725,171 @@ export default NoteDetail;
 
 ```
 
-http://localhost:5173/notes/1
+解説
 
-### ./pages/Signin コンポーネントを作成します。
+NoteDetail コンポーネントは、
+URL に含まれている「ノートID」を取得して表示するページです。
+
+```URL
+/notes/123
+```
+
+のような URL にアクセスすると、
+123 の部分を React Router から受け取ることができます。
+
+useParams とは？
+import { useParams } from "react-router-dom";
+
+useParams は、
+URL のパラメータ（:id など）を取得するための React Router のフックです。
+
+URL とコードの対応関係
+
+例えば、ルーティングを次のように定義している場合：
+
+src/App.tsx
+```
+<Route path="/notes/:id" element={<NoteDetail />} />
+```
+
+:id の部分が「URL パラメータ」になります。
+
+ノートIDを取得する
+const { id } = useParams<{ id: string }>();
+
+useParams() は URL パラメータをオブジェクトとして返す
+
+今回は :id という名前なので、id を取り出している
+
+TypeScript では <{ id: string }> と書くことで、id の型を明示している
+
+取得した ID を表示する
+return <div>ノートID: {id}</div>;
+
+
+ここでは確認のために、
+取得したノートIDをそのまま画面に表示しています。
+
+※ 実際のアプリでは、この id を使って
+ノートのデータを取得することになります。
+
+### 9.5 pages/Signin コンポーネントを作成します。
 
 ```bash
 touch src/pages/Signin.tsx
 ```
 
 ```pages/Signin.tsx
+import { Link } from "react-router-dom";
+
 const Signin = () => {
   return (
-    <div>
-      Signin
+    <div className="min-h-screen bg-gray-100 px-4 py-10 sm:px-6 lg:px-8">
+      <div className="flex flex-col items-center">
+        <h2 className="text-3xl font-extrabold text-gray-900">
+          Notionクローン
+        </h2>
+
+        <div className="mt-8 w-full max-w-md">
+          <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
+            <div className="space-y-6">
+              {/* メールアドレス */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  メールアドレス
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="メールアドレス"
+                    required
+                    className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-slate-500 focus:ring-slate-500 focus:outline-none sm:text-sm"
+                  />
+                </div>
+              </div>
+
+              {/* パスワード */}
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  パスワード
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="パスワード"
+                    required
+                    className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-slate-500 focus:ring-slate-500 focus:outline-none sm:text-sm"
+                  />
+                </div>
+              </div>
+
+              {/* ログインボタン */}
+              <div>
+                <button
+                  type="button"
+                  className="flex w-full justify-center rounded-md border border-transparent bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  ログイン
+                </button>
+              </div>
+
+              {/* サインアップへのリンク */}
+              <div className="mt-4 text-center text-sm">
+                登録は
+                <Link to="/signup" className="ml-1 underline">
+                  こちら
+                </Link>
+                から
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Signin;
+
 ```
+
+解説
+
+このコンポーネントの役割
+
+Signin コンポーネントは、
+ユーザーがメールアドレスとパスワードを入力してログインする画面を表示するためのものです。
+
+import 文の解説
+```ts
+import { Link } from "react-router-dom";
+```
+
+
+Link は 画面遷移用のコンポーネントです
+
+<a> タグの代わりに使うことで、
+
+ページのリロードをせず
+
+React Router のルーティングを使った遷移ができます
+
+今回は「サインアップ画面へ移動するリンク」に使っています。
+
 
 http://localhost:5173/signin
 
-### ./pages/Signup.tsx コンポーネントを作成します。
+### 9.6 pages/Signup.tsx コンポーネントを作成します。
 
 ```bash
 touch src/pages/Signup.tsx
