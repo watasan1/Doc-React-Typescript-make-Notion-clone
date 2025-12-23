@@ -510,7 +510,7 @@ export default App;
 
 ```
 
-### src/App.tsxの解説（React Ruter）
+### src/App.tsxの解説（React Router）
 
 1. BrowserRouterについて
 
