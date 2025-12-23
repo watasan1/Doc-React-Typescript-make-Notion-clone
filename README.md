@@ -898,8 +898,79 @@ touch src/pages/Signup.tsx
 ```pages/Signup.tsx
 const Signup = () => {
   return (
-    <div>
-      Signup
+    <div className="min-h-screen bg-gray-100 px-4 py-10 sm:px-6 lg:px-8">
+      <div className="flex flex-col items-center">
+        <h2 className="text-3xl font-extrabold text-gray-900">
+          Notionクローン
+        </h2>
+
+        <div className="mt-8 w-full max-w-md">
+          <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
+            <form className="space-y-6">
+              {/* ユーザー名 */}
+              <div>
+                <label
+                  htmlFor="username"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  ユーザー名
+                </label>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  required
+                  autoComplete="username"
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:ring-slate-500 sm:text-sm"
+                />
+              </div>
+
+              {/* メールアドレス */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  メールアドレス
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:ring-slate-500 sm:text-sm"
+                />
+              </div>
+
+              {/* パスワード */}
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  パスワード
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  autoComplete="new-password"
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:ring-slate-500 sm:text-sm"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+              >
+                登録
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
