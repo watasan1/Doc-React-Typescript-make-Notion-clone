@@ -978,6 +978,17 @@ const Signup = () => {
 export default Signup;
 ```
 
+解説
+
+このコンポーネントの役割
+
+Signup コンポーネントは、
+新規ユーザー登録（サインアップ）画面を表示するためのものです。
+
 http://localhost:5173/signup
+
+
+### 9.7 確認
+
 
 
