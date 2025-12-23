@@ -1010,6 +1010,8 @@ http://localhost:5173/signup
 
 http://localhost:5173/signin
 
+## 3. 認証機能（ユーザー登録機能）を作成
+
 
 
 
