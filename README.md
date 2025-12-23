@@ -37,7 +37,7 @@ React + TypeScriptで人気アプリ「Notion」のクローンを作る講座�
 - ノートのタイトル/本文を作成・編集・削除できる（CRUD）
 - 入れ子構造（階層構造）のノートを作成できる
 - 左側メニューにノート一覧表示
-- ノートを検索機能
+- ノートの検索
 - アカウントの認証機能
 
 ### 2.2 応用機能
@@ -432,7 +432,7 @@ export default App;
 
 ```
 
-## 8. 開発サーバーの起動する
+## 8. 開発サーバーを起動する
 
 ```bash
 npm run dev
@@ -755,7 +755,7 @@ src/App.tsx
 :id の部分が「URL パラメータ」になります。
 
 ノートIDを取得する
-const { id } = useParams<{ id: string }>();
+const { id } = useParams();
 
 useParams() は URL パラメータをオブジェクトとして返す
 
