@@ -446,23 +446,34 @@ npm run dev
 
 ## 9. ルーティングを設定しよう
 
-Notion Clone のプロダクトは、主に次の4つの画面から成り立っています。
+Notion Clone のアプリには、次の4つの画面があります。
 
 - トップページ(Home)
 - サインイン(Signin)
 - サインアップ(Signup)
 - ノート詳細(NoteDetail)
 
-これら、4つの画面にそれぞれにURLを割り当てて表示を切り替えるために、React Routerを使ってルーティングを設定していきます。
+これらの画面を、URLによって切り替える仕組みを作るためにReact Routerを使ってルーティングを設定していきます。
 
-### 9.1 React Router のコンポーネントを記述します。
+URLに応じて、どのコンポーネントを表示するかを決める仕組みです。
+
+### 9.1 App.tsxにルーティングを書こう
 
 `src/App.tsx` は、アプリ全体の画面構成とURLの対応関係を定義するファイルです。
 
-- どのURLにアクセスしたとき
-- どのReactコンポーネントを表示するのか
+画面の見た目ではなく、ページの切り替えルールだけを担当します。
 
-を、ここで設定します。
+### React Routerを使う準備
+
+```tsx
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+```
+
+| 名前            | 役割                 |
+| ------------- | ------------------ |
+| BrowserRouter | URL を管理する          |
+| Routes        | どの Route を表示するか決める |
+| Route         | URL と画面を対応させる      |
 
 - src/App.tsx を修正します。
 
@@ -501,34 +512,102 @@ export default App;
 
 ### src/App.tsxの解説（React Ruter）
 
-### BrowserRouterについて
+1. BrowserRouterについて
 
-`BrowserRouter`は、ブラウザのURL（履歴）を管理し、URLの変更に応じて表示する画面を切り替えるための React Router の最上位コンポーネントです。
+`BrowserRouter`は、ブラウザのURL（履歴）を管理し、URLの変更に応じて表示する画面を切り替えるための React Router のコンポーネントです。
+React Routerの機能は、この中に書いたコンポーネントでしか使えません。
 
-* Route
-* Routes
-* useParams
-* useNavigate
+2. Routes について
 
-このコンポーネントの中に記述されたコンポーネントのみが、 React Ruter の機能を利用できます。
-
-BrowserRouterタグでアプリ全体を囲みます。
-
-### Routes について
-
-`Routes`は、現在のURLに一致する`Route`を検索し、その中から最も適切な1つだけを描画するコンポーネントです。
-
-React Router では、`Route`は必ず`Routes`の中に記述する必要があります。
-
-### Route コンポーネントの役割
+Route コンポーネントの役割
 
 `Route`コンポーネントでは、URLと表示するReactコンポーネントの対応関係を定義します。
+
+`Routes`は、現在のURLに一致する`Route`を検索し、その中からURLに合う`Route`を描画するコンポーネントです。
+
+`Route`は、このURLなら、この画面というルールを書きます。
+
+```tsx
+<Route path="/signin" element={<Signin />} />
+```
 
 主に次の2つのpropsを使用します。
 
 * `path`: URLのパス
 
 * `element`: そのURLで表示するReactコンポーネント
+
+これは、`signin`にアクセスしたら`Signin`コンポーネントを表示します。
+
+### 共通レイアウトを使ったルーティング
+
+```tsx
+<Route path="/" element={<Layout />}>
+  <Route index element={<Home />} />
+  <Route path="notes/:id" element={<NoteDetail />} />
+</Route>
+
+```
+
+ここでは、共通レイアウトを使ったルーティングを設定しています。
+
+### 共通レイアウトとは？
+
+「どのページでも同じ見た目になる部分」です。
+
+例：
+
+* ヘッダー
+* フッター
+* メニュー
+
+ページごとに変わるのは中身だけ、という構造を作れます。
+
+トップページ（indexルート）
+
+```tsx
+<Route index element={<Home />} />
+```
+
+`index`は、`/`にアクセスすると`Home`コンポーネントが表示されます。
+
+### ノート詳細ページ（動的ルーティング）
+
+```tsx
+<Route path="notes/:id" element={<NoteDetail />} />
+
+```
+
+`:id`は変わる値を表示します。
+
+これにより
+
+* `/notes/1`
+* `/notes/2`
+* `/notes/abc`
+
+といったURLを、1のルールで扱うことができます。
+
+### 9.2 layout.tsx　を作ろう
+
+Layout.tsx はどのページでも共通で表示される「外枠」を書くファイルです。
+
+App.tsx で指定した共通レイアウトの中身を、ここで実際に作ります。
+
+### Layout.tsx を作成する
+
+プロジェクト直下で以下のコマンドを
+
+```sh
+touch src/Layout.tsx
+```
+
+
+
+
+
+
+
 
 ```tsx
 <Route path="/" element={<Layout />}>
@@ -620,7 +699,10 @@ const { id } = useParams();
 * index：トップページ用のルート
 * :id：動的ルーティング
 
-### 9.2 layout.tsx
+
+
+
+
 
 layout.tsx は「どのページでも共通で表示される枠組み」を書くファイルです。
 
@@ -631,11 +713,7 @@ layoutコンポーネントは、ペースの見た目となります。Layout�
 
 src/App.tsxだけでは、ルーティング先のファイルがないのでエラーになります。続いて`src/Layout.tsx`ファイルを作成します。
 
-プロジェクト直下で
 
-```sh
-touch src/Layout.tsx
-```
 
 ```tsx
 import { Outlet } from "react-router-dom";
