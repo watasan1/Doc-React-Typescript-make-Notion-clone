@@ -1002,6 +1002,16 @@ http://localhost:5173/
 
 http://localhost:5173/notes/1
 
+サインアップ
+
+http://localhost:5173/signup
+
+サインイン
+
+http://localhost:5173/signin
+
+
+
 
 
 
