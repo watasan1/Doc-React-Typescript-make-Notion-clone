@@ -602,8 +602,6 @@ App.tsx で指定した共通レイアウトの中身を、ここで実際に作
 touch src/Layout.tsx
 ```
 
-
-
 ```tsx
 import { Outlet } from "react-router-dom";
 
@@ -620,142 +618,34 @@ export default Layout;
 
 ```
 
+解説
 
+`<Outlet />` は、ここに、今のURLにあったページを表示するという目印になります。
 
+画面が切り替わる仕組み
+URL が `/` のとき
 
-```tsx
-<Route path="/" element={<Layout />}>
-```
+* App.tsx
+→ `index` ルートが選ばれる
 
-`element`には、コンポーネントをJSX（<Component />）として直接渡す点がReact Routerの特徴です。
+* Layout.tsx
+→ `<Outlet />` に Home が表示される
 
-### 共通レイアウト（ネストルーティング）
+URL が `/notes/1` のとき
 
-```tsx
-<Route path="/" element={<Layout />}>
-```
+* App.tsx
+→ `notes/:id` が選ばれる
 
-このように`Route`をネスト（入れ子）させることで、共通レイアウトを持つページ構成を作ることができます。
+* Layout.tsx
+→ `<Outlet />` に NoteDetail が表示される
 
-React Routerにおける「ネスト」とは、Routeを親子関係で定義することを指します。
+大事なポイント
 
-* 親ルート：共通レイアウト（ヘッダー・フッターなd）
-* 子ルート：レイアウト内で切り替わるページ
+* Layout 自体は常に表示される
+* 切り替わるのは <Outlet /> の中だけ
+* これが、React Router の「共通レイアウト＋ページ切り替え」の仕組みです。
 
-### Outletについて
-
-ネストされたルートは、`Layout`コンポーネント内にある`<Outlet />`の位置に表示されます。
-
-```tsx
-<Outlet />
-```
-
-この`<Outlet />`が、「URLに応じて切り替わる表示エリア」になります。
-
-### index ルートについて（トップページ）
-
-```tsx
-<Route index element={<Home />} />
-```
-
-`index`を指定したルートは、親ルートのパスに完全一致したときに表示されます。
-
-この場合：
-
-* `/`にアクセスしたとき → `Home`コンポーネントが表示されます。
-
-### 表示の仕組み
-
-`Layout` コンポーネントが外枠として存在し、
-
-* Header
-* Footer
-
-などの共通パーツを表示します。
-
-その中に`<Outlet />`に、URLに応じて以下が切り替わります。
-
-
-* `/` のとき → `Home` が表示される
-
-* `/notes/1` のとき → `NoteDetail` が表示される
-
-つまり、「Layout が外枠として存在し、その中の `<Outlet />` だけが切り替わるという構造になっています。
-
-### 動的ルーティングについて
-
-```tsx
-<Route path="notes/:id" element={<NoteDetail />} />
-```
-
-`:id` は 動的パラメータです。
-
-これにより、次のようなURLに対応できます。
-
-* `/notes/1`
-* `/notes/abc`
-
-`NoteDetail`コンポーネント内では、`useParams()`を使ってURLパラメータを取得できます。
-
-```ts
-const { id } = useParams();
-```
-
-※ `useParams()`で取得できる値は文字列として返されます。
-数値として扱いたい場合は、変換が必要です。
-
-### まとめ
-
-* BrowserRouter：URL（履歴）を管理する最上位コンポーネント
-* Routes：URL に一致する Route を 1 つ選んで描画
-* Route：URL と表示コンポーネントの対応を定義
-* ネスト + Outlet：共通レイアウトを実現
-* index：トップページ用のルート
-* :id：動的ルーティング
-
-
-
-
-
-
-layout.tsx は「どのページでも共通で表示される枠組み」を書くファイルです。
-
-layoutコンポーネントは、ペースの見た目となります。Layoutコンポーネントファイルは、<Outlet />タグにApp.tsx でのpath="/"を引数として渡してあげるとHomeコンポーネントが入ります。
-
-<Route path="/notes/:id" element={<NoteDetail />} />解説してください。
-
-
-src/App.tsxだけでは、ルーティング先のファイルがないのでエラーになります。続いて`src/Layout.tsx`ファイルを作成します。
-
-
-
-
-
-Layout.tsx解説
-
-`<Outlet />`ここに、今のURLに対応した子ページを表示してくださいという意味です。
-
-例えば、URL が`/`のとき
-
-Layout.tsx （共通レイアウト）がHomeが入ります。
-
-一方、URLが、`notes/1`のとき
-
-Layout.tsx （共通レイアウト）がHomeが入ります。ノートの1番目の投稿が入ります。
-
-
-
-
-
-
-## Home.tsxコンポーネントの作成
-
-```bash
-mkdir -p src/pages && touch src/pages/Home.tsx
-```
-
-pagesディレクトリは、ルーティング単位の画面コンポーネントを置く場所です。
-Home.tsx はトップページに対応する画面になります。
+### 9.3 Home.tsxコンポーネント（トップページ）の作成
 
 src/App.tsx で、react-router-domを使う場合は、
 
@@ -765,24 +655,59 @@ src/App.tsx で、react-router-domを使う場合は、
 
 のように指定します。
 
-## Home.tsx(トップページ)を作成する
+```bash
+mkdir -p src/pages && touch src/pages/Home.tsx
+```
+
+shadcnのCard コンポーネントを追加する
+
+```bash
+npx shadcn@latest add card
+```
+
+Home.tsx コンポーネントの作成
 
 ```Home.tsx
+import { Plus } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 const Home = () => {
   return (
     <div>
-      <h1>ここがトップページです</h1>
+      <Card className="m-auto w-1/2 border-0 shadow-none">
+        <CardHeader className="px-4 pb-3">
+          <CardTitle className="text-lg font-medium">
+            新しいノートを作成してみましょう
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-4">
+          <div className="flex gap-2">
+            <input
+              className="block h-9 w-full flex-1 appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-slate-500 focus:ring-slate-500 focus:outline-none sm:text-sm"
+              placeholder="ノートのタイトルを入力"
+              type="text"
+            />
+            <button className="flex justify-center rounded-md border border-transparent bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50">
+              <Plus className="h-4 w-4" />
+              <span className="ml-1">ノート作成</span>
+            </button>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
-}
+};
 
 export default Home;
+
 ```
 
-http://localhost:5173/
+解説
 
+pagesディレクトリは、ルーティング単位の画面コンポーネントを置く場所です。
+Home.tsx はトップページに対応する画面になります。
 
-## pages/notes/NoteDetail.tsx コンポーネントを作成する
+### 9.4 pages/notes/NoteDetail.tsx コンポーネントを作成する
 
 ```bash
 mkdir -p src/pages/notes && touch src/pages/notes/NoteDetail.tsx
