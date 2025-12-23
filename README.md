@@ -717,7 +717,7 @@ mkdir -p src/pages/notes && touch src/pages/notes/NoteDetail.tsx
 import { useParams } from "react-router-dom";
 
 const NoteDetail = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
   return <div>ノートID: {id}</div>;
 };
 
