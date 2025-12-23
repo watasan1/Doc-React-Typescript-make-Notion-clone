@@ -596,7 +596,7 @@ App.tsx で指定した共通レイアウトの中身を、ここで実際に作
 
 ### Layout.tsx を作成する
 
-プロジェクト直下で以下のコマンドを
+プロジェクト直下で以下のコマンドを実行します。
 
 ```sh
 touch src/Layout.tsx
@@ -604,7 +604,21 @@ touch src/Layout.tsx
 
 
 
+```tsx
+import { Outlet } from "react-router-dom";
 
+const Layout = () => {
+  return (
+    <main className="min-h-screen">
+      <h1>Layoutが表示されています。</h1>
+      <Outlet />
+    </main>
+  );
+};
+
+export default Layout;
+
+```
 
 
 
@@ -715,21 +729,7 @@ src/App.tsxだけでは、ルーティング先のファイルがないのでエ
 
 
 
-```tsx
-import { Outlet } from "react-router-dom";
 
-const Layout = () => {
-  return (
-    <main className="min-h-screen">
-      <h1>Layoutが表示されています。</h1>
-      <Outlet />
-    </main>
-  );
-};
-
-export default Layout;
-
-```
 
 Layout.tsx解説
 
