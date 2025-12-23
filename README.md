@@ -990,5 +990,18 @@ http://localhost:5173/signup
 
 ### 9.7 確認
 
+```bash
+npm run dev
+```
+
+トップページ
+
+http://localhost:5173/ 
+
+詳細ページ
+
+http://localhost:5173/notes/1
+
+
 
 
