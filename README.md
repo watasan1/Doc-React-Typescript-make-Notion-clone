@@ -761,8 +761,6 @@ useParams() は URL パラメータをオブジェクトとして返す
 
 今回は :id という名前なので、id を取り出している
 
-TypeScript では <{ id: string }> と書くことで、id の型を明示している
-
 取得した ID を表示する
 return <div>ノートID: {id}</div>;
 
