@@ -1072,14 +1072,41 @@ import { createClient } from '@supabase/supabase-js'
 解説
 
 createClient関数は、2つの引数を設定することができます。一つ目は、プロジェクトURLと、プロジェクトAPIキーを指定することで初期化処理されます。
+createClient関数から、supabaseの様々な処理が利用できるようになります。
+createClient関数に渡す、引数は、環境変数から取得するようにします。
+環境変数にデータを渡すことで本番環境、開発環境で分けることができます。
 
-### 9.5 APIキーとURLを取得する
+### 9.6 .env 環境変数を作成する
+
+プロジェクト直下に、.env ファイルを作成します。
+
+```bash
+touch .env
+```
+
+Viteを利用してプロジェクトを作成したので、以下のように掲載します。
+
+```
+VITE_SUPABASE_URL = ""
+VITE_SUPABASE_API_KEY = ""
+```
+
+*　掲載する APIキーとURLを取得する
 
 1. dashboard の左側にあるメニューから、 「Project Overview」をクリックします。
 
 2. Connect to your project の一覧にある、Project API　を利用します。
 
+Project URL　https://XXXXXXXXXXXXXXXXXXXX.supabase.co
 
+Publishable API Key sb_publishable_XXXXXXXXX_XXXXXXXXXXXX_XXX-XXXX
+
+を、先に作成した.envファイルに記述してください。
+
+```env
+VITE_SUPABASE_URL = "https://XXXXXXXXXXXXXXXXXXXX.supabase.co"
+VITE_SUPABASE_API_KEY = "sb_publishable_XXXXXXXXX_XXXXXXXXXXXX_XXX-XXXX"
+```
 
 
 
