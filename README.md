@@ -1041,6 +1041,47 @@ Create new project ボタンをクリックします。
 npm install @supabase/supabase-js
 ```
 
+### 9.4 SupaBaseの Providerの設定について
+
+1. dashboard 左側メニューから「Authentication」を選択します。
+
+2. Authentication の一覧の下にある、「Sign In / Providers」お選択します。
+
+3. Sign In / Providersの一覧から、スクロールして「Auth Providers」の一覧から、「Email」を選択します。
+
+4. からEmail の詳細が表示されるので、×をクリックします。 
+
+4. Auth Providers のEmail 右横が「Disabled」から「Enabled」になっていることを確認します。
+
+### 9.5 ReactからSupabeseに接続するための初期化処理をする設定ファイルを作成します。
+
+src/lib/supabase.tsファイルを作成します。
+
+```bash
+mkdir -p src/lib/ && touch src/lib/supabase.ts
+```
+
+```ts
+import { createClient } from '@supabase/supabase-js'
+
+// Create a single supabase client for interacting with your database
+ export const supabase = createClient('https://xyzcompany.supabase.co', 'publishable-or-anon-key')
+
+```
+
+解説
+
+createClient関数は、2つの引数を設定することができます。一つ目は、プロジェクトURLと、プロジェクトAPIキーを指定することで初期化処理されます。
+
+### 9.5 APIキーとURLを取得する
+
+1. dashboard の左側にあるメニューから、 「Project Overview」をクリックします。
+
+2. Connect to your project の一覧にある、Project API　を利用します。
+
+
+
+
 
 supabase のAPIキーのURLを使ってReactのアプリから呼び出して、ユーザー登録機能を作ります。
 
