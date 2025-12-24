@@ -1108,9 +1108,29 @@ VITE_SUPABASE_URL = "https://XXXXXXXXXXXXXXXXXXXX.supabase.co"
 VITE_SUPABASE_API_KEY = "sb_publishable_XXXXXXXXX_XXXXXXXXXXXX_XXX-XXXX"
 ```
 
+githubの追跡対象から外すために、.gitignoreファイルを編集します。
 
+```
+.env
+```
 
-supabase のAPIキーのURLを使ってReactのアプリから呼び出して、ユーザー登録機能を作ります。
+`.env`を.gitignoreファイルに追加してください。
 
+最後にsupabase.tsを編集して完了です。
 
+```ts
+import { createClient } from "@supabase/supabase-js";
 
+// Create a single supabase client for interacting with your database
+export const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_API_KEY,
+);
+
+```
+
+※ 注意
+
+開発サーバーを再起動しないと反映されません。
+
+次回は、ユーザーを登録する処理を作成します。
