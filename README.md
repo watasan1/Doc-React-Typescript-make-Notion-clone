@@ -135,7 +135,7 @@ cd notion-clone-app
 
 ## 4. パッケージのインストールと初期設定
 
-### 4.1.1 この章について
+### 4.1 この章について
 
 この章では、アプリ開発に必要な npm パッケージ をインストールします。
 本章では、役割に応じて以下のように呼び分けます。
@@ -227,7 +227,7 @@ IDE（エディタ）で正しくパスを解決できるように設定を追�
 
 ```
 
-4.4 vite.config.tsを更新する
+### 4.4 vite.config.tsを更新する
 
 - Node.jsの型定義をインストール
 
@@ -255,7 +255,7 @@ export default defineConfig({
 
 ```
 
-4.5 shadcn/ui の導入
+### 4.5 shadcn/ui の導入
 
 shadcn/ui は、Radix UI と Tailwind CSS をベースにした実務向けの UI コンポーネント集です。
 
@@ -293,7 +293,7 @@ Success! Project initialization completed.
 
 ### 5.1 UI関連ライブラリ
 
-#### 5.1.1 cmdkをインストール（ライブラリ）
+5.1.1 cmdkをインストール（ライブラリ）
 
 cmdkは、キーボード操作に特化したコマンドパレットUIを実装できるReactライブラリです。
 
@@ -301,7 +301,7 @@ cmdkは、キーボード操作に特化したコマンドパレットUIを実�
 npm install cmdk
 ```
 
-#### 5.1.2 lucide-react をインストール（ライブラリ）
+5.1.2 lucide-react をインストール（ライブラリ）
 
 lucide-reactは、React用のアイコンコンポーネント集です。
 shadcn/ui と相性が良いのが特徴です。
@@ -310,7 +310,7 @@ shadcn/ui と相性が良いのが特徴です。
 npm install lucide-react
 ```
 
-#### 5.1.3 @radix-ui/react-dropdown-menuをインストール(ライブラリ)
+5.1.3 @radix-ui/react-dropdown-menuをインストール(ライブラリ)
 
 Radix UI のドロップダウンメニューコンポーネントをReactで利用するためのパッケージです。
 
@@ -318,7 +318,7 @@ Radix UI のドロップダウンメニューコンポーネントをReactで利
 npm install @radix-ui/react-dropdown-menu
 ```
 
-#### 5.1.4 tailwind-merge をインストール（ライブラリ）
+5.1.4 tailwind-merge をインストール（ライブラリ）
 
 Tailwind CSS のクラス名の競合を自動で解決してくれます。
 
@@ -326,7 +326,7 @@ Tailwind CSS のクラス名の競合を自動で解決してくれます。
 npm i tailwind-merge
 ```
 
-#### 5.1.5 tailwindcss-animateをインストール（プラグイン）
+5.1.5 tailwindcss-animateをインストール（プラグイン）
 
 Tailwind CSS にアニメーション用のユーティリティを追加します。
 
@@ -336,7 +336,7 @@ npm install tailwindcss-animate
 
 ### 5.2 アプリ構造系ライブラリ
 
-#### 5.2.1 react-router-dom をインストールします（ライブラリ）
+5.2.1 react-router-dom をインストールします（ライブラリ）
 
 ページ遷移（ルーティング）を実現するReactライブラリです。
 
@@ -344,7 +344,7 @@ npm install tailwindcss-animate
 npm install react-router-dom
 ```
 
-#### 5.2.2 react-textarea-autosizeをインストール（ライブラリ）
+5.2.2 react-textarea-autosizeをインストール（ライブラリ）
 
 入力内容に応じて高さが自動で変化するtextareaを実装できるReactライブラリです。
 
@@ -366,7 +366,7 @@ Prettierは、コードの整形（フォーマット）を自動で行うツー
 npm install -D prettier prettier-plugin-tailwindcss @trivago/prettier-plugin-sort-imports
 ```
 
-### 6.2 Prettierの設定ファイルを作成する
+### 6.2 Prettier設定ファイルの作成
 
 プロジェクト直下に.prettierrcファイルを作成する
 
@@ -404,6 +404,8 @@ npx prettier --write .
 
 ## 7. shadcn/ui を試す
 
+### 7.1 Buttonコンポーネントを使ってみよう
+
 Button コンポーネントを追加します。
 
 ```bash
@@ -432,7 +434,9 @@ export default App;
 
 ```
 
-## 8. 開発サーバーを起動する
+## 8. 動作確認
+
+### 8.1 開発サーバーを起動する
 
 ```bash
 npm run dev
@@ -463,7 +467,7 @@ URLに応じて、どのコンポーネントを表示するかを決める仕�
 
 画面の見た目ではなく、ページの切り替えルールだけを担当します。
 
-### React Routerを使う準備
+9.1.1 React Routerを使う準備
 
 ```tsx
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -510,7 +514,7 @@ export default App;
 
 ```
 
-### src/App.tsxの解説（React Router）
+* src/App.tsxの解説（React Router）
 
 1. BrowserRouterについて
 
@@ -588,13 +592,11 @@ Route コンポーネントの役割
 
 といったURLを、1のルールで扱うことができます。
 
-### 9.2 layout.tsx　を作ろう
+### 9.2 Layout.tsxを作成する
 
 Layout.tsx はどのページでも共通で表示される「外枠」を書くファイルです。
 
 App.tsx で指定した共通レイアウトの中身を、ここで実際に作ります。
-
-### Layout.tsx を作成する
 
 プロジェクト直下で以下のコマンドを実行します。
 
@@ -707,7 +709,7 @@ export default Home;
 pagesディレクトリは、ルーティング単位の画面コンポーネントを置く場所です。
 Home.tsx はトップページに対応する画面になります。
 
-### 9.4 pages/notes/NoteDetail.tsx コンポーネントを作成する
+### 9.4 pages/notes/NoteDetail.tsx コンポーネント(詳細ページ)を作成する
 
 ```bash
 mkdir -p src/pages/notes && touch src/pages/notes/NoteDetail.tsx
@@ -771,7 +773,7 @@ return <div>ノートID: {id}</div>;
 ※ 実際のアプリでは、この id を使って
 ノートのデータを取得することになります。
 
-### 9.5 pages/Signin コンポーネントを作成します。
+### 9.5 pages/Signin コンポーネント(サインイン)を作成します。
 
 ```bash
 touch src/pages/Signin.tsx
@@ -884,10 +886,9 @@ React Router のルーティングを使った遷移ができます
 
 今回は「サインアップ画面へ移動するリンク」に使っています。
 
-
 http://localhost:5173/signin
 
-### 9.6 pages/Signup.tsx コンポーネントを作成します。
+### 9.6 pages/Signup.tsx コンポーネント（サインアップ）を作成
 
 ```bash
 touch src/pages/Signup.tsx
@@ -985,8 +986,7 @@ Signup コンポーネントは、
 
 http://localhost:5173/signup
 
-
-### 9.7 確認
+### 9.7 動作確認
 
 ```bash
 npm run dev
