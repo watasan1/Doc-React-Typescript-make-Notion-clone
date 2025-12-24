@@ -434,9 +434,7 @@ export default App;
 
 ```
 
-## 8. 動作確認
-
-### 8.1 開発サーバーを起動する
+### 7.2 開発サーバーを起動する
 
 ```bash
 npm run dev
@@ -448,7 +446,7 @@ npm run dev
 
 これでプロジェクトの雛形が完成しました。
 
-## 9. ルーティングを設定しよう
+## 8. ルーティングを設定しよう
 
 Notion Clone のアプリには、次の4つの画面があります。
 
@@ -461,13 +459,13 @@ Notion Clone のアプリには、次の4つの画面があります。
 
 URLに応じて、どのコンポーネントを表示するかを決める仕組みです。
 
-### 9.1 App.tsxにルーティングを書こう
+### 8.1 App.tsxにルーティングを書こう
 
 `src/App.tsx` は、アプリ全体の画面構成とURLの対応関係を定義するファイルです。
 
 画面の見た目ではなく、ページの切り替えルールだけを担当します。
 
-9.1.1 React Routerを使う準備
+8.1.1 React Routerを使う準備
 
 ```tsx
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -592,7 +590,7 @@ Route コンポーネントの役割
 
 といったURLを、1のルールで扱うことができます。
 
-### 9.2 Layout.tsxを作成する
+### 8.2 Layout.tsxを作成する
 
 Layout.tsx はどのページでも共通で表示される「外枠」を書くファイルです。
 
@@ -647,7 +645,7 @@ URL が `/notes/1` のとき
 * 切り替わるのは <Outlet /> の中だけ
 * これが、React Router の「共通レイアウト＋ページ切り替え」の仕組みです。
 
-### 9.3 Home.tsxコンポーネント（トップページ）の作成
+### 8.3 Home.tsxコンポーネント（トップページ）の作成
 
 src/App.tsx で、react-router-domを使う場合は、
 
@@ -709,7 +707,7 @@ export default Home;
 pagesディレクトリは、ルーティング単位の画面コンポーネントを置く場所です。
 Home.tsx はトップページに対応する画面になります。
 
-### 9.4 pages/notes/NoteDetail.tsx コンポーネント(詳細ページ)を作成する
+### 8.4 pages/notes/NoteDetail.tsx コンポーネント(詳細ページ)を作成する
 
 ```bash
 mkdir -p src/pages/notes && touch src/pages/notes/NoteDetail.tsx
@@ -766,14 +764,13 @@ useParams() は URL パラメータをオブジェクトとして返す
 取得した ID を表示する
 return <div>ノートID: {id}</div>;
 
-
 ここでは確認のために、
 取得したノートIDをそのまま画面に表示しています。
 
 ※ 実際のアプリでは、この id を使って
 ノートのデータを取得することになります。
 
-### 9.5 pages/Signin コンポーネント(サインイン)を作成します。
+### 8.5 pages/Signin コンポーネント(サインイン)を作成します。
 
 ```bash
 touch src/pages/Signin.tsx
@@ -875,7 +872,6 @@ import 文の解説
 import { Link } from "react-router-dom";
 ```
 
-
 Link は 画面遷移用のコンポーネントです
 
 <a> タグの代わりに使うことで、
@@ -888,7 +884,7 @@ React Router のルーティングを使った遷移ができます
 
 http://localhost:5173/signin
 
-### 9.6 pages/Signup.tsx コンポーネント（サインアップ）を作成
+### 8.6 pages/Signup.tsx コンポーネント（サインアップ）を作成
 
 ```bash
 touch src/pages/Signup.tsx
@@ -986,7 +982,7 @@ Signup コンポーネントは、
 
 http://localhost:5173/signup
 
-### 9.7 動作確認
+### 8.7 動作確認
 
 ```bash
 npm run dev
@@ -1008,10 +1004,45 @@ http://localhost:5173/signup
 
 http://localhost:5173/signin
 
-## 3. 認証機能（ユーザー登録機能）を作成
+## 9. 認証機能（ユーザー登録機能）を作成
+
+### 9.1 supabaseの解説とセットアップ
+
+supabase のアカウントを所持して無かったら
+
+[https://supabase.com/](https://supabase.com/)よりアカウントを作成します。
+
+### 9.2 プロジェクトを作成
+
+アカウントが作成できたら、supabaseのダッシュボードに遷移します。
+
+[https://supabase.com/dashboard](https://supabase.com/dashboard)
+
++ New project ボタンをクリックします。
+
+Create a new project が表示されたら、
+
+Organization → 初期設定の状態で大丈夫です。
+
+Project name → notion-clone-app
+
+Database password → 忘れないパスワードを入れてください。
+
+Region →　Northeast Asia (Tokyo)　を選択します。
+
+Create new project ボタンをクリックします。
 
 
+### 9.3 ライブラリをインストール
 
+ターミナル経由で@supabase/supabase-jsパッケージをインストール
+
+```bash
+npm install @supabase/supabase-js
+```
+
+
+supabase のAPIキーのURLを使ってReactのアプリから呼び出して、ユーザー登録機能を作ります。
 
 
 
