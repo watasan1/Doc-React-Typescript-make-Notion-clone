@@ -1167,21 +1167,61 @@ export const supabase = createClient(
 
 次の章では、Supabaseを利用してユーザー登録（signUp）処理を実装していきます。
 
-## ユーザー登録機能のAPIを利用してみよう
+### 9.9 ユーザー登録機能のAPIを利用してみよう
 
-アプリを作る上で、ロジックは、
+アプリを作る上で、主なビジネスロジック（処理の中身）は、次の2つに分けられます。
+
 * 認証まわりの機能
 * ノートまわりの機能
+
 になります。
 
-ロジックは、modules フォルダに格納します。
+これらのロジックは、機能ごとに管理しやすくするため、`modules`フォルダにまとめて格納します。
 
-src/modules/auth/auth.repository.tsファイルを作成します。
+今回は、ユーザー登録（サインアップ）を担当する認証機能のモジュールを作成します。
+`src/modules/auth/auth.repository.ts`ファイルを作成します。
 
 ```bash
 mkdir -p src/modules/auth && touch src/modules/auth/auth.repository.ts
 ```
 
-auth.repository.tsは、APIを実行するファイルになります。
+`auth.repository.ts`は、Supabaseの認証APIを呼び出す処理をまとめたファイルです。
+Reactコンポーネントから直接Supabaseを操作せず、このauth.repository.tsファイルを経由して認証処理を行うことで、
+責務を分離し、コードを管理しやすくします。
+
+`auth.repository.ts` の中身は以下のようになります。
+
+```ts
+import { supabase } from "@/lib/supabase";
+
+export const authRepository = {
+  // ユーザー登録
+  async signup(name: string, email: string, password: string) {
+    // SupabaseのサインアップAPIを実行
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { name } },
+    });
+    // エラーが発生した、またはユーザー情報が取得できなかった場合は例外をスロー
+    if (error != null || data.user == null) {
+      throw new Error(error?.message);
+    }
+    // 呼び出し元で扱いやすい形に整形して返却
+    return {
+      ...data.user,
+      userName: data.user.user_metadata.name,
+    };
+  },
+};
+```
+
+
+
+### 9.10 Reactアプリからユーザー登録処理を呼び出す
+
+emai password name　の3っつの情報を登録できるようにします。
+
+
 
 
