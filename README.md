@@ -1216,6 +1216,17 @@ export const authRepository = {
 };
 ```
 
+コードの役割
+
+このコードは、Supabaseを使ってユーザー登録（サインアップ）を行う処理をまとめたものです。
+画面（Reactコンポーネント）から直接Supabaseを操作せず、repositoryを通じて登録処理を行います。
+
+このように repository を用意することで、
+「Supabase と通信する処理」 と 「画面（コンポーネント）」 を分離できます。
+
+次の章では、この `authRepository.signup` を React コンポーネントから呼び出し、
+実際にユーザー登録画面を実装していきます。
+
 
 
 ### 9.10 Reactアプリからユーザー登録処理を呼び出す
