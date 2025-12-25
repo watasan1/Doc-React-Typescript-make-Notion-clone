@@ -1006,117 +1006,148 @@ http://localhost:5173/signin
 
 ## 9. 認証機能（ユーザー登録機能）を作成
 
-### 9.1 supabaseの解説とセットアップ
+### 9.1 Supabaseの解説とセットアップ
 
-supabase のアカウントを所持して無かったら
+Supabase は、認証・データベース・ストレージなどをまとめて提供するBaaS(Backend as a Service)です。
+本章では、Supabaseを利用してユーザー登録機能の準備を行います。
 
-[https://supabase.com/](https://supabase.com/)よりアカウントを作成します。
+まだ Supabaseのアカウントを所持していない場合は、以下の公式サイトからアカウントを作成してください。
+
+[https://supabase.com/](https://supabase.com/)
 
 ### 9.2 プロジェクトを作成
 
-アカウントが作成できたら、supabaseのダッシュボードに遷移します。
+アカウント作成後、Supabaseのダッシュボードにアクセスします。
 
 [https://supabase.com/dashboard](https://supabase.com/dashboard)
 
-+ New project ボタンをクリックします。
+1. + New project ボタンをクリックします
 
-Create a new project が表示されたら、
+2. Create a new project 画面で、以下の項目を設定します。
+   * Organization
+     → 初期設定の状態で大丈夫です。
+   * Project name
+     → `notion-clone-app`
+   * Database password
+     → 忘れないパスワードを入れてください。
+   * Region
+     →　`Northeast Asia (Tokyo)`　を選択します。
 
-Organization → 初期設定の状態で大丈夫です。
-
-Project name → notion-clone-app
-
-Database password → 忘れないパスワードを入れてください。
-
-Region →　Northeast Asia (Tokyo)　を選択します。
-
-Create new project ボタンをクリックします。
-
+3. Create new project ボタンをクリックします。
 
 ### 9.3 ライブラリをインストール
 
-ターミナル経由で@supabase/supabase-jsパッケージをインストール
+ReactからSupabaseを利用するため、公式SDKをインストールします。
 
 ```bash
 npm install @supabase/supabase-js
 ```
 
-### 9.4 SupaBaseの Providerの設定について
+### 9.4 SupaBase の Auth Providerの設定に（Email認証）
+
+次に、ユーザー登録で使用する Email 認証を有効化します。
 
 1. dashboard 左側メニューから「Authentication」を選択します。
 
-2. Authentication の一覧の下にある、「Sign In / Providers」お選択します。
+2. Authentication 配下の「Sign In / Providers」お選択します。
 
-3. Sign In / Providersの一覧から、スクロールして「Auth Providers」の一覧から、「Email」を選択します。
+3. Sign In / Providersの一覧から、ページをスクロールして「Auth Providers」の一覧から「Email」を選択します。
 
-4. からEmail の詳細が表示されるので、×をクリックします。 
+4. Email の設定画面が表示されるので、×をクリックします。 
 
-4. Auth Providers のEmail 右横が「Disabled」から「Enabled」になっていることを確認します。
+5. Auth Providers のEmail 右横にあるステータスが「Disabled」から「Enabled」になっていることを確認します。
 
-### 9.5 ReactからSupabeseに接続するための初期化処理をする設定ファイルを作成します。
+### 9.5 Supabeseクライアント初期化ファイルを作成
 
-src/lib/supabase.tsファイルを作成します。
+ReactアプリからSupabaseに接続するための初期化ファイルを作成します。
+
+このファイルはアプリ全体で共通して利用するSupabaseクライアントを定義する役割を持ちます。
+
+以下のコマンドを実行し、src/lib/supabase.tsファイルを作成します。
 
 ```bash
 mkdir -p src/lib/ && touch src/lib/supabase.ts
 ```
 
+src/lib/supabase.ts（サンプル）
+
+※以下はサンプルです。実際の値は後ほど環境変数から読み込みます。
+
 ```ts
 import { createClient } from '@supabase/supabase-js'
 
 // Create a single supabase client for interacting with your database
- export const supabase = createClient('https://xyzcompany.supabase.co', 'publishable-or-anon-key')
+ export const supabase = createClient('https://XXXXXXXXXX.supabase.co', 'publishable-or-anon-key')
 
 ```
 
 解説
 
-createClient関数は、2つの引数を設定することができます。一つ目は、プロジェクトURLと、プロジェクトAPIキーを指定することで初期化処理されます。
-createClient関数から、supabaseの様々な処理が利用できるようになります。
-createClient関数に渡す、引数は、環境変数から取得するようにします。
-環境変数にデータを渡すことで本番環境、開発環境で分けることができます。
+`createClient`関数は、以下の2つの引数を指定することでSupabaseクライアントを初期化します。
 
-### 9.6 .env 環境変数を作成する
+* プロジェクトURL
+* APIキー
 
-プロジェクト直下に、.env ファイルを作成します。
+このクライアントを通じて、認証・データ取得・データ操作などの機能などの機能が利用できるようになります。
+
+### 9.6 環境変数（.env）を作成する
+
+APIキーやURLを直接コードに書かず、環境変数として管理します。
+これにより、開発環境と本番環境を分けて管理できます。
+
+* .envファイルを作成
+
+プロジェクト直下に、`.env` ファイルを作成します。
 
 ```bash
 touch .env
 ```
 
-Viteを利用してプロジェクトを作成したので、以下のように掲載します。
+本プロジェクトは、Viteを使用しているため、環境変数名は、`VITE_`から始める必要があります。
 
-```
+```env
 VITE_SUPABASE_URL = ""
 VITE_SUPABASE_API_KEY = ""
 ```
 
-*　掲載する APIキーとURLを取得する
+* Viteでは、`VITE_`プレフィックスが付いた環境変数のみが`import.meta.env`から参照可能です。
 
-1. dashboard の左側にあるメニューから、 「Project Overview」をクリックします。
+* Supabase の URL/APIキーを取得する
 
-2. Connect to your project の一覧にある、Project API　を利用します。
+1. dashboard 左側にあるメニューから、「Project Overview」をクリックします。
 
-Project URL　https://XXXXXXXXXXXXXXXXXXXX.supabase.co
+2. Connect to your project セクションにあるProject APIを確認します。
 
-Publishable API Key sb_publishable_XXXXXXXXX_XXXXXXXXXXXX_XXX-XXXX
+以下の情報を使用します。
 
-を、先に作成した.envファイルに記述してください。
+* Project URL
+  `https://XXXXXXXXXXXXXXXXXXXX.supabase.co`
+
+* anon public key（Publishable API Key）
+  `sb_publishable_XXXXXXXXX_XXXXXXXXXXXX_XXX-XXXX`
+
+* フロントエンド（React）では必ずanon public key（Publishable）を使用してください。
+
+* `service_role key` はサーバー専用のため、絶対に使用しません。
+
+取得した値を、先に作成した`.env`ファイルに記述します。
 
 ```env
 VITE_SUPABASE_URL = "https://XXXXXXXXXXXXXXXXXXXX.supabase.co"
 VITE_SUPABASE_API_KEY = "sb_publishable_XXXXXXXXX_XXXXXXXXXXXX_XXX-XXXX"
 ```
 
-githubの追跡対象から外すために、.gitignoreファイルを編集します。
+### 9.7 .gitignoreに.envを追加
 
-```
+APIキーをGitHubに公開しないよう、`.gitignore`ファイルに`.env`を追加します。
+
+```txt
 .env
 ```
 
-`.env`を.gitignoreファイルに追加してください。
+### 9.8 `supabase.ts`を環境変数対応に修正
 
-最後にsupabase.tsを編集して完了です。
+最後に、`supabase.ts`を環境変数から値を読み込むように修正します。
 
 ```ts
 import { createClient } from "@supabase/supabase-js";
@@ -1129,8 +1160,28 @@ export const supabase = createClient(
 
 ```
 
-※ 注意
+※ 注意点
 
-開発サーバーを再起動しないと反映されません。
+* `.env` を変更した場合は開発サーバーを再起動しないと反映されません
+* anon public key は公開されても問題ありませんが、`service_role key`は絶対にフロントエンドに記載しないでください。
 
-次回は、ユーザーを登録する処理を作成します。
+次の章では、Supabaseを利用してユーザー登録（signUp）処理を実装していきます。
+
+## ユーザー登録機能のAPIを利用してみよう
+
+アプリを作る上で、ロジックは、
+* 認証まわりの機能
+* ノートまわりの機能
+になります。
+
+ロジックは、modules フォルダに格納します。
+
+src/modules/auth/auth.repository.tsファイルを作成します。
+
+```bash
+mkdir -p src/modules/auth && touch src/modules/auth/auth.repository.ts
+```
+
+auth.repository.tsは、APIを実行するファイルになります。
+
+
