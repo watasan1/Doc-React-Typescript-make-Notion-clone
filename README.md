@@ -1169,12 +1169,10 @@ export const supabase = createClient(
 
 ### 9.9 ユーザー登録機能のAPIを利用してみよう
 
-アプリを作る上で、主なビジネスロジック（処理の中身）は、次の2つに分けられます。
+アプリを作る上で、主なビジネスロジック（処理の中身）は、大きく次の2つに分けられます。
 
 * 認証まわりの機能
 * ノートまわりの機能
-
-になります。
 
 これらのロジックは、機能ごとに管理しやすくするため、`modules`フォルダにまとめて格納します。
 
@@ -1185,11 +1183,20 @@ export const supabase = createClient(
 mkdir -p src/modules/auth && touch src/modules/auth/auth.repository.ts
 ```
 
-`auth.repository.ts`は、Supabaseの認証APIを呼び出す処理をまとめたファイルです。
-Reactコンポーネントから直接Supabaseを操作せず、このauth.repository.tsファイルを経由して認証処理を行うことで、
-責務を分離し、コードを管理しやすくします。
+このコマンドは、認証機能用のフォルダを作成し、その中に認証処理をまとめるファイルを作成しています。
 
-`auth.repository.ts` の中身は以下のようになります。
+`auth.repository.ts`の役割
+
+`auth.repository.ts`は、Supabaseの認証APIを呼び出す処理をまとめたファイルです。
+
+Reactコンポーネントから直接Supabaseを操作せず、この`auth.repository.ts`ファイルを経由して認証処理を行うことで、
+
+* Supabaseと通信する処理
+* 画面（Reactコンポーネント）
+
+を分離でき、コードを管理しやすくします。
+
+`auth.repository.ts` の実装
 
 ```ts
 import { supabase } from "@/lib/supabase";
@@ -1216,30 +1223,35 @@ export const authRepository = {
 };
 ```
 
-コードの役割
+解説
 
 このコードは、Supabaseを使ってユーザー登録（サインアップ）を行う処理をまとめたものです。
 画面（Reactコンポーネント）から直接Supabaseを操作せず、repositoryを通じて登録処理を行います。
 
 このように repository を用意することで、
-「Supabase と通信する処理」 と 「画面（コンポーネント）」 を分離できます。
+
+* Supabase と通信する処理
+* 画面表示やユーザー操作を扱う処理
+
+を分離できます。
 
 次の章では、この `authRepository.signup` を React コンポーネントから呼び出し、
 実際にユーザー登録画面を実装していきます。
 
-
-
 ### 9.10 Reactアプリからユーザー登録処理を呼び出す
 
-emai password name　の3っつの情報を登録できるようにします。
+email・password・name　の3っつの情報を登録できるようにします。
 
-src/pages/Signup.tsx を参照すると各項目のinputタグがあることを確認してください。
+`src/pages/Signup.tsx` を参照すると、各項目の`input`タグが用意されていることが確認できます。
 
-各項目の内容をステートに反映させて認証処理の登録に使います。
+各項目に入力された内容をステートに反映し、そのステートを使ってユーザー登録処理を行います。
 
-各項目に、入力された情報を保持するステートを作りたいです。
+1. フォームのステートを作成する
+
+各項目に、入力された情報を保持するためのステートを作成します。
 
 ```src/pages/Signup.tsx
+// src/pages/Signup.tsx
 import { useState } from "react";
 
 const Signup = () => {
@@ -1252,7 +1264,11 @@ const Signup = () => {
     <div class 
 ```
 
-inputタグに入力された値がステートに反映されるようにする
+2. inputタグとステートを連携させる
+
+`input`タグの`onChange`イベントを使って、入力された値がステートに反映されるようにします。
+
+* ユーザー名
 
 ```src/pages/Signup.tsx
                 <label
@@ -1265,7 +1281,7 @@ inputタグに入力された値がステートに反映されるようにする
                   onChange={(e) => setName(e.target.value)}
 ```
 
-同様に、メールアドレス
+* メールアドレス
 
 ```src/pages/Signup.tsx
                 <label
@@ -1278,7 +1294,7 @@ inputタグに入力された値がステートに反映されるようにする
                   onChange={(e) => setEmail(e.target.value)}
 ```
 
-パスワードについてもinputタグを変更します。
+* パスワード
 
 ```src/pages/Signup.tsx
                 <label
@@ -1292,11 +1308,9 @@ inputタグに入力された値がステートに反映されるようにする
                   id="password"
 ```
 
-解説
+2. サインアップ処理を実装する
 
-ユーザーが登録した内容がステートの中に反映されました。
-
-ステートの中身を利用して、登録処理をします。
+作成したステートを使って、`authRepository.signup`を呼び出します。
 
 ```src/pages/Signup.tsx
 import { authRepository } from "@/modules/auth/auth.repository";
@@ -1319,7 +1333,9 @@ const Signup = () => {
 
 ```
 
-各項目が入力されて無かったら登録ボタンをクリックできないようバリデーションロジックを作成する
+3. バリデーションを追加する
+
+いずれかの項目が未入寮の場合、登録ボタンをクリっくできないようにします。
 
 ```src/pages/Signup.tsx
               <button
@@ -1332,8 +1348,50 @@ const Signup = () => {
 
 ```
 
-登録ボタンがクリックされたら、登録処理を行う
+4. 登録ボタンでサインアップ処理を呼び出す
 
+```src/pages/Signup.tsx
+              <button
+                disabled={!name || !email || !password}
+                onClick={signup}
+                type="submit"
+                className="w-full rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+              >
+                登録
+              </button>
+```
 
+解説
+
+`onClick={signup}`を指定することで、登録ボタンがクリックされたタイミングで`signup`関数が実行されます。
+
+### 9.11 動作確認
+
+開発サーバーを起動します。
+
+```bash
+npm run dev
+```
+
+次のURLをブラウザで開いてください。
+
+[http://localhost:5173/signup](http://localhost:5173/signup) 
+
+Google Chromeの上部のメニューから
+表示　→　開発／管理　→　デベロッパーツール　をクリックします。
+
+デベロッパーツールが表示されたら、Consoleタブを開きます。
+
+ユーザー名・メールアドレス・パスワードいずれかが未入力の場合、登録ボタンは無効になり、処理は実行されません。
+
+| ユーザー名 | メールアドレス | パスワード | 登録ボタン | console.logの結果 |
+| -------- | ----------- | --------- | -------- | ---------------- |
+| 未記入    | 未記入       | 未記入     | 押せない  | 表示されない        |
+| 記入     | 未記入       | 未記入     | 押せない  | 表示されない        |
+| 未記入    | 記入        | 未記入     | 押せない  | 表示されない        |
+| 未記入   | 未記入       | 記入       | 押せない  | 表示されない         |
+| 記入     | 記入        | 未記入     | 押せない  | 表示されない         |
+| 記入     | 未記入       | 記入      | 押せない  | 表示されない         |
+| 未記入   | 記入        | 記入       | 押せない  | 表示されない         |
 
 
