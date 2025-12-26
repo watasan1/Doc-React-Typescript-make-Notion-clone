@@ -1233,6 +1233,107 @@ export const authRepository = {
 
 emai password name　の3っつの情報を登録できるようにします。
 
+src/pages/Signup.tsx を参照すると各項目のinputタグがあることを確認してください。
+
+各項目の内容をステートに反映させて認証処理の登録に使います。
+
+各項目に、入力された情報を保持するステートを作りたいです。
+
+```src/pages/Signup.tsx
+import { useState } from "react";
+
+const Signup = () => {
+  // フォームの状態管理
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  return (
+    <div class 
+```
+
+inputタグに入力された値がステートに反映されるようにする
+
+```src/pages/Signup.tsx
+                <label
+                  htmlFor="username"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  ユーザー名
+                </label>
+                <input
+                  onChange={(e) => setName(e.target.value)}
+```
+
+同様に、メールアドレス
+
+```src/pages/Signup.tsx
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  メールアドレス
+                </label>
+                <input
+                  onChange={(e) => setEmail(e.target.value)}
+```
+
+パスワードについてもinputタグを変更します。
+
+```src/pages/Signup.tsx
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  パスワード
+                </label>
+                <input
+                  onChange={(e) => setPassword(e.target.value)}
+                  id="password"
+```
+
+解説
+
+ユーザーが登録した内容がステートの中に反映されました。
+
+ステートの中身を利用して、登録処理をします。
+
+```src/pages/Signup.tsx
+import { authRepository } from "@/modules/auth/auth.repository";
+import { useState } from "react";
+
+const Signup = () => {
+  // フォームの状態管理
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
+  // サインアップ処理
+  const signup = async () => {
+    const user = await authRepository.signup(name, email, password);
+    console.log(user);
+  }
+
+  return (
+
+
+```
+
+各項目が入力されて無かったら登録ボタンをクリックできないようバリデーションロジックを作成する
+
+```src/pages/Signup.tsx
+              <button
+                disabled={!name || !email || !password}
+                type="submit"
+                className="w-full rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+              >
+                登録
+              </button>
+
+```
+
+登録ボタンがクリックされたら、登録処理を行う
+
 
 
 
