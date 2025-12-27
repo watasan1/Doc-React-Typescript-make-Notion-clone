@@ -1406,20 +1406,15 @@ const Signup = () => {
 
 4. 登録ボタンでサインアップ処理を呼び出す
 
+formタグに`onSubmit={signup}`を追加します。
+
 ```src/pages/Signup.tsx
-              <button
-                disabled={!name || !email || !password}
-                onClick={signup}
-                type="submit"
-                className="w-full rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 disabled:opacity-50"
-              >
-                登録
-              </button>
+<form className="space-y-6" onSubmit={signup}>
 ```
 
 解説
 
-`onClick={signup}`を指定することで、登録ボタンがクリックされたタイミングで`signup`関数が実行されます。
+`onSubmit={signup}`を指定することで、フォームが送信されたタイミングで`signup`関数が実行されます。
 
 ### 9.11 動作確認
 
