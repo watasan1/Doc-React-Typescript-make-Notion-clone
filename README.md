@@ -1449,7 +1449,7 @@ const Signup = () => {
 formタグに`onSubmit={signup}`を追加します。
 
 ```src/pages/Signup.tsx
-<form className="space-y-6" onSubmit={signup}>
+<form className="space-y-6" onSubmit={signup} noValidate>
 ```
 
 解説
