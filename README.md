@@ -804,7 +804,6 @@ const Signin = () => {
                     name="email"
                     type="email"
                     placeholder="メールアドレス"
-                    required
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-slate-500 focus:ring-slate-500 focus:outline-none sm:text-sm"
                   />
                 </div>
@@ -824,7 +823,6 @@ const Signin = () => {
                     name="password"
                     type="password"
                     placeholder="パスワード"
-                    required
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-slate-500 focus:ring-slate-500 focus:outline-none sm:text-sm"
                   />
                 </div>
@@ -890,7 +888,7 @@ http://localhost:5173/signin
 touch src/pages/Signup.tsx
 ```
 
-```pages/Signup.tsx
+```src/pages/Signup.tsx
 const Signup = () => {
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-10 sm:px-6 lg:px-8">
@@ -901,7 +899,7 @@ const Signup = () => {
 
         <div className="mt-8 w-full max-w-md">
           <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6">
+            <form className="space-y-6" noValidate>
               {/* ユーザー名 */}
               <div>
                 <label
@@ -914,7 +912,6 @@ const Signup = () => {
                   id="username"
                   name="username"
                   type="text"
-                  required
                   autoComplete="username"
                   className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:ring-slate-500 sm:text-sm"
                 />
