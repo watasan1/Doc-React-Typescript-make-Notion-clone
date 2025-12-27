@@ -1454,4 +1454,9 @@ Google Chromeの上部のメニューから
 最後に、全ての項目が記入されたら、登録ボタンの背景色が黒くなり、クリックできてconsole.logの結果が表示されることを確認してください。
 
 
+[Notification] Mounted notification: autosave
+Signup.tsx:13 入力された値: {"name":"test1","email":"ishiwatahirotaka1012@gmail.com","password":"testuser1012"}
+notification.js:3 [Notification] Mounted notification: autosave
+Signup.tsx:18 {id: 'ba8a4fd5-737a-40a8-b884-3ac673936dbc', aud: 'authenticated', role: 'authenticated', email: 'ishiwatahirotaka1012@gmail.com', phone: '', …}app_metadata: {provider: 'email', providers: Array(1)}aud: "authenticated"confirmation_sent_at: "2025-12-27T09:21:59.8444362Z"created_at: "2025-12-27T08:59:06.615514Z"email: "ishiwatahirotaka1012@gmail.com"id: "ba8a4fd5-737a-40a8-b884-3ac673936dbc"identities: [{…}]is_anonymous: falsephone: ""role: "authenticated"updated_at: "2025-12-27T09:22:01.186755Z"userName: "test1"user_metadata: {email: 'ishiwatahirotaka1012@gmail.com', email_verified: false, name: 'test1', phone_verified: false, sub: 'ba8a4fd5-737a-40a8-b884-3ac673936dbc'}[[Prototype]]: Object
+
 
