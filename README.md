@@ -1386,11 +1386,10 @@ const Signup = () => {
               <button
                 disabled={!name || !email || !password}
                 type="submit"
-                className="w-full rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+                className="w-full rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 disabled:opacity-50"
               >
                 登録
               </button>
-
 ```
 
 4. 登録ボタンでサインアップ処理を呼び出す
@@ -1400,7 +1399,7 @@ const Signup = () => {
                 disabled={!name || !email || !password}
                 onClick={signup}
                 type="submit"
-                className="w-full rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+                className="w-full rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 disabled:opacity-50"
               >
                 登録
               </button>
