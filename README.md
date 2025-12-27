@@ -932,7 +932,6 @@ const Signup = () => {
                   id="email"
                   name="email"
                   type="email"
-                  required
                   autoComplete="email"
                   className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:ring-slate-500 sm:text-sm"
                 />
@@ -950,7 +949,6 @@ const Signup = () => {
                   id="password"
                   name="password"
                   type="password"
-                  required
                   autoComplete="new-password"
                   className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:ring-slate-500 sm:text-sm"
                 />
@@ -1404,6 +1402,51 @@ const Signup = () => {
               </button>
 ```
 
+さらに、Supabase Authの入力条件があるのでバリデーションを追加します。
+
+* email の項目に、正しいメール形式である
+* password には最低 6文字である
+
+ことが必要になります。
+
+```
+const Signup = () => {
+  // フォームの状態管理
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // サインアップ処理
+  const signup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("入力された値:", JSON.stringify({ name, email, password }));
+
+    //email バリデーション
+    if(!email.includes("@")) {
+      alert("有効なメールアドレスを入力してください。");
+      return;
+    }
+
+    // パスワード バリデーション
+    if(password.length < 6) {
+      alert("パスワードは6文字以上で入力してください。");
+      return;
+    }
+    // サインアップ処理の呼び出し
+    const user = await authRepository.signup(name, email, password);
+    console.log(user);
+  };
+
+  return (
+
+```
+
+
+
+
+
+
+
 4. 登録ボタンでサインアップ処理を呼び出す
 
 formタグに`onSubmit={signup}`を追加します。
@@ -1448,10 +1491,25 @@ Google Chromeの上部のメニューから
 
 最後に、全ての項目が記入されたら、登録ボタンの背景色が黒くなり、クリックできてconsole.logの結果が表示されることを確認してください。
 
+正しい値が入力された場合において、登録できたらSupabaseより登録できたか確認します。
 
-[Notification] Mounted notification: autosave
-Signup.tsx:13 入力された値: {"name":"test1","email":"ishiwatahirotaka1012@gmail.com","password":"testuser1012"}
-notification.js:3 [Notification] Mounted notification: autosave
-Signup.tsx:18 {id: 'ba8a4fd5-737a-40a8-b884-3ac673936dbc', aud: 'authenticated', role: 'authenticated', email: 'ishiwatahirotaka1012@gmail.com', phone: '', …}app_metadata: {provider: 'email', providers: Array(1)}aud: "authenticated"confirmation_sent_at: "2025-12-27T09:21:59.8444362Z"created_at: "2025-12-27T08:59:06.615514Z"email: "ishiwatahirotaka1012@gmail.com"id: "ba8a4fd5-737a-40a8-b884-3ac673936dbc"identities: [{…}]is_anonymous: falsephone: ""role: "authenticated"updated_at: "2025-12-27T09:22:01.186755Z"userName: "test1"user_metadata: {email: 'ishiwatahirotaka1012@gmail.com', email_verified: false, name: 'test1', phone_verified: false, sub: 'ba8a4fd5-737a-40a8-b884-3ac673936dbc'}[[Prototype]]: Object
+## Supabaseのダッシュボードよりアカウントが登録されたか確認します
+
+ブラウザーより、[https://supabase.com/dashboard/](https://supabase.com/dashboard/) を表示して、
+
+notion-clone-app をクリックします。
+
+Supabaseのダッシュボードが表示されます。
+
+左側から、Authenticationをクリックします。
+
+Users の一覧が表示されます。
+
+
+
+
+
+
+
 
 
