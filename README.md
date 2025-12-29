@@ -163,16 +163,19 @@ npm install tailwindcss @tailwindcss/vite
 
 React（Vite）プロジェクトでは、主に次の2つのCSSファイルがあります。
 
-- `src/index.css`：リセットCSSやTailwindCSSなど、全体に適用するスタイル
-- `src/App.css`：コンポーネント固有のスタイル
+* `src/index.css`：アプリ全体に適用するスタイル（リセットCSS、TailwindCSSなど）
+* `src/App.css`：コンポーネント単位で使われるスタイル
 
-`src/index.css`の中身をすべて削除して、以下の内容に置き換えてください。
+本講座では、スタイル管理を Tailwind CSSに統一するため、`src/index.css`の中身をすべて削除して、以下の内容に置き換えてください。
 
 ```src/index.css
 @import "tailwindcss";
 ```
 
 ### 3.3 パスエイリアス（@/）の設定
+
+import文が深くなってくると、相対パス(`../../`)は可読性を下げます。
+そこで本講座では、`@`を使って`src`配下を参照できるように設定します。
 
 `tsconfig.json` と `tsconfig.app.json` の両方に `baseUrl` と `paths` を設定します。
 
@@ -184,9 +187,10 @@ import Header from "@/components/Header";
 
 パスエイリアスを設定すると、`@`を使って`src`配下のファイルを参照できるようになります。
 
-- tsconfig.json ファイルを編集する
+#### 3.3.1 tsconfig.json ファイルを編集する
 
 ViteではTypeScriptの設定が複数ファイルに分かれています。
+まず、プロジェクト直下の`tsconfig.json`を編集します。
 
 ```tsconfig.json
 {
@@ -207,11 +211,9 @@ ViteではTypeScriptの設定が複数ファイルに分かれています。
 
 ```
 
-- tsconfig.app.json ファイルを編集する
+#### 3.3.2 tsconfig.app.json ファイルを編集する
 
-IDE（エディタ）で正しくパスを解決できるように設定を追加します。
-
-以下のコードをプロジェクト直下にある、tsconfig.app.jsonファイルに追加します。
+IDE（エディタ）上で正しくパスを解決されるよう、以下のコードをプロジェクト直下にある、`tsconfig.app.json`ファイルにも同様の設定を追加します。
 
 ```tsconfig.app.json
 {
@@ -237,13 +239,22 @@ IDE（エディタ）で正しくパスを解決できるように設定を追�
 
 ### 3.4 vite.config.tsを更新する
 
-- Node.jsの型定義をインストール
+#### 3.4.1 Node.jsの型定義をインストール
+
+Viteの設定ファイル内で`path`モジュールを使用するため、Node.jsの型定義を開発依存としてインストールします。
 
 ```bash
 npm install -D @types/node
 ```
 
-- vite.config.ts を編集する
+#### 3.4.2 vite.config.ts を編集する
+
+次に、`vite.config.ts`を編集し、
+
+* Tailwind CSS プラグインの追加
+* パスエイリアスの設定
+
+を行います。
 
 ```vite.config.ts
 import tailwindcss from "@tailwindcss/vite";
@@ -276,7 +287,6 @@ npx shadcn@latest init
 
 途中で以下の表示が出た場合は、`y`を入力して進めてください。
 
-
 ```bash
 Need to install the following packages:
 shadcn@3.5.2
@@ -297,87 +307,88 @@ Neutralを選択してエンターキーでインストールしてください�
 Success! Project initialization completed.
 ```
 
-
 ## 4. UI・構造系ライブラリの導入
+
+この章では、アプリ全体で使用するUI系・構造系ライブラリをまとめて導入します。
 
 ### 4.1 UI関連ライブラリ
 
-4.1.1 cmdkをインストール（ライブラリ）
-
-cmdkは、キーボード操作に特化したコマンドパレットUIを実装できるReactライブラリです。
+#### 4.1.1 cmdk（コマンドパレット）
 
 ```bash
 npm install cmdk
 ```
 
-4.1.2 lucide-react をインストール（ライブラリ）
+cmdkは、キーボード操作に特化したコマンドパレットUIを実装するためのライブラリです。
 
-lucide-reactは、React用のアイコンコンポーネント集です。
-shadcn/ui と相性が良いのが特徴です。
+
+#### 4.1.2 lucide-react（ライブラリ）
 
 ```bash
 npm install lucide-react
 ```
 
-4.1.3 @radix-ui/react-dropdown-menuをインストール(ライブラリ)
+shadcn/uiと相性の良い、React用のアイコンコンポーネント集です。
 
-Radix UI のドロップダウンメニューコンポーネントをReactで利用するためのパッケージです。
+#### 4.1.3 @radix-ui/react-dropdown-menu(ライブラリ)
 
 ```bash
 npm install @radix-ui/react-dropdown-menu
 ```
 
-4.1.4 tailwind-merge をインストール（ライブラリ）
+Radix UI のドロップダウンメニューコンポーネントを利用するためのライブラリです。
 
-Tailwind CSS のクラス名の競合を自動で解決してくれます。
+#### 4.1.4 tailwind-merge（ライブラリ）
 
 ```sh
 npm i tailwind-merge
 ```
 
-4.1.5 tailwindcss-animateをインストール（プラグイン）
+Tailwind CSS のクラス名の競合を自動で解決してくれます。
 
-Tailwind CSS にアニメーション用のユーティリティを追加します。
+#### 4.1.5 tailwindcss-animate（プラグイン）
 
 ```bash
 npm install tailwindcss-animate
 ```
 
+Tailwind CSS にアニメーション用のユーティリティを追加します。
+
 ### 4.2 アプリ構造系ライブラリ
 
-4.2.1 react-router-dom をインストールします（ライブラリ）
-
-ページ遷移（ルーティング）を実現するReactライブラリです。
+#### 4.2.1 react-router-dom（ライブラリ）
 
 ```bash
 npm install react-router-dom
 ```
 
-4.2.2 react-textarea-autosizeをインストール（ライブラリ）
+ページ遷移（ルーティング）を実現するReactライブラリです。
 
-入力内容に応じて高さが自動で変化するtextareaを実装できるReactライブラリです。
+#### 4.2.2 react-textarea-autosize（ライブラリ）
 
 ```bash
 npm i react-textarea-autosize
 ```
 
-## 5. Prettierの導入
+入力内容に応じて高さが自動で変化するtextareaを実装できます。
+
+## 5. 開発体験を整える
+
+### 5.1 Prettierの導入
 
 Prettierは、コードの整形（フォーマット）を自動で行うツールです。
 
-### 5.1 Prettierのパッケージのインストール
-
-- `prettier-plugin-tailwindcss`は、Tailwind CSSのclassの順番をルールにしたがって並べ変えるプラグインです。
-
-- `@trivago/prettier-plugin-sort-imports`は、import 文の順番をルール通りに整列するプラグインです。
-
-```Bash
+```bash
 npm install -D prettier prettier-plugin-tailwindcss @trivago/prettier-plugin-sort-imports
 ```
 
+* `prettier-plugin-tailwindcss`は、Tailwind CSSのclassの順番を整列するプラグイン。
+
+* `@trivago/prettier-plugin-sort-imports`は、import 文の順番を整列するプラグイン。
+
 ### 5.2 Prettier設定ファイルの作成
 
-プロジェクト直下に.prettierrcファイルを作成する
+プロジェクト直下に`.prettierrc`ファイルを作成します。
 
 ```bash
 touch .prettierrc
@@ -405,25 +416,25 @@ touch .prettierrc
 
 ```
 
-### 5.3 Prettierを実行する
+### 5.3 フォーマットを実行する
+
+以下のコマンドで、プロジェクト全体を整形します。
 
 ```bash
 npx prettier --write .
 ```
 
-## 6. shadcn/ui を試す
+## 6. 動作確認と初期画面の表示
 
-### 6.1 Buttonコンポーネントを使ってみよう
+### 6.1 shadcn/ui を使ってみる
 
-Button コンポーネントを追加します。
+#### 6.1.1 Button コンポーネントを追加します。
 
 ```bash
 npx shadcn@latest add button
 ```
 
-上記のコマンドを実行すると、Buttonコンポーネントがプロジェクトに追加されます。その後、次のようにインポートできます。
-
-`src/App.tsx`ファイルを編集します。
+#### 6.1.2 `src/App.tsx`ファイルを編集します。
 
 ```src/App.tsx
 import { Button } from "@/components/ui/button";
@@ -443,17 +454,21 @@ export default App;
 
 ```
 
-### 6.2 開発サーバーを起動する
+#### 6.1.3 動作確認
+
+* 開発サーバーを起動する
 
 ```bash
 npm run dev
 ```
 
-[http://localhost:5173/](http://localhost:5173/)にアクセスして表示を確認してください。
+ブラウザで以下にアクセスしてください。
+
+[http://localhost:5173/](http://localhost:5173/)
 
 開発サーバーを停止する場合は、Ctrl + C　を押してください。
 
-これでプロジェクトの雛形が完成しました。
+表示が確認できれば、プロジェクトの雛形は完成です。
 
 ## 7. ルーティングを設定しよう
 
