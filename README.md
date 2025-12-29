@@ -1189,7 +1189,7 @@ mkdir -p src/modules/auth && touch src/modules/auth/auth.repository.ts
 
 `auth.repository.ts` は、Supabase の認証 API を呼び出す処理をまとめたファイルです。
 
-Reactコンポーネントから直接Supabaseを操作ぜず、この`auth.repository.ts` を経由して認証処理を行うことで、
+Reactコンポーネントから直接 Supabase を操作せず、この`auth.repository.ts` を経由して認証処理を行うことで、
 
 * Supabaseと通信する処理
 * 画面（Reactコンポーネント）
