@@ -1228,23 +1228,18 @@ Supabase の 認証系APIとのやり取り をまとめたものです。
 import { supabase } from "@/lib/supabase";
 
 export const authRepository = {
-  // ユーザー登録
   async signup(name: string, email: string, password: string) {
-    // SupabaseのサインアップAPIを実行
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { name } },
+      options: {
+        data: {
+          name,
+        },
+      },
     });
-    // エラーが発生した、またはユーザー情報が取得できなかった場合は例外をスロー
-    if (error != null || data.user == null) {
-      throw new Error(error?.message);
-    }
-    // 呼び出し元で扱いやすい形に整形して返却
-    return {
-      ...data.user,
-      userName: data.user.user_metadata.name,
-    };
+
+    return { data, error };
   },
 };
 ```
@@ -1263,6 +1258,11 @@ export const authRepository = {
 
 次の章では、この `authRepository.signup` を React コンポーネントから呼び出し、
 実際にユーザー登録画面を実装していきます。
+
+
+
+
+
 
 ### 9.10 Reactアプリからユーザー登録処理を呼び出す
 
