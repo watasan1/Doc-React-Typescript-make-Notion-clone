@@ -133,21 +133,23 @@ npm create vite@latest notion-clone-app
 cd notion-clone-app
 ```
 
+## 3. プロジェクト初期セットアップ
 
+### 3.1 この章について
 
+この章では、プロジェクトを実際に開発できる状態に整えるための初期セットアップを行います。
 
+具体的には、以下の内容を扱います。
 
-## 4. パッケージのインストールと初期設定
+* Tailwind CSSを使ったスタイリング環境の構築
+* パスエイリアス(`@/`)の設定
+* Viteの設定ファイルの更新
+* shadcn/ui の初期化
 
-### 4.1 この章について
+ここで行う設定は、以降の章すべて土台になります。
+1つずつ確実に進めていきましょう。
 
-この章では、アプリ開発に必要な npm パッケージ をインストールします。
-本章では、役割に応じて以下のように呼び分けます。
-
-- ライブラリ：単体で機能を提供する
-- プラグイン：特定のツールを拡張するための
-
-### 4.2 Tailwind CSSのセットアップ
+### 3.2 Tailwind CSSのセットアップ
 
 Vite用の公式プラグイン（`@tailwindcss/vite`）を含めてインストールします。
 
@@ -168,7 +170,7 @@ React（Vite）プロジェクトでは、主に次の2つのCSSファイルが�
 @import "tailwindcss";
 ```
 
-### 4.3 パスエイリアス（@/）の設定
+### 3.3 パスエイリアス（@/）の設定
 
 `tsconfig.json` と `tsconfig.app.json` の両方に `baseUrl` と `paths` を設定します。
 
@@ -231,7 +233,7 @@ IDE（エディタ）で正しくパスを解決できるように設定を追�
 
 ```
 
-### 4.4 vite.config.tsを更新する
+### 3.4 vite.config.tsを更新する
 
 - Node.jsの型定義をインストール
 
@@ -259,7 +261,7 @@ export default defineConfig({
 
 ```
 
-### 4.5 shadcn/ui の導入
+### 3.5 shadcn/ui の導入
 
 shadcn/ui は、Radix UI と Tailwind CSS をベースにした実務向けの UI コンポーネント集です。
 
@@ -293,11 +295,12 @@ Neutralを選択してエンターキーでインストールしてください�
 Success! Project initialization completed.
 ```
 
-## 5. UI・構造系ライブラリの導入
 
-### 5.1 UI関連ライブラリ
+## 4. UI・構造系ライブラリの導入
 
-5.1.1 cmdkをインストール（ライブラリ）
+### 4.1 UI関連ライブラリ
+
+4.1.1 cmdkをインストール（ライブラリ）
 
 cmdkは、キーボード操作に特化したコマンドパレットUIを実装できるReactライブラリです。
 
@@ -305,7 +308,7 @@ cmdkは、キーボード操作に特化したコマンドパレットUIを実�
 npm install cmdk
 ```
 
-5.1.2 lucide-react をインストール（ライブラリ）
+4.1.2 lucide-react をインストール（ライブラリ）
 
 lucide-reactは、React用のアイコンコンポーネント集です。
 shadcn/ui と相性が良いのが特徴です。
@@ -314,7 +317,7 @@ shadcn/ui と相性が良いのが特徴です。
 npm install lucide-react
 ```
 
-5.1.3 @radix-ui/react-dropdown-menuをインストール(ライブラリ)
+4.1.3 @radix-ui/react-dropdown-menuをインストール(ライブラリ)
 
 Radix UI のドロップダウンメニューコンポーネントをReactで利用するためのパッケージです。
 
@@ -322,7 +325,7 @@ Radix UI のドロップダウンメニューコンポーネントをReactで利
 npm install @radix-ui/react-dropdown-menu
 ```
 
-5.1.4 tailwind-merge をインストール（ライブラリ）
+4.1.4 tailwind-merge をインストール（ライブラリ）
 
 Tailwind CSS のクラス名の競合を自動で解決してくれます。
 
@@ -330,7 +333,7 @@ Tailwind CSS のクラス名の競合を自動で解決してくれます。
 npm i tailwind-merge
 ```
 
-5.1.5 tailwindcss-animateをインストール（プラグイン）
+4.1.5 tailwindcss-animateをインストール（プラグイン）
 
 Tailwind CSS にアニメーション用のユーティリティを追加します。
 
@@ -338,9 +341,9 @@ Tailwind CSS にアニメーション用のユーティリティを追加しま�
 npm install tailwindcss-animate
 ```
 
-### 5.2 アプリ構造系ライブラリ
+### 4.2 アプリ構造系ライブラリ
 
-5.2.1 react-router-dom をインストールします（ライブラリ）
+4.2.1 react-router-dom をインストールします（ライブラリ）
 
 ページ遷移（ルーティング）を実現するReactライブラリです。
 
@@ -348,7 +351,7 @@ npm install tailwindcss-animate
 npm install react-router-dom
 ```
 
-5.2.2 react-textarea-autosizeをインストール（ライブラリ）
+4.2.2 react-textarea-autosizeをインストール（ライブラリ）
 
 入力内容に応じて高さが自動で変化するtextareaを実装できるReactライブラリです。
 
@@ -356,11 +359,11 @@ npm install react-router-dom
 npm i react-textarea-autosize
 ```
 
-## 6. Prettierの導入
+## 5. Prettierの導入
 
 Prettierは、コードの整形（フォーマット）を自動で行うツールです。
 
-### 6.1 Prettierのパッケージのインストール
+### 5.1 Prettierのパッケージのインストール
 
 - `prettier-plugin-tailwindcss`は、Tailwind CSSのclassの順番をルールにしたがって並べ変えるプラグインです。
 
@@ -370,7 +373,7 @@ Prettierは、コードの整形（フォーマット）を自動で行うツー
 npm install -D prettier prettier-plugin-tailwindcss @trivago/prettier-plugin-sort-imports
 ```
 
-### 6.2 Prettier設定ファイルの作成
+### 5.2 Prettier設定ファイルの作成
 
 プロジェクト直下に.prettierrcファイルを作成する
 
@@ -400,15 +403,15 @@ touch .prettierrc
 
 ```
 
-### 6.3 Prettierを実行する
+### 5.3 Prettierを実行する
 
 ```bash
 npx prettier --write .
 ```
 
-## 7. shadcn/ui を試す
+## 6. shadcn/ui を試す
 
-### 7.1 Buttonコンポーネントを使ってみよう
+### 6.1 Buttonコンポーネントを使ってみよう
 
 Button コンポーネントを追加します。
 
@@ -438,7 +441,7 @@ export default App;
 
 ```
 
-### 7.2 開発サーバーを起動する
+### 6.2 開発サーバーを起動する
 
 ```bash
 npm run dev
@@ -450,7 +453,7 @@ npm run dev
 
 これでプロジェクトの雛形が完成しました。
 
-## 8. ルーティングを設定しよう
+## 7. ルーティングを設定しよう
 
 Notion Clone のアプリには、次の4つの画面があります。
 
