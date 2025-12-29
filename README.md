@@ -1270,6 +1270,10 @@ export const authRepository = {
 次の章では、この `authRepository.signup` を React コンポーネントから呼び出し、
 実際にユーザー登録画面を実装していきます。
 
+
+
+
+
 ### 9.10 Supabase Auth で作る安全なサインアップフォーム
 
 Step 1: 必要なモジュールのimport
@@ -1618,6 +1622,58 @@ export default Signup;
 
 ```
 
+解説
+
+authRepository.signup() で Supabase に登録
+
+エラーがあれば errors に、成功なら success に格納
+
+### 動作確認
+
+開発サーバーを起動して、
+
+```bash
+npm run dev
+```
+
+ブラウザーより確認します。
+
+[http://localhost:5173/signup](http://localhost:5173/signup)
+
+ユーザー名 → testuser1
+メールアドレス → t1@t.co
+パスワード → 123456
+
+登録ボタンをクリック
+
+## Supabaseのダッシュボードよりアカウントが登録されたか確認します
+
+ブラウザーより、[https://supabase.com/dashboard/](https://supabase.com/dashboard/) を表示して、
+
+notion-clone-app をクリックします。
+
+Supabaseのダッシュボードが表示されます。
+
+左側メニューから、Authenticationをクリックします。
+
+Users の一覧が表示されます。
+
+
+
+
+
+
+
+
+
+
+
+この時点ではローディングバリデーションや日本語化は未実装
+
+
+
+
+Step 5: 
 
 
 
