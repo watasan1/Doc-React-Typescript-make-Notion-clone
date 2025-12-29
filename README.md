@@ -1293,81 +1293,17 @@ Step 2: return 内の見た目（画面の骨組み）を作る
 * フォームの見た目を先に確認できる完成体験を作る
 * 名前・メール・パスワード入力欄、ボタン、メッセージ表示の枠だけ作る
 
-```
+```Signup.tsx
 const Signup = () => {
   // フォームの状態管理
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // エラー・ローディング・成功状態
+  // エラー・ローディング
   const [errors, setErrors] = useState<string[]>([]);
   const [success, setSuccess] = useState<string | null>(null);
-
-  /**
-   * フロント側バリデーション（予習）
-   */
-  const validateBeforeSubmit = (): boolean => {
-    const validationErrors: string[] = [];
-
-    if (!name) {
-      validationErrors.push("ユーザー名を入力してください");
-    }
-
-    if (!email) {
-      validationErrors.push("メールアドレスを入力してください");
-    } else if (!isValidEmail(email)) {
-      validationErrors.push("メールアドレスの形式が正しくありません");
-    }
-
-    if (!password) {
-      validationErrors.push("パスワードを入力してください");
-    } else if (password.length < 6) {
-      validationErrors.push("パスワードは6文字以上で入力してください");
-    }
-
-    setErrors(validationErrors);
-    return validationErrors.length === 0;
-  };
-
-  /**
-   * 送信処理（採点）
-   */
-  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (loading) return;
-
-    // 初期化
-    setErrors([]);
-    setSuccess(null);
-
-    // 予習で不合格なら送信しない
-    if (!validateBeforeSubmit()) return;
-
-    try {
-      setLoading(true);
-
-      // Supabase による最終チェック
-      const { error } = await authRepository.signup(name, email, password);
-
-      if (error) {
-        console.error("Supabase signup error:", error);
-        console.error("message:", error.message);
-        setErrors([translateSupabaseError(error.message)]);
-        return;
-      }
-
-      setSuccess("サインアップが成功しました。");
-    } catch (err) {
-      setErrors([
-        err instanceof Error
-          ? err.message
-          : "サインアップ中にエラーが発生しました",
-      ]);
-    } finally {
-      setLoading(false);
-    }
-  };
+};
 
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-10 sm:px-6 lg:px-8">
@@ -1461,11 +1397,20 @@ export default Signup;
 
 ```
 
-email・password・name　の3っつの情報を登録できるようにします。
+解説
 
-`src/pages/Signup.tsx` を参照すると、各項目の`input`タグが用意されていることが確認できます。
+入力フォームには、`name・email・password`の3っの入力欄があります。
 
 各項目に入力された内容をステートに反映し、そのステートを使ってユーザー登録処理を行います。
+
+Step 3: 登録処理の追加（handleSignup）
+
+目的
+
+* ボタンを押したら Supabase にアカウントを作れるようにする
+
+* 成功／失敗のメッセージ表示
+
 
 1. フォームのステートを作成する
 
