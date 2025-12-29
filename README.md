@@ -1178,12 +1178,10 @@ export const supabase = createClient(
 mkdir -p src/modules/auth && touch src/modules/auth/auth.repository.ts
 ```
 
-このコマンドでは、
+このコマンドでは、次のものを作成しています。
 
 * `auth`: 認証機能用のフォルダ
 * `auth.repository.ts`: 認証処理をまとめるファイル
-
-を作成します。
 
 ### 9.9.1 auth.repository.ts の役割
 
@@ -1204,17 +1202,19 @@ Reactコンポーネントから直接 Supabase を操作せず、この`auth.re
 
 * `modules`フォルダを使う理由
 
+このアプリでは、主に次のような機能単位でロジックを管理します。
+
 * 認証（auth）
 * ノート（notes）
 
-UI（components）やページ（pages / app）とは分離し、
-**「アプリの振る舞いを決めるロジック」**を置く場所として modules を使っています。
+UI（components）やページ（pages / app）とは分離し、「アプリの振る舞いを決めるロジック」を置く場所として`modules`を使っています。
 
 * `auth`フォルダなのか
 
-auth フォルダは、認証に関する処理をまとめるためのフォルダです。
+`auth` フォルダは、認証に関する処理をまとめるためのフォルダです。
+ログイン・ログアウト・ユーザー登録など、認証に関するロジックはすべてここに集約します。
 
-* ファイル名に、auth.repository.tsなのか？
+* `auth.repository.ts`なのか？
 
 Repository（リポジトリ）とは？
 
