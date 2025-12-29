@@ -1214,11 +1214,20 @@ UI（components）やページ（pages / app）とは分離し、「アプリの
 `auth` フォルダは、認証に関する処理をまとめるためのフォルダです。
 ログイン・ログアウト・ユーザー登録など、認証に関するロジックはすべてここに集約します。
 
-* `auth.repository.ts`なのか？
+* `auth.repository.ts`というファイル名なのか？
 
-Repository（リポジトリ）とは？
+Repository（リポジトリ）とは、外部のサービスと通信する処理をまとめた層のことです。
 
-Supabase の 認証系APIとのやり取り をまとめたものです。
+今回の場合は、Supabase の 認証系APIとのやり取りを、この Repository に集約しています。
+
+このようにすることで、
+
+* Supabase の仕様が変わっても影響範囲を限定できる
+* 画面側のコードをシンプルに保てる
+
+といったメリットがあります。
+
+※ このような構成は、Repository パターンと呼ばれる設計の考え方の一部です。
 
 #### 9.9.3 auth.repository.ts の実装
 
@@ -1247,7 +1256,7 @@ export const authRepository = {
 解説
 
 このコードは、Supabaseを使ってユーザー登録（サインアップ）を行う処理をまとめたものです。
-画面（Reactコンポーネント）から直接Supabaseを操作せず、repositoryを通じて登録処理を行います。
+画面（Reactコンポーネント）から直接Supabaseを操作せず、`authRepository.signup`を通じてユーザー登録を行います。
 
 このように repository を用意することで、
 
@@ -1256,13 +1265,10 @@ export const authRepository = {
 
 を分離できます。
 
+「責務を分ける構成」を理解することを重視しています。
+
 次の章では、この `authRepository.signup` を React コンポーネントから呼び出し、
 実際にユーザー登録画面を実装していきます。
-
-
-
-
-
 
 ### 9.10 Reactアプリからユーザー登録処理を呼び出す
 
