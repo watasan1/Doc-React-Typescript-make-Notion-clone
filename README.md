@@ -1548,14 +1548,14 @@ export default Signup;
 * この段階ではフォームの見た目だけ確認可能
 * 入力欄やボタン、エラー・成功表示の枠を先に作る
 
-Step 3: 登録処理の追加（handleSignup）
+Step 4: 登録処理の追加（handleSignup）
 
 目的
 
-* authRepository.signup() で Supabase に登録
+* ボタンを押したら Supabase にアカウントを作れるようにする
 * 成功／失敗のメッセージ表示
 
-```
+```src/pages/Signup.tsx
 // src/pages/Signup.tsx
 import { authRepository } from "@/modules/auth/auth.repository";
 import { useState } from "react";
@@ -1594,16 +1594,30 @@ const Signup = () => {
   };
 
   return (
+   <div className="min-h-screen bg-gray-100 px-4 py-10 sm:px-6 lg:px-8">
+      <div className="flex flex-col items-center">
+        <h2 className="text-3xl font-extrabold text-gray-900">
+          Notionクローン
+        </h2>
 
-    <div className="min-h-screen bg-gray-100 px-4 py-10 sm:px-6 lg:px-8">
-      {/* 省略 */}
-    </div>
+        <div className="mt-8 w-full max-w-md">
+          <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
+            {/* formタグ内の onSubmit={(e) => e.preventDefault()} */}
+            {/* を handleSignup に変更 */}
+
+            <form
+              className="space-y-6"
+              onSubmit={handleSignup}
+              noValidate
+            >
+              {/* エラー・成功メッセージ枠 */}
   );
 };
 
 export default Signup;
 
 ```
+
 
 
 
