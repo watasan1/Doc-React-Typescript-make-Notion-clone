@@ -151,13 +151,15 @@ cd notion-clone-app
 
 ### 3.2 Tailwind CSSのセットアップ
 
+本講座では、スタイリングにTailwind CSSを使用します。
+
 Vite用の公式プラグイン（`@tailwindcss/vite`）を含めてインストールします。
 
 ```bash
 npm install tailwindcss @tailwindcss/vite
 ```
 
-- CSS ファイルの設定
+### 3.2.1 CSSファイルの構成について
 
 React（Vite）プロジェクトでは、主に次の2つのCSSファイルがあります。
 
