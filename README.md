@@ -1162,9 +1162,9 @@ export const supabase = createClient(
 
 次の章では、Supabaseを利用してユーザー登録（signUp）処理を実装していきます。
 
-### 9.9 ユーザー登録機能のAPIを利用してみよう
+### 9.9 Supabase Authを使ったユーザー登録機能の実装
 
-アプリを作る上で、主なビジネスロジック（処理の中身）は、大きく次の2つに分けられます。
+アプリを作る上で、主なビジネスロジック（アプリの処理の中身）は、大きく次の2つに分けられます。
 
 * 認証まわりの機能
 * ノートまわりの機能
@@ -1172,24 +1172,55 @@ export const supabase = createClient(
 これらのロジックは、機能ごとに管理しやすくするため、`modules`フォルダにまとめて格納します。
 
 今回は、ユーザー登録（サインアップ）を担当する認証機能のモジュールを作成します。
-`src/modules/auth/auth.repository.ts`ファイルを作成します。
+まずは、`src/modules/auth/auth.repository.ts`ファイルを作成します。
 
 ```bash
 mkdir -p src/modules/auth && touch src/modules/auth/auth.repository.ts
 ```
 
-このコマンドは、認証機能用のフォルダを作成し、その中に認証処理をまとめるファイルを作成しています。
+このコマンドでは、
 
-`auth.repository.ts`の役割
+* `auth`: 認証機能用のフォルダ
+* `auth.repository.ts`: 認証処理をまとめるファイル
 
-`auth.repository.ts`は、Supabaseの認証APIを呼び出す処理をまとめたファイルです。
+を作成します。
 
-Reactコンポーネントから直接Supabaseを操作せず、この`auth.repository.ts`ファイルを経由して認証処理を行うことで、
+### 9.9.1 auth.repository.ts の役割
+
+`auth.repository.ts` は、Supabase の認証 API を呼び出す処理をまとめたファイルです。
+
+Reactコンポーネントから直接Supabaseを操作ぜず、この`auth.repository.ts` を経由して認証処理を行うことで、
 
 * Supabaseと通信する処理
 * 画面（Reactコンポーネント）
 
-を分離でき、コードを管理しやすくします。
+を分離できます。
+
+これにより、コードの見通しがよくなり、保守・テストもしやすくなります。
+
+### 9.9.2 `src/modules/auth/auth.repository.ts` なのか？
+
+このファイル名と配置は、「何をするコードか」「どこに属するか」が一目で分かるように設計されています。
+
+* `modules`フォルダを使う理由
+
+* 認証（auth）
+* ノート（notes）
+
+UI（components）やページ（pages / app）とは分離し、
+**「アプリの振る舞いを決めるロジック」**を置く場所として modules を使っています。
+
+* `auth`フォルダなのか
+
+auth フォルダは、認証に関する処理をまとめるためのフォルダです。
+
+* ファイル名に、auth.repository.tsなのか？
+
+Repository（リポジトリ）とは？
+
+Supabase の 認証系APIとのやり取り をまとめたものです。
+
+#### 9.9.3 auth.repository.ts の実装
 
 `auth.repository.ts` の実装
 
@@ -1419,10 +1450,12 @@ const Signup = () => {
     console.log("入力された値:", JSON.stringify({ name, email, password }));
 
     //email バリデーション
-    if(!email.includes("@")) {
-      alert("有効なメールアドレスを入力してください。");
-      return;
-    }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if (!emailPattern.test(email)) {
+  alert("メールアドレスの形式が正しくありません");
+  return;
+}
 
     // パスワード バリデーション
     if(password.length < 6) {
