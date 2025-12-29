@@ -1270,15 +1270,12 @@ export const authRepository = {
 次の章では、この `authRepository.signup` を React コンポーネントから呼び出し、
 実際にユーザー登録画面を実装していきます。
 
-
-
-
-
-### 9.10 Supabase Auth で作る安全なサインアップフォーム
+### 9.9.2 Supabase Auth で作る安全なサインアップフォーム
 
 Step 1: 必要なモジュールのimport
 
 目的
+
 * React の状態管理フック `useState` を使えるようにする
 * Supabase への登録処理をまとめた `authRepository` を使えるようにする
 
@@ -1289,14 +1286,15 @@ import { useState } from "react";
 ```
 
 解説
-* React のフックはフォームの入力値やエラー表示の状態管理に必要
-* `authrepository`はSupabaseへの登録処理をラップしたもの
 
-Step 2: return 内の見た目（画面の骨組み）を作る
+* React のフックはフォームの入力値やエラー表示の状態管理に必要
+* `authrepository`はSupabaseのSignup処理をラップしており、エラーハンドリングを簡単にできるラッパー
+
+Step 2: フォームの骨組み作成（見た目だけ）
 
 目的
 
-* フォームの見た目を先に確認できる完成体験を作る
+* フォームの見た目を先に確認できる
 * 名前・メール・パスワード入力欄、ボタン、メッセージ表示の枠だけ作る
 
 ```Signup.tsx
@@ -1420,8 +1418,7 @@ export default Signup;
 npm run dev  
 ```
 
-ブラウザーで確認する
-[http://localhost:5173/signup](http://localhost:5173/signup)
+ブラウザーで[http://localhost:5173/signup](http://localhost:5173/signup)を開き、フォームの見た目を確認します。
 
 Step 3: 登録処理の追加（handleSignup）
 
@@ -1454,7 +1451,7 @@ const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
 };
 ```
 
-return 内の骨組み
+フォームの onSubmit を handleSignup に置き換え
 
 ```src/pages/Signup.tsx
 return (
@@ -1467,196 +1464,34 @@ return (
       <div className="mt-8 w-full max-w-md">
         <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSignup} noValidate>
-            {/* エラーメッセージ */}
-            {errors.length > 0 && (
-              <div
-                role="alert"
-                className="my-8 border-l-10 border-[#ffc06e] bg-yellow-50 px-4 py-2 text-gray-800"
-              >
-                <ul className="list-disc pl-5">
-                  {errors.map((error, index) => (
-                    <li key={index}>{error}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
 
-            {/* 成功メッセージ */}
-            {success && (
-              <div
-                role="status"
-                className="my-8 border-l-10 border-green-500 bg-green-50 px-4 py-2 text-gray-800"
-              >
-                <p className="m-0 p-0">{success}</p>
-              </div>
-            )}
-
-            {/* ユーザー名 */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                ユーザー名
-              </label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm"
-              />
-            </div>
-
-            {/* メールアドレス */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                メールアドレス
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm"
-              />
-            </div>
-
-            {/* パスワード */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                パスワード
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
-            >
-              {loading ? "登録中..." : "登録"}
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-export default Signup;
-```
-
-解説
-
-* この段階ではフォームの見た目だけ確認可能
-* 入力欄やボタン、エラー・成功表示の枠を先に作る
-
-Step 4: 登録処理の追加（handleSignup）
-
-目的
-
-* ボタンを押したら Supabase にアカウントを作れるようにする
-* 成功／失敗のメッセージ表示
-
-```src/pages/Signup.tsx
-// src/pages/Signup.tsx
-import { authRepository } from "@/modules/auth/auth.repository";
-import { useState } from "react";
-
-const Signup = () => {
-  // 省略
-
-  // 登録中状態
-  const [loading, setLoading] = useState(false);
-
-  // 登録処理
-  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // 初期化
-    setErrors([]);
-    setSuccess(null);
-
-    try {
-      // Supabase に登録
-      const { error } = await authRepository.signup(name, email, password);
-
-      if (error) {
-        setErrors([error.message]); // ここではまだ翻訳なし
-        return;
-      }
-
-      setSuccess("サインアップが成功しました。");
-    } catch (err) {
-      setErrors([
-        err instanceof Error
-          ? err.message
-          : "サインアップ中にエラーが発生しました",
-      ]);
-    }
-  };
-
-  return (
-   <div className="min-h-screen bg-gray-100 px-4 py-10 sm:px-6 lg:px-8">
-      <div className="flex flex-col items-center">
-        <h2 className="text-3xl font-extrabold text-gray-900">
-          Notionクローン
-        </h2>
-
-        <div className="mt-8 w-full max-w-md">
-          <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
-            {/* formタグ内の onSubmit={(e) => e.preventDefault()} */}
-            {/* を handleSignup に変更 */}
-
-            <form
-              className="space-y-6"
-              onSubmit={handleSignup}
-              noValidate
-            >
-              {/* エラー・成功メッセージ枠 */}
-  );
-};
-
-export default Signup;
+            {/* 省略 */}
 
 ```
 
-解説
+動作確認
 
-authRepository.signup() で Supabase に登録
-
-エラーがあれば errors に、成功なら success に格納
-
-### 動作確認
-
-開発サーバーを起動して、
+1. 開発サーバー起動
 
 ```bash
-npm run dev
+npm run dev  
 ```
 
-ブラウザーより確認します。
+2. ブラウザーで[http://localhost:5173/signup](http://localhost:5173/signup)を開く。
 
-[http://localhost:5173/signup](http://localhost:5173/signup)
+3. テスト用の入力値：
 
-ユーザー名 → testuser1
-メールアドレス → t1@t.co
-パスワード → 123456
+* ユーザー名 → testuser1
+* メールアドレス → t1@t.co
+* パスワード → 123456
 
-登録ボタンをクリック
+4. 登録ボタンをクリック
 
-## Supabaseのダッシュボードよりアカウントが登録されたか確認します
+5. Supabaseダッシュボードで確認：
 
-ブラウザーより、[https://supabase.com/dashboard/](https://supabase.com/dashboard/) を表示して、
-
-notion-clone-app をクリックします。
-
-Supabaseのダッシュボードが表示されます。
-
-左側メニューから、Authenticationをクリックします。
-
-Users の一覧が表示されます。
+* ブラウザーより、[https://supabase.com/dashboard/](https://supabase.com/dashboard/) にアクセス
+* `notion-clone-app` を選択
+* 左側メニューのAuthentication → Users で登録済みアカウントを確認の一覧が表示されます。
 
 
 
