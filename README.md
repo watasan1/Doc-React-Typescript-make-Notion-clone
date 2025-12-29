@@ -470,7 +470,7 @@ npm run dev
 
 表示が確認できれば、プロジェクトの雛形は完成です。
 
-## 7. ルーティングを設定しよう
+## 7. ページ構成とルーティング設計
 
 Notion Clone のアプリには、次の4つの画面があります。
 
@@ -483,13 +483,13 @@ Notion Clone のアプリには、次の4つの画面があります。
 
 URLに応じて、どのコンポーネントを表示するかを決める仕組みです。
 
-### 8.1 App.tsxにルーティングを書こう
+### 7.1 App.tsxにルーティングを書こう
 
 `src/App.tsx` は、アプリ全体の画面構成とURLの対応関係を定義するファイルです。
 
 画面の見た目ではなく、ページの切り替えルールだけを担当します。
 
-8.1.1 React Routerを使う準備
+#### 7.1.1 React Routerを使う準備
 
 ```tsx
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -614,7 +614,7 @@ Route コンポーネントの役割
 
 といったURLを、1のルールで扱うことができます。
 
-### 8.2 Layout.tsxを作成する
+### 7.2 Layout.tsxを作成する
 
 Layout.tsx はどのページでも共通で表示される「外枠」を書くファイルです。
 
@@ -669,7 +669,7 @@ URL が `/notes/1` のとき
 * 切り替わるのは <Outlet /> の中だけ
 * これが、React Router の「共通レイアウト＋ページ切り替え」の仕組みです。
 
-### 8.3 Home.tsxコンポーネント（トップページ）の作成
+### 7.3 Home.tsxコンポーネント（トップページ）の作成
 
 src/App.tsx で、react-router-domを使う場合は、
 
@@ -731,7 +731,7 @@ export default Home;
 pagesディレクトリは、ルーティング単位の画面コンポーネントを置く場所です。
 Home.tsx はトップページに対応する画面になります。
 
-### 8.4 pages/notes/NoteDetail.tsx コンポーネント(詳細ページ)を作成する
+### 7.4 pages/notes/NoteDetail.tsx コンポーネント(詳細ページ)を作成する
 
 ```bash
 mkdir -p src/pages/notes && touch src/pages/notes/NoteDetail.tsx
@@ -794,7 +794,7 @@ return <div>ノートID: {id}</div>;
 ※ 実際のアプリでは、この id を使って
 ノートのデータを取得することになります。
 
-### 8.5 pages/Signin コンポーネント(サインイン)を作成します。
+### 7.5 pages/Signin コンポーネント(サインイン)を作成します。
 
 ```bash
 touch src/pages/Signin.tsx
@@ -906,7 +906,7 @@ React Router のルーティングを使った遷移ができます
 
 http://localhost:5173/signin
 
-### 8.6 pages/Signup.tsx コンポーネント（サインアップ）を作成
+### 7.6 pages/Signup.tsx コンポーネント（サインアップ）を作成
 
 ```bash
 touch src/pages/Signup.tsx
@@ -1001,7 +1001,7 @@ Signup コンポーネントは、
 
 http://localhost:5173/signup
 
-### 8.7 動作確認
+### 7.7 動作確認
 
 ```bash
 npm run dev
@@ -1023,9 +1023,9 @@ http://localhost:5173/signup
 
 http://localhost:5173/signin
 
-## 9. 認証機能（ユーザー登録機能）を作成
+## 8. 認証機能（ユーザー登録機能）を作成
 
-### 9.1 Supabaseの解説とセットアップ
+### 8.1 Supabaseの解説とセットアップ
 
 Supabase は、認証・データベース・ストレージなどをまとめて提供するBaaS(Backend as a Service)です。
 本章では、Supabaseを利用してユーザー登録機能の準備を行います。
@@ -1034,7 +1034,7 @@ Supabase は、認証・データベース・ストレージなどをまとめ�
 
 [https://supabase.com/](https://supabase.com/)
 
-### 9.2 プロジェクトを作成
+### 8.2 プロジェクトを作成
 
 アカウント作成後、Supabaseのダッシュボードにアクセスします。
 
@@ -1054,7 +1054,7 @@ Supabase は、認証・データベース・ストレージなどをまとめ�
 
 3. Create new project ボタンをクリックします。
 
-### 9.3 ライブラリをインストール
+### 8.3 ライブラリをインストール
 
 ReactからSupabaseを利用するため、公式SDKをインストールします。
 
@@ -1062,7 +1062,7 @@ ReactからSupabaseを利用するため、公式SDKをインストールしま�
 npm install @supabase/supabase-js
 ```
 
-### 9.4 SupaBase の Auth Providerの設定に（Email認証）
+### 8.4 SupaBase の Auth Providerの設定に（Email認証）
 
 次に、ユーザー登録で使用する Email 認証を有効化します。
 
@@ -1076,7 +1076,7 @@ npm install @supabase/supabase-js
 
 5. Auth Providers のEmail 右横にあるステータスが「Disabled」から「Enabled」になっていることを確認します。
 
-### 9.5 Supabeseクライアント初期化ファイルを作成
+### 8.5 Supabeseクライアント初期化ファイルを作成
 
 ReactアプリからSupabaseに接続するための初期化ファイルを作成します。
 
@@ -1109,7 +1109,7 @@ import { createClient } from '@supabase/supabase-js'
 
 このクライアントを通じて、認証・データ取得・データ操作などの機能などの機能が利用できるようになります。
 
-### 9.6 環境変数（.env）を作成する
+### 8.6 環境変数（.env）を作成する
 
 APIキーやURLを直接コードに書かず、環境変数として管理します。
 これにより、開発環境と本番環境を分けて管理できます。
@@ -1156,7 +1156,7 @@ VITE_SUPABASE_URL = "https://XXXXXXXXXXXXXXXXXXXX.supabase.co"
 VITE_SUPABASE_API_KEY = "sb_publishable_XXXXXXXXX_XXXXXXXXXXXX_XXX-XXXX"
 ```
 
-### 9.7 .gitignoreに.envを追加
+### 8.7 .gitignoreに.envを追加
 
 APIキーをGitHubに公開しないよう、`.gitignore`ファイルに`.env`を追加します。
 
@@ -1164,7 +1164,7 @@ APIキーをGitHubに公開しないよう、`.gitignore`ファイルに`.env`�
 .env
 ```
 
-### 9.8 `supabase.ts`を環境変数対応に修正
+### 8.8 `supabase.ts`を環境変数対応に修正
 
 最後に、`supabase.ts`を環境変数から値を読み込むように修正します。
 
@@ -1186,7 +1186,7 @@ export const supabase = createClient(
 
 次の章では、Supabaseを利用してユーザー登録（signUp）処理を実装していきます。
 
-### 9.9 Supabase Authを使ったユーザー登録機能の実装
+### 8.9 Supabase Authを使ったユーザー登録機能の実装
 
 アプリを作る上で、主なビジネスロジック（アプリの処理の中身）は、大きく次の2つに分けられます。
 
@@ -1207,7 +1207,7 @@ mkdir -p src/modules/auth && touch src/modules/auth/auth.repository.ts
 * `auth`: 認証機能用のフォルダ
 * `auth.repository.ts`: 認証処理をまとめるファイル
 
-### 9.9.1 auth.repository.ts の役割
+#### 8.9.1 auth.repository.ts の役割
 
 `auth.repository.ts` は、Supabase の認証 API を呼び出す処理をまとめたファイルです。
 
@@ -1220,7 +1220,7 @@ Reactコンポーネントから直接 Supabase を操作せず、この`auth.re
 
 これにより、コードの見通しがよくなり、保守・テストもしやすくなります。
 
-### 9.9.2 `src/modules/auth/auth.repository.ts` なのか？
+#### 8.9.2 `src/modules/auth/auth.repository.ts` なのか？
 
 このファイル名と配置は、「何をするコードか」「どこに属するか」が一目で分かるように設計されています。
 
@@ -1253,7 +1253,7 @@ Repository（リポジトリ）とは、外部のサービスと通信する処�
 
 ※ このような構成は、Repository パターンと呼ばれる設計の考え方の一部です。
 
-#### 9.9.3 auth.repository.ts の実装
+#### 8.9.3 auth.repository.ts の実装
 
 `auth.repository.ts` の実装
 
@@ -1294,7 +1294,7 @@ export const authRepository = {
 次の章では、この `authRepository.signup` を React コンポーネントから呼び出し、
 実際にユーザー登録画面を実装していきます。
 
-### 9.9.2 Supabase Auth で作る安全なサインアップフォーム
+#### 8.9.2 Supabase Auth で作る安全なサインアップフォーム
 
 Step 1: 必要なモジュールのimport
 
