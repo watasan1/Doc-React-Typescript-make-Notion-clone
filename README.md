@@ -1270,7 +1270,196 @@ export const authRepository = {
 次の章では、この `authRepository.signup` を React コンポーネントから呼び出し、
 実際にユーザー登録画面を実装していきます。
 
-### 9.10 Reactアプリからユーザー登録処理を呼び出す
+### 9.10 Supabase Auth で作る安全なサインアップフォーム
+
+Step 1: 必要なモジュールのimport
+
+目的
+* React の状態管理フック useState を使えるようにする
+* Supabase への登録処理をまとめた authRepository を使えるようにする
+
+```Signup.tsx
+import { authRepository } from "@/modules/auth/auth.repository";
+import { useState } from "react";
+```
+
+解説
+* React のフックはフォームの入力値やエラー表示の状態管理に必要
+* `authrepository`はSupabaseへの登録処理をラップしたもの
+
+Step 2: return 内の見た目（画面の骨組み）を作る
+
+目的
+* フォームの見た目を先に確認できる完成体験を作る
+* 名前・メール・パスワード入力欄、ボタン、メッセージ表示の枠だけ作る
+
+```
+const Signup = () => {
+  // フォームの状態管理
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // エラー・ローディング・成功状態
+  const [errors, setErrors] = useState<string[]>([]);
+  const [success, setSuccess] = useState<string | null>(null);
+
+  /**
+   * フロント側バリデーション（予習）
+   */
+  const validateBeforeSubmit = (): boolean => {
+    const validationErrors: string[] = [];
+
+    if (!name) {
+      validationErrors.push("ユーザー名を入力してください");
+    }
+
+    if (!email) {
+      validationErrors.push("メールアドレスを入力してください");
+    } else if (!isValidEmail(email)) {
+      validationErrors.push("メールアドレスの形式が正しくありません");
+    }
+
+    if (!password) {
+      validationErrors.push("パスワードを入力してください");
+    } else if (password.length < 6) {
+      validationErrors.push("パスワードは6文字以上で入力してください");
+    }
+
+    setErrors(validationErrors);
+    return validationErrors.length === 0;
+  };
+
+  /**
+   * 送信処理（採点）
+   */
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (loading) return;
+
+    // 初期化
+    setErrors([]);
+    setSuccess(null);
+
+    // 予習で不合格なら送信しない
+    if (!validateBeforeSubmit()) return;
+
+    try {
+      setLoading(true);
+
+      // Supabase による最終チェック
+      const { error } = await authRepository.signup(name, email, password);
+
+      if (error) {
+        console.error("Supabase signup error:", error);
+        console.error("message:", error.message);
+        setErrors([translateSupabaseError(error.message)]);
+        return;
+      }
+
+      setSuccess("サインアップが成功しました。");
+    } catch (err) {
+      setErrors([
+        err instanceof Error
+          ? err.message
+          : "サインアップ中にエラーが発生しました",
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 px-4 py-10 sm:px-6 lg:px-8">
+      <div className="flex flex-col items-center">
+        <h2 className="text-3xl font-extrabold text-gray-900">
+          Notionクローン
+        </h2>
+
+        <div className="mt-8 w-full max-w-md">
+          <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
+            <form className="space-y-6" onSubmit={handleSignup} noValidate>
+              {/* エラーメッセージ */}
+              {errors.length > 0 && (
+                <div
+                  role="alert"
+                  className="my-8 border-l-10 border-[#ffc06e] bg-yellow-50 px-4 py-2 text-gray-800"
+                >
+                  <ul className="list-disc pl-5">
+                    {errors.map((error, index) => (
+                      <li key={index}>{error}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* 成功メッセージ */}
+              {success && (
+                <div
+                  role="status"
+                  className="my-8 border-l-10 border-green-500 bg-green-50 px-4 py-2 text-gray-800"
+                >
+                  <p className="m-0 p-0">{success}</p>
+                </div>
+              )}
+
+              {/* ユーザー名 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  ユーザー名
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm"
+                />
+              </div>
+
+              {/* メールアドレス */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  メールアドレス
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm"
+                />
+              </div>
+
+              {/* パスワード */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  パスワード
+                </label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading || !name || !email || !password}
+                className="w-full rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
+              >
+                {loading ? "登録中..." : "登録"}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Signup;
+
+```
 
 email・password・name　の3っつの情報を登録できるようにします。
 
