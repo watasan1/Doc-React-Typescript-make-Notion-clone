@@ -517,7 +517,7 @@ import NoteDetail from "./pages/notes/NoteDetail";
 function App() {
   return (
     <BrowserRouter>
-      <div className="h-full">
+      <div>
         <Routes>
           {/* 共通レイアウト */}
           <Route path="/" element={<Layout />}>
@@ -571,7 +571,9 @@ Route コンポーネントの役割
 
 ### 7.3 共通レイアウト(Layout.tsx)の実装
 
-共通レイアウトとは、どのページでも共通して表示される外枠のことです。
+共通レイアウトLayutコンポーネント(Layout.tsx)は、
+「ページごとに切り替わる部分(Outlet)」を分離するための仕組みです。
+どのページでも共通して表示される外枠のことです。
 
 例：
 
