@@ -470,38 +470,41 @@ npm run dev
 
 表示が確認できれば、プロジェクトの雛形は完成です。
 
-## 7. ページ構成とルーティング設計
+## 7. ルーティングと画面の作成
+
+### 7.1 画面構成の確認
 
 Notion Clone のアプリには、次の4つの画面があります。
 
-- トップページ(Home)
-- サインイン(Signin)
-- サインアップ(Signup)
-- ノート詳細(NoteDetail)
+* トップページ(Home)
+* サインイン(Signin)
+* サインアップ(Signup)
+* ノート詳細(NoteDetail)
 
 これらの画面を、URLによって切り替える仕組みを作るためにReact Routerを使ってルーティングを設定していきます。
 
-URLに応じて、どのコンポーネントを表示するかを決める仕組みです。
+React Routerは、「URLに応じて、どのコンポーネントを表示するかを決める仕組み」　を提供するライブラリです。
 
-### 7.1 App.tsxにルーティングを書こう
+### 7.2 App.tsxでにルーティングを設定する
 
 `src/App.tsx` は、アプリ全体の画面構成とURLの対応関係を定義するファイルです。
 
-画面の見た目ではなく、ページの切り替えルールだけを担当します。
+ここでは、画面の見た目ではなく「どのURLで、どの画面を表示するか」だけを定義します。
 
-#### 7.1.1 React Routerを使う準備
+
+#### 7.2.1 React Routerを使う準備
 
 ```tsx
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 ```
 
-| 名前            | 役割                 |
-| ------------- | ------------------ |
-| BrowserRouter | URL を管理する          |
+| 名前          | 役割                        |
+|---------------|----------------------------|
+| BrowserRouter | URL を管理する              |
 | Routes        | どの Route を表示するか決める |
-| Route         | URL と画面を対応させる      |
+| Route         | URL と画面を対応させる       |
 
-- src/App.tsx を修正します。
+#### 7.2.2 src/App.tsx の実装
 
 ```tsx
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -545,11 +548,11 @@ React Routerの機能は、この中に書いたコンポーネントでしか�
 
 2. Routes について
 
+`Routes`は、現在のURLに一致する`Route`を検索し、その中からURLに合う`Route`を描画するコンポーネントです。
+
 Route コンポーネントの役割
 
 `Route`コンポーネントでは、URLと表示するReactコンポーネントの対応関係を定義します。
-
-`Routes`は、現在のURLに一致する`Route`を検索し、その中からURLに合う`Route`を描画するコンポーネントです。
 
 `Route`は、このURLなら、この画面というルールを書きます。
 
@@ -565,62 +568,18 @@ Route コンポーネントの役割
 
 これは、`signin`にアクセスしたら`Signin`コンポーネントを表示します。
 
-### 共通レイアウトを使ったルーティング
 
-```tsx
-<Route path="/" element={<Layout />}>
-  <Route index element={<Home />} />
-  <Route path="notes/:id" element={<NoteDetail />} />
-</Route>
+### 7.3 共通レイアウト(Layout)
 
-```
-
-ここでは、共通レイアウトを使ったルーティングを設定しています。
-
-### 共通レイアウトとは？
-
-「どのページでも同じ見た目になる部分」です。
+共通レイアウトとは、どのページでも共通して表示される外枠のことです。
 
 例：
 
 * ヘッダー
-* フッター
 * メニュー
+* フッター
 
-ページごとに変わるのは中身だけ、という構造を作れます。
-
-トップページ（indexルート）
-
-```tsx
-<Route index element={<Home />} />
-```
-
-`index`は、`/`にアクセスすると`Home`コンポーネントが表示されます。
-
-### ノート詳細ページ（動的ルーティング）
-
-```tsx
-<Route path="notes/:id" element={<NoteDetail />} />
-
-```
-
-`:id`は変わる値を表示します。
-
-これにより
-
-* `/notes/1`
-* `/notes/2`
-* `/notes/abc`
-
-といったURLを、1のルールで扱うことができます。
-
-### 7.2 Layout.tsxを作成する
-
-Layout.tsx はどのページでも共通で表示される「外枠」を書くファイルです。
-
-App.tsx で指定した共通レイアウトの中身を、ここで実際に作ります。
-
-プロジェクト直下で以下のコマンドを実行します。
+#### 7.3.1 Layout.tsxの実装
 
 ```sh
 touch src/Layout.tsx
@@ -644,46 +603,26 @@ export default Layout;
 
 解説
 
-`<Outlet />` は、ここに、今のURLにあったページを表示するという目印になります。
+`Outlet`の役割
 
-画面が切り替わる仕組み
-URL が `/` のとき
+`<Outlet />` は、
 
-* App.tsx
-→ `index` ルートが選ばれる
+現在のURLに対応したページコンポーネントを表示する場所です。
 
-* Layout.tsx
-→ `<Outlet />` に Home が表示される
+* URL が `/`のときHomeコンポーネントが表示されます。
+* URL が `/notes/1` のときNoteDetailが表示されます。
 
-URL が `/notes/1` のとき
+Layout自体は常に表示され、切り替わるのは`<Outlet />`の中身だけ、という構造になります。
 
-* App.tsx
-→ `notes/:id` が選ばれる
+### 7.4 Home.tsxページ（トップページ）
 
-* Layout.tsx
-→ `<Outlet />` に NoteDetail が表示される
-
-大事なポイント
-
-* Layout 自体は常に表示される
-* 切り替わるのは <Outlet /> の中だけ
-* これが、React Router の「共通レイアウト＋ページ切り替え」の仕組みです。
-
-### 7.3 Home.tsxコンポーネント（トップページ）の作成
-
-src/App.tsx で、react-router-domを使う場合は、
-
-```App.tsx
-<Route index element={<Home />} />
-```
-
-のように指定します。
+トップページは、ノート作成の起点となる画面です。
 
 ```bash
 mkdir -p src/pages && touch src/pages/Home.tsx
 ```
 
-shadcnのCard コンポーネントを追加する
+shadcn/ui の Card を追加します。
 
 ```bash
 npx shadcn@latest add card
@@ -729,9 +668,8 @@ export default Home;
 解説
 
 pagesディレクトリは、ルーティング単位の画面コンポーネントを置く場所です。
-Home.tsx はトップページに対応する画面になります。
 
-### 7.4 pages/notes/NoteDetail.tsx コンポーネント(詳細ページ)を作成する
+### 7.5 pages/notes/NoteDetail.tsx コンポーネント(詳細ページ)を作成する
 
 ```bash
 mkdir -p src/pages/notes && touch src/pages/notes/NoteDetail.tsx
