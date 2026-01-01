@@ -569,7 +569,7 @@ Route コンポーネントの役割
 これは、`signin`にアクセスしたら`Signin`コンポーネントを表示します。
 
 
-### 7.3 共通レイアウト(Layout)
+### 7.3 共通レイアウト(Layout.tsx)の実装
 
 共通レイアウトとは、どのページでも共通して表示される外枠のことです。
 
@@ -578,8 +578,6 @@ Route コンポーネントの役割
 * ヘッダー
 * メニュー
 * フッター
-
-#### 7.3.1 Layout.tsxの実装
 
 ```sh
 touch src/Layout.tsx
@@ -614,7 +612,7 @@ export default Layout;
 
 Layout自体は常に表示され、切り替わるのは`<Outlet />`の中身だけ、という構造になります。
 
-### 7.4 Home.tsxページ（トップページ）
+### 7.4 Home.tsxページ（トップページ）の実装
 
 トップページは、ノート作成の起点となる画面です。
 
@@ -669,7 +667,7 @@ export default Home;
 
 pagesディレクトリは、ルーティング単位の画面コンポーネントを置く場所です。
 
-### 7.5 pages/notes/NoteDetail.tsx コンポーネント(詳細ページ)を作成する
+### 7.5 pages/notes/NoteDetail.tsx コンポーネント(ノート詳細ページ)の実装
 
 ```bash
 mkdir -p src/pages/notes && touch src/pages/notes/NoteDetail.tsx
@@ -700,7 +698,7 @@ URL に含まれている「ノートID」を取得して表示するページ�
 123 の部分を React Router から受け取ることができます。
 
 useParams とは？
-import { useParams } from "react-router-dom";
+`import { useParams } from "react-router-dom";`
 
 useParams は、
 URL のパラメータ（:id など）を取得するための React Router のフックです。
@@ -732,7 +730,9 @@ return <div>ノートID: {id}</div>;
 ※ 実際のアプリでは、この id を使って
 ノートのデータを取得することになります。
 
-### 7.5 pages/Signin コンポーネント(サインイン)を作成します。
+### 7.6 pages/Signin コンポーネント(サインイン)の実装
+
+Signin ページは、既存ユーザーがログインするための画面です。
 
 ```bash
 touch src/pages/Signin.tsx
@@ -822,11 +822,6 @@ export default Signin;
 
 解説
 
-このコンポーネントの役割
-
-Signin コンポーネントは、
-ユーザーがメールアドレスとパスワードを入力してログインする画面を表示するためのものです。
-
 import 文の解説
 ```ts
 import { Link } from "react-router-dom";
@@ -842,9 +837,9 @@ React Router のルーティングを使った遷移ができます
 
 今回は「サインアップ画面へ移動するリンク」に使っています。
 
-http://localhost:5173/signin
+### 7.7 pages/Signup.tsx コンポーネント（サインアップ）の実装
 
-### 7.6 pages/Signup.tsx コンポーネント（サインアップ）を作成
+Signup ページは、新規ユーザー登録用の画面です。
 
 ```bash
 touch src/pages/Signup.tsx
@@ -937,9 +932,7 @@ export default Signup;
 Signup コンポーネントは、
 新規ユーザー登録（サインアップ）画面を表示するためのものです。
 
-http://localhost:5173/signup
-
-### 7.7 動作確認
+### 7.8 動作確認
 
 ```bash
 npm run dev
@@ -947,19 +940,19 @@ npm run dev
 
 トップページ
 
-http://localhost:5173/ 
+[http://localhost:5173/](http://localhost:5173/) 
 
-詳細ページ
+ノート詳細ページ
 
-http://localhost:5173/notes/1
+[http://localhost:5173/notes/1](http://localhost:5173/notes/1)
 
 サインアップ
 
-http://localhost:5173/signup
+[http://localhost:5173/signup](http://localhost:5173/signup)
 
 サインイン
 
-http://localhost:5173/signin
+[http://localhost:5173/signin](http://localhost:5173/signin)
 
 ## 8. 認証機能（ユーザー登録機能）を作成
 
