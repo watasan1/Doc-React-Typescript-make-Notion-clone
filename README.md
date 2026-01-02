@@ -472,42 +472,39 @@ npm run dev
 
 ## 7. ルーティングと画面の作成
 
+この章では、React Router を使って**URL と画面コンポーネントを対応づける**方法を学びます。
+
+解説はすべて**「ファイル（画面）単位」**で行い、実際にアプリの画面遷移を実装しながら理解を深めていきます。
+
+まずは、「URLによって表示される画面が切り替わる」という感覚をつかみます。
+
 ### 7.1 画面構成の確認
 
-Notion Clone のアプリには、次の4つの画面があります。
+本アプリで（Notion Clone）では、次の4つの画面を作成します。
 
 * トップページ(Home)
 * サインイン(Signin)
 * サインアップ(Signup)
 * ノート詳細(NoteDetail)
 
-これらの画面を、URLによって切り替える仕組みを作るためにReact Routerを使ってルーティングを設定していきます。
+これらの画面を、**URLによって切り替える**ために、React Routerを使用します。
 
-React Routerは、「URLに応じて、どのコンポーネントを表示するかを決める仕組み」　を提供するライブラリです。
+React Router は、URLに応じて、どのReactコンポーネントを表示するかを決めるためのライブラリです。
 
-### 7.2 App.tsxでルーティングを設定する
+### 7.2 `src/App.tsx`でルーティングを定義する
 
 `src/App.tsx` は、アプリ全体の画面構成とURLの対応関係を定義するファイルです。
 
-ここでは、画面の見た目ではなく「どのURLで、どの画面を表示するか」だけを定義します。
+このファイルの役割
 
+* アプリ全体をルーティング可能な状態にする
+* URLと画面コンポーネントの対応関係を定義する
+* 共通レイアウトを使う画面・使わない画面を分ける
 
-#### 7.2.1 React Routerを使う準備
-
-```tsx
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-```
-
-| 名前          | 役割                        |
-|---------------|----------------------------|
-| BrowserRouter | URL を管理する              |
-| Routes        | どの Route を表示するか決める |
-| Route         | URL と画面を対応させる       |
-
-#### 7.2.2 src/App.tsx の実装
+#### 7.2.1 src/App.tsx の実装
 
 ```tsx
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
@@ -539,25 +536,28 @@ export default App;
 
 ```
 
-* src/App.tsxの解説（React Router）
-
-1. BrowserRouterについて
-
-`BrowserRouter`は、ブラウザのURL（履歴）を管理し、URLの変更に応じて表示する画面を切り替えるための React Router のコンポーネントです。
-React Routerの機能は、この中に書いたコンポーネントでしか使えません。
-
-2. Routes について
-
-`Routes`は、現在のURLに一致する`Route`を検索し、その中からURLに合う`Route`を描画するコンポーネントです。
-
-Route コンポーネントの役割
-
-`Route`コンポーネントでは、URLと表示するReactコンポーネントの対応関係を定義します。
-
-`Route`は、このURLなら、この画面というルールを書きます。
+React Routerの基本コンポーネント
 
 ```tsx
-<Route path="/signin" element={<Signin />} />
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+```
+
+React Routerでは、主に次の3つのコンポーネントを使用します。
+
+コンポーネントの役割
+
+BrowserRouter は、ブラウザの URL を管理し、ルーティング機能を有効にする。
+
+React Routerの機能は、この中に書いたコンポーネントでしか使えません。
+
+Routes は、現在の URL に一致する Route を探し、一致した Route のコンポーネントを表示するためのコンテナです。
+
+Route は、特定の URL（path）と、表示するコンポーネント（element）を対応させる設定です。
+
+共通レイアウトを設定するRoute
+
+```tsx
+ <Route path="/" element={<Layout />}>
 ```
 
 主に次の2つのpropsを使用します。
@@ -566,12 +566,70 @@ Route コンポーネントの役割
 
 * `element`: そのURLで表示するReactコンポーネント
 
-これは、`signin`にアクセスしたら`Signin`コンポーネントを表示します。
 
+Routeは、URLが「`/`」から始まるときに、共通レイアウトとして Layoutコンポーネントを使用することを表しています。
+
+Layoutの中には header や footerなど、複数のページで共通して表示したいUIを配置します。
+
+この Routeの中にネストされた Route(Home や NoteDetail)が表示される場合でも、親である Layout コンポーネントは常に表示されます。
+
+そのため、トップページ(/)やノート詳細ページ(/notes/:id)を開いたときも、共通レイアウトとしてLayoutが画面に表示されます。
+
+解説
+
+
+```tsx
+ <Route index element={<Home />} />
+```
+
+index ルートは、親のパス（ここでは `/`）にアクセスしたときに、
+表示される画面を表します。
+
+index ルートでは path を指定せず、
+element に指定した Home コンポーネントが表示されます。
+
+解説
+
+
+```tsx
+<Route path="notes/:id" element={<NoteDetail />} />
+```
+
+解説
+
+`notes/:id` の `:id` の部分は、URL パラメータ（動的な値）を表しています。
+このように `:` を付けたパスは、アクセスするたびに値が変わる URL に対応できます。
+
+`:id` はどんな文字列でもマッチするため、次のような URL を指定することができます。
+
+- `/notes/1`
+- `/notes/42`
+- `/notes/abc123`
+
+この id の値は、NoteDetail コンポーネント内で取得し、
+表示するノートの内容を切り替えるために使用します。
+
+```tsx
+<Route path="/signin" element={<Signin />} />
+```
+
+```
+<Route path="/signup" element={<Signup />} />
+```
+
+解説
+
+サインインページとサインアップページは、
+Layout コンポーネントを element に持つ Route の中に
+ネストされていません。
+
+そのため、これらのページにアクセスした場合は
+Layout コンポーネントは表示されず、
+それぞれ Signin、Signup コンポーネントのみが表示されます。
 
 ### 7.3 共通レイアウト(Layout.tsx)の実装
 
-共通レイアウトLayutコンポーネント(Layout.tsx)は、
+共通レイアウト Layout コンポーネント(Layout.tsx)は、
 「ページごとに切り替わる部分(Outlet)」を分離するための仕組みです。
 どのページでも共通して表示される外枠のことです。
 
@@ -732,6 +790,12 @@ return <div>ノートID: {id}</div>;
 ※ 実際のアプリでは、この id を使って
 ノートのデータを取得することになります。
 
+
+`NoteDetail` コンポーネント内では、
+`useParams()` を使うことで URL に含まれる `id` の値を取得でき、
+その id を元に表示するノートを切り替えることができます。
+
+
 ### 7.6 pages/Signin コンポーネント(サインイン)の実装
 
 Signin ページは、既存ユーザーがログインするための画面です。
@@ -839,7 +903,7 @@ React Router のルーティングを使った遷移ができます
 
 今回は「サインアップ画面へ移動するリンク」に使っています。
 
-### 7.7 pages/Signup.tsx コンポーネント（サインアップ）の実装
+### 7.7 pages/Signup コンポーネント（サインアップ）の実装
 
 Signup ページは、新規ユーザー登録用の画面です。
 
