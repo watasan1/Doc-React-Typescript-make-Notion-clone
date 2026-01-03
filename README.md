@@ -983,7 +983,29 @@ npm run dev
 
 [http://localhost:5173/signin](http://localhost:5173/signin)
 
-## 8. 認証機能（ユーザー登録機能）を作成
+
+## 8. 認証機能の準備（Supabase Authの導入）
+
+### 8.1 Supabase とは何か
+### 8.2 Supabase プロジェクトの作成
+### 8.3 Supabase SDK のインストール
+### 8.4 Auth Provider（Email認証）の設定
+### 8.5 Supabase クライアントの初期化
+### 8.6 環境変数（.env）の設定
+### 8.7 .gitignore の設定
+### 8.8 Supabase クライアントを環境変数対応にする
+
+## 9. Supabase Auth を使ったユーザー登録（サインアップ）機能の実装
+
+### 9.1 認証ロジックの設計（Repository パターン）
+### 9.2 auth.repository.ts の実装
+### 9.3 Signup ページに登録処理を追加する
+  - Step 1: 必要なモジュールの import
+  - Step 2: フォームの骨組み作成
+  - Step 3: 登録処理（handleSignup）の実装
+### 9.4 動作確認（Supabase Dashboard）
+
+
 
 ### 8.1 Supabaseの解説とセットアップ
 
