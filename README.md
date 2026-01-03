@@ -498,7 +498,7 @@ React Routerは、「URLに応じて、どのReactコンポーネントを表示
 このファイルの役割
 
 * アプリ全体をルーティング可能な状態にする
-* URLと画面コンポーネントの対応関係を定義する
+* URLと画面コンポーネントの対応づける
 * 共通レイアウトを使う画面・使わない画面を分ける
 
 #### 7.2.1 src/App.tsx の実装
@@ -536,7 +536,7 @@ export default App;
 
 ```
 
-React Routerの基本コンポーネント
+**React Routerの基本コンポーネント**
 
 ```tsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -554,48 +554,39 @@ Routes は、現在の URL に一致する Route を探し、一致した Route 
 
 Route は、特定の URL（path）と、表示するコンポーネント（element）を対応させる設定です。
 
-共通レイアウトを設定するRoute
+**共通レイアウトを設定するRoute**
 
 ```tsx
  <Route path="/" element={<Layout />}>
 ```
 
-主に次の2つのpropsを使用します。
+このRouteのpropsは
 
-* `path`: URLのパス
+* Pathにある、`/`から始まるページでは、
 
-* `element`: そのURLで表示するReactコンポーネント
+* elementにある共通レイアウト（Layout）コンポーネントを使用します。
 
+ことを表しています。
 
-Routeは、URLが「`/`」から始まるときに、共通レイアウトとして Layoutコンポーネントを使用することを表しています。
+Layoutには header や footerなど、複数のページで共通して表示したいUIを配置します。
 
-Layoutの中には header や footerなど、複数のページで共通して表示したいUIを配置します。
+この Routeの中にネストされた Home や NoteDetailが表示される場合でも、Layout 自体は常に画面に表示されます。
 
-この Routeの中にネストされた Route(Home や NoteDetail)が表示される場合でも、親である Layout コンポーネントは常に表示されます。
-
-そのため、トップページ(/)やノート詳細ページ(/notes/:id)を開いたときも、共通レイアウトとしてLayoutが画面に表示されます。
-
-解説
-
+**indexルート（トップページ）**
 
 ```tsx
  <Route index element={<Home />} />
 ```
 
-index ルートは、親のパス（ここでは `/`）にアクセスしたときに、
-表示される画面を表します。
+indexルートは、親のパス（ここでは `/`）にアクセスしたときに、表示される画面。
 
-index ルートでは path を指定せず、
-element に指定した Home コンポーネントが表示されます。
+index ルートでは、`path`を指定せず、`element` に指定した Home コンポーネントが表示されます。
 
-解説
-
+**動的ルート（ノート詳細ページ）**
 
 ```tsx
 <Route path="notes/:id" element={<NoteDetail />} />
 ```
-
-解説
 
 `notes/:id` の `:id` の部分は、URL パラメータ（動的な値）を表しています。
 このように `:` を付けたパスは、アクセスするたびに値が変わる URL に対応できます。
@@ -606,40 +597,27 @@ element に指定した Home コンポーネントが表示されます。
 - `/notes/42`
 - `/notes/abc123`
 
-この id の値は、NoteDetail コンポーネント内で取得し、
-表示するノートの内容を切り替えるために使用します。
+この`id`の値は、NoteDetail コンポーネント内で取得し、表示するノートの内容を切り替えるために使用します。
+
+認証ページ（Layoutを使わないルート）
 
 ```tsx
 <Route path="/signin" element={<Signin />} />
-```
-
-```
 <Route path="/signup" element={<Signup />} />
 ```
 
 解説
 
-サインインページとサインアップページは、
-Layout コンポーネントを element に持つ Route の中に
-ネストされていません。
+サインインページとサインアップページは、Layoutコンポーネントの中にネストされていないため、
 
-そのため、これらのページにアクセスした場合は
-Layout コンポーネントは表示されず、
-それぞれ Signin、Signup コンポーネントのみが表示されます。
+* ヘッダーやメニューは表示されず
+* Signin / Signup コンポーネントのみが表示されます
 
 ### 7.3 共通レイアウト(Layout.tsx)の実装
 
-共通レイアウト Layout コンポーネント(Layout.tsx)は、
-「ページごとに切り替わる部分(Outlet)」を分離するための仕組みです。
-どのページでも共通して表示される外枠のことです。
+Layout コンポーネント(Layout.tsx)は、共通の外枠と、ページごとに切り替わる部分を分離する仕組みです。
 
-例：
-
-* ヘッダー
-* メニュー
-* フッター
-
-```sh
+```bash
 touch src/Layout.tsx
 ```
 
@@ -659,18 +637,14 @@ export default Layout;
 
 ```
 
-解説
+**`Outlet`の役割**
 
-`Outlet`の役割
-
-`<Outlet />` は、
-
-現在のURLに対応したページコンポーネントを表示する場所です。
+`<Outlet />` は、現在のURLに対応したページコンポーネントを表示する場所です。
 
 * URL が `/`のときHomeコンポーネントが表示されます。
 * URL が `/notes/1` のときNoteDetailが表示されます。
 
-Layout自体は常に表示され、切り替わるのは`<Outlet />`の中身だけ、という構造になります。
+Layout自体は常に表示され、切り替わるのは`<Outlet />`の中身だけが切り替わります。
 
 ### 7.4 Home.tsxページ（トップページ）の実装
 
@@ -747,6 +721,18 @@ export default NoteDetail;
 
 解説
 
+```
+const { id } = useParams();
+```
+
+useParams について
+`useParams`は、URLに含まれるパラメータ（:idなど）を取得するためのReact Routerのフックです。
+
+この`id`を使って、
+実際のアプリではノートデータを取得します。
+
+URL とコードの対応関係
+
 NoteDetail コンポーネントは、
 URL に含まれている「ノートID」を取得して表示するページです。
 
@@ -757,14 +743,6 @@ URL に含まれている「ノートID」を取得して表示するページ�
 のような URL にアクセスすると、
 123 の部分を React Router から受け取ることができます。
 
-useParams とは？
-`import { useParams } from "react-router-dom";`
-
-useParams は、
-URL のパラメータ（:id など）を取得するための React Router のフックです。
-
-URL とコードの対応関係
-
 例えば、ルーティングを次のように定義している場合：
 
 src/App.tsx
@@ -773,11 +751,6 @@ src/App.tsx
 ```
 
 :id の部分が「URL パラメータ」になります。
-
-ノートIDを取得する
-const { id } = useParams();
-
-useParams() は URL パラメータをオブジェクトとして返す
 
 今回は :id という名前なので、id を取り出している
 
@@ -790,13 +763,7 @@ return <div>ノートID: {id}</div>;
 ※ 実際のアプリでは、この id を使って
 ノートのデータを取得することになります。
 
-
-`NoteDetail` コンポーネント内では、
-`useParams()` を使うことで URL に含まれる `id` の値を取得でき、
-その id を元に表示するノートを切り替えることができます。
-
-
-### 7.6 pages/Signin コンポーネント(サインイン)の実装
+### 7.6 pages/Signin ページの実装
 
 Signin ページは、既存ユーザーがログインするための画面です。
 
@@ -893,17 +860,13 @@ import 文の解説
 import { Link } from "react-router-dom";
 ```
 
-Link は 画面遷移用のコンポーネントです
+`Link`コンポーネントを使うことで、ページリロードをせずに画面遷移ができます。
 
-<a> タグの代わりに使うことで、
-
-ページのリロードをせず
-
-React Router のルーティングを使った遷移ができます
+<a> タグの代わりに使うことでページのリロードをせず、React Router のルーティングを使った遷移ができます。
 
 今回は「サインアップ画面へ移動するリンク」に使っています。
 
-### 7.7 pages/Signup コンポーネント（サインアップ）の実装
+### 7.7 pages/Signup ページの実装
 
 Signup ページは、新規ユーザー登録用の画面です。
 
